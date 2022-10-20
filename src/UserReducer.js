@@ -6,8 +6,14 @@ const UseUserReducer = create(set => ({
   email: '',
   photoURL: '',
   expertise: {},
+<<<<<<< HEAD
   appointments: [{}],
   id: '',
+=======
+  appointments: [],
+  id: '',
+  initials: '',
+>>>>>>> tomi
 
   setUsername: newUsername =>
     set(() => ({
@@ -37,6 +43,13 @@ const UseUserReducer = create(set => ({
     set(() => ({
       id: newId,
     })),
+<<<<<<< HEAD
+=======
+  setInitials: newInitials =>
+    set(() => ({
+      initials: newInitials,
+    })),
+>>>>>>> tomi
 }))
 
 export default UseUserReducer
