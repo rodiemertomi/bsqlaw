@@ -192,7 +192,6 @@ export default function CaseFolders() {
                 <button disabled={loading} onClick={uploadFile}>
                   Upload
                 </button>
-                {/* <button onClick={getFiles}>Get Files</button> */}
               </div>
               <div className="flex items-center justify-evenly">
                 <input
