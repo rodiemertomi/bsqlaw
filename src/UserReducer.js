@@ -6,7 +6,7 @@ const UseUserReducer = create(set => ({
   email: '',
   photoURL: '',
   expertise: {},
-  appointments: [{}],
+  appointments: [],
   id: '',
 
   setUsername: newUsername =>
