@@ -1,55 +1,42 @@
-import create from 'zustand'
+import create from "zustand";
 
-const UseUserReducer = create(set => ({
-  username: '',
-  role: '',
-  email: '',
-  photoURL: '',
+const UseUserReducer = create((set) => ({
+  username: "",
+  role: "",
+  email: "",
+  photoURL: "",
   expertise: {},
-<<<<<<< HEAD
   appointments: [{}],
-  id: '',
-=======
-  appointments: [],
-  id: '',
-  initials: '',
->>>>>>> tomi
+  id: "",
 
-  setUsername: newUsername =>
+  setUsername: (newUsername) =>
     set(() => ({
       username: newUsername,
     })),
-  setRole: newRole =>
+  setRole: (newRole) =>
     set(() => ({
       role: newRole,
     })),
-  setEmail: newEmail =>
+  setEmail: (newEmail) =>
     set(() => ({
       email: newEmail,
     })),
-  setPhotoURL: newPhotoURL =>
+  setPhotoURL: (newPhotoURL) =>
     set(() => ({
       photoURL: newPhotoURL,
     })),
-  setExpertise: newExpertise =>
+  setExpertise: (newExpertise) =>
     set(() => ({
       expertise: newExpertise,
     })),
-  setAppointments: newAppointments =>
-    set(state => ({
+  setAppointments: (newAppointments) =>
+    set((state) => ({
       appointments: { ...state.appointments, newAppointments },
     })),
-  setId: newId =>
+  setId: (newId) =>
     set(() => ({
       id: newId,
     })),
-<<<<<<< HEAD
-=======
-  setInitials: newInitials =>
-    set(() => ({
-      initials: newInitials,
-    })),
->>>>>>> tomi
-}))
+}));
 
-export default UseUserReducer
+export default UseUserReducer;
