@@ -8,6 +8,7 @@ const UseUserReducer = create(set => ({
   expertise: {},
   appointments: [],
   id: '',
+  initials: '',
 
   setUsername: newUsername =>
     set(() => ({
@@ -36,6 +37,10 @@ const UseUserReducer = create(set => ({
   setId: newId =>
     set(() => ({
       id: newId,
+    })),
+  setInitials: newInitials =>
+    set(() => ({
+      initials: newInitials,
     })),
 }))
 
