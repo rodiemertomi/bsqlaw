@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UseUserReducer from "../../UserReducer";
-import EditProfile from "./EditProfile";
+import EditProfile from "../../adminDashBoard/pages/EditProfile";
 
 export default function LawyerProfile() {
   const { username } = UseUserReducer();
