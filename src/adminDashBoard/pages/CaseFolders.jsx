@@ -166,7 +166,7 @@ export default function CaseFolders() {
                 </button>
                 {showModal && (
                   <div className='w-screen h-screen backdrop-blur-sm absolute top-0 left-0 flex justify-center items-center'>
-                    <div className='flex flex-col justify-center items-center bg-[#9C9999] absolute h-[57%] w-[50%] gap-5 shadow-lg rounded-md md:h-[55%] lg:h-[80%] lg:w-[40%] '>
+                    <div className='flex flex-col justify-center items-center bg-[#9C9999] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[80%] lg:w-[40%] '>
                       <div className='flex flex-col items-center gap-2'>
                         <h1 className='font-bold text-2xl'>ADD FILE</h1>
                         <hr className='w-64' />
@@ -304,13 +304,6 @@ export default function CaseFolders() {
                   <h1 className='font-bold'>To-Do</h1>
                   <h1 className='font-bold'>+</h1>
                 </div>
-              </div>
-            </div>
-            {/* Calendar */}
-            <div className='flex flex-col items-start text-white  bg-maroon rounded-md lg:h-[45%]'>
-              <div className='flex flex-col ml-5 mt-5'>
-                <h1 className='font-bold'>Calendar</h1>
-                <h1 className='mt-[175px] mb-5 lg:cursor-pointer'>Full Calendar</h1>
               </div>
             </div>
           </div>
