@@ -31,11 +31,13 @@ export default function OwnerDashboard({ username }) {
     const distanceY = touchStartY - touchEndY
     const isLeftSwipe = distanceX > minSwipeDistance
     const isUpSwipe = distanceY > minSwipeDistance
-    if (isLeftSwipe || isUpSwipe) {
+    const isDownSwipe = distanceY < -minSwipeDistance
+    if (isLeftSwipe || isUpSwipe || isDownSwipe) {
       setHideNavBar(true)
     } else {
       setHideNavBar(false)
     }
+    console.log(distanceY)
   }
 
   return (
