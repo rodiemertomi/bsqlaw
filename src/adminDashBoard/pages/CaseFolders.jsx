@@ -323,23 +323,14 @@ function ReadOnlyRow({
               {shareable ? "Shared" : "Unshared"}
             </td>
             <td>{folder}</td>
-<<<<<<< HEAD
-            <button
-              onClick={(e) => handleEditClick(e, data)}
-              className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
-            >
-              Edit
-            </button>
-=======
             <td>
               <button
-                onClick={e => handleEditClick(e, data)}
-                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+                onClick={(e) => handleEditClick(e, data)}
+                className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
               >
                 Edit
               </button>
             </td>
->>>>>>> fad5c9029dcc547a8f6ef2add1635cada0195ae9
           </tr>
         </tbody>
       </table>
@@ -393,12 +384,15 @@ function EditRow({
               </select>
             </td>
             <td>
-              <button className='w-14 h-8 rounded-md border-0 bg-maroon text-white' type='submit'>
+              <button
+                className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
+                type="submit"
+              >
                 Save
               </button>
               <button
                 onClick={handleCancel}
-                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+                className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
               >
                 Cancel
               </button>
