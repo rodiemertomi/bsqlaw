@@ -42,6 +42,7 @@ export default function CaseFolders() {
   }
 
   const addFolder = () => {
+    if (folderNameRef.current.value === '') return
     const docRef = doc(db, `users/${id}`)
     const data = {
       folders: arrayUnion(`${folderNameRef.current.value}`),
