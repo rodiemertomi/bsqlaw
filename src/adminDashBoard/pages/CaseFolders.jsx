@@ -176,7 +176,7 @@ export default function CaseFolders() {
                   Add File
                 </button>
                 {showModal && (
-                  <div className="flex flex-col justify-center items-center bg-[#9C9999] absolute top-36 left-7 h-[57%] w-[85.5%] gap-5 shadow-lg rounded-md lg:h-[80%] lg:top-[90px] lg:left-[310px] lg:w-[40%] ">
+                  <div className="flex flex-col justify-center items-center bg-[#9C9999] absolute top-36 left-7 h-[57%] w-[85.5%] gap-5 shadow-lg rounded-md md:left-[50px] md:h-[55%] lg:h-[80%] lg:top-[90px] lg:left-[310px] lg:w-[40%] ">
                     <div className="flex flex-col items-center gap-2">
                       <h1 className="font-bold text-2xl">ADD FILE</h1>
                       <hr className="w-64" />
