@@ -165,79 +165,81 @@ export default function CaseFolders() {
                   Add File
                 </button>
                 {showModal && (
-                  <div className='flex flex-col justify-center items-center bg-[#9C9999] absolute top-36 left-7 h-[57%] w-[85.5%] gap-5 shadow-lg rounded-md md:left-[50px] md:h-[55%] lg:h-[80%] lg:top-[90px] lg:left-[310px] lg:w-[40%] '>
-                    <div className='flex flex-col items-center gap-2'>
-                      <h1 className='font-bold text-2xl'>ADD FILE</h1>
-                      <hr className='w-64' />
-                    </div>
-                    <div className='flex flex-col items-center justify-evenly gap-5 mt-5'>
-                      <input
-                        className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                  <div className='w-screen h-screen backdrop-blur-sm absolute top-0 left-0 flex justify-center items-center'>
+                    <div className='flex flex-col justify-center items-center bg-[#9C9999] absolute h-[57%] w-[50%] gap-5 shadow-lg rounded-md md:h-[55%] lg:h-[80%] lg:w-[40%] '>
+                      <div className='flex flex-col items-center gap-2'>
+                        <h1 className='font-bold text-2xl'>ADD FILE</h1>
+                        <hr className='w-64' />
+                      </div>
+                      <div className='flex flex-col items-center justify-evenly gap-5 mt-5'>
+                        <input
+                          className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                         shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        type='text'
-                        ref={fileNameRef}
-                        placeholder='Enter filename...'
-                      />
-                      <select
-                        className='bg-white self-center border-black outline-none border-b-[1px] 
+                          type='text'
+                          ref={fileNameRef}
+                          placeholder='Enter filename...'
+                        />
+                        <select
+                          className='bg-white self-center border-black outline-none border-b-[1px] 
                         shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        name='folders'
-                        id='folders'
-                        value={folderOption}
-                        onChange={e => {
-                          setFolderOption(e.target.value)
-                          console.log(e.target.value)
-                        }}
-                      >
-                        <option default value=''>
-                          -Select Folder-
-                        </option>
-                        {foldersList?.map(folder => (
-                          <option value={`${folder}`}>{folder}</option>
-                        ))}
-                      </select>
-                      <input
-                        className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                          name='folders'
+                          id='folders'
+                          value={folderOption}
+                          onChange={e => {
+                            setFolderOption(e.target.value)
+                            console.log(e.target.value)
+                          }}
+                        >
+                          <option default value=''>
+                            -Select Folder-
+                          </option>
+                          {foldersList?.map(folder => (
+                            <option value={`${folder}`}>{folder}</option>
+                          ))}
+                        </select>
+                        <input
+                          className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                         shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        type='text'
-                        placeholder='Enter Court...'
-                        ref={courtRef}
-                      />
-                      <input
-                        className='bg-[#9C9999] self-center lg:h-[35px]
+                          type='text'
+                          placeholder='Enter Court...'
+                          ref={courtRef}
+                        />
+                        <input
+                          className='bg-[#9C9999] self-center lg:h-[35px]
                        rounded w-[70%] py-2 px-3 text-gray-700 '
-                        type='file'
-                        onChange={e => setFileUpload(e.target.files[0])}
-                      />
-                      <button
-                        className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-                        disabled={loading}
-                        onClick={uploadFile}
-                      >
-                        Upload
-                      </button>
-                    </div>
-                    <div className='flex justify-center gap-2'>
-                      <input
-                        className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                          type='file'
+                          onChange={e => setFileUpload(e.target.files[0])}
+                        />
+                        <button
+                          className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                          disabled={loading}
+                          onClick={uploadFile}
+                        >
+                          Upload
+                        </button>
+                      </div>
+                      <div className='flex justify-center gap-2'>
+                        <input
+                          className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                          shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        type='text'
-                        ref={folderNameRef}
-                        placeholder='Enter folder name'
-                      />
-                      <button
-                        className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-                        onClick={addFolder}
+                          type='text'
+                          ref={folderNameRef}
+                          placeholder='Enter folder name'
+                        />
+                        <button
+                          className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                          onClick={addFolder}
+                        >
+                          Add Folder
+                        </button>
+                      </div>
+                      <p
+                        className='text-maroon font-bold cursor-pointer hover:text-white'
+                        onClick={() => setShowModal(false)}
                       >
-                        Add Folder
-                      </button>
+                        Close
+                      </p>
                     </div>
-                    <p
-                      className='text-maroon font-bold cursor-pointer hover:text-white'
-                      onClick={() => setShowModal(false)}
-                    >
-                      Close
-                    </p>
                   </div>
                 )}
               </div>
