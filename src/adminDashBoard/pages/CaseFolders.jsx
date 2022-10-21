@@ -323,12 +323,23 @@ function ReadOnlyRow({
               {shareable ? "Shared" : "Unshared"}
             </td>
             <td>{folder}</td>
+<<<<<<< HEAD
             <button
               onClick={(e) => handleEditClick(e, data)}
               className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
             >
               Edit
             </button>
+=======
+            <td>
+              <button
+                onClick={e => handleEditClick(e, data)}
+                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+              >
+                Edit
+              </button>
+            </td>
+>>>>>>> fad5c9029dcc547a8f6ef2add1635cada0195ae9
           </tr>
         </tbody>
       </table>
@@ -366,31 +377,32 @@ function EditRow({
             <td className={`text-left w-1/5`}>{initials}</td>
             <td className={`text-left w-1/5`}>{court}</td>
             <td className={`text-left w-1/5`}>{date_created}</td>
-            <select onChange={handleEdit}>
-              {shareable ? (
-                <>
-                  <option value={true}>Shared</option>
-                  <option value={false}>Unshared</option>
-                </>
-              ) : (
-                <>
-                  <option value={false}>Unshared</option>
-                  <option value={true}>Shared</option>
-                </>
-              )}
-            </select>
-            <button
-              className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
-              type="submit"
-            >
-              Save
-            </button>
-            <button
-              onClick={handleCancel}
-              className="w-14 h-8 rounded-md border-0 bg-maroon text-white"
-            >
-              Cancel
-            </button>
+            <td>
+              <select onChange={handleEdit}>
+                {shareable ? (
+                  <>
+                    <option value={true}>Shared</option>
+                    <option value={false}>Unshared</option>
+                  </>
+                ) : (
+                  <>
+                    <option value={false}>Unshared</option>
+                    <option value={true}>Shared</option>
+                  </>
+                )}
+              </select>
+            </td>
+            <td>
+              <button className='w-14 h-8 rounded-md border-0 bg-maroon text-white' type='submit'>
+                Save
+              </button>
+              <button
+                onClick={handleCancel}
+                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+              >
+                Cancel
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
