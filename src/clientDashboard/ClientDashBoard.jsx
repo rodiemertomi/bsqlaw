@@ -1,49 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import { UserAuth } from '../context/AuthContext'
+import React, { useState } from 'react'
 import ClientSideNavBar from './ClientSideNavBar'
-import { db } from '../firebase'
-import { collection, query, where, getDocs } from 'firebase/firestore'
 import { useReducer } from 'react'
 import ClientReducer from './reducers/ClientReducer'
 
 export default function ClientDashboard({ username }) {
   const [hideNavBar, setHideNavBar] = useState()
   const [state, dispatch] = useReducer(ClientReducer, { page: '' })
-  const { user } = UserAuth()
-  const [touchStart, setTouchStart] = useState(null)
-  const [touchEnd, setTouchEnd] = useState(null)
-  const colRef = collection(db, 'users')
-  const userRef = query(colRef, where('email', '==', user.email))
+  const [touchStartX, setTouchStartX] = useState(null)
+  const [touchStartY, setTouchStartY] = useState(null)
+  const [touchEndX, setTouchEndX] = useState(null)
+  const [touchEndY, setTouchEndY] = useState(null)
 
   const minSwipeDistance = 150
 
   const onTouchStart = e => {
-    setTouchEnd(null)
-    setTouchStart(e.targetTouches[0].clientX)
+    setTouchEndX(null)
+    setTouchEndY(null)
+    setTouchStartX(e.targetTouches[0].clientX)
+    setTouchStartY(e.targetTouches[0].clientY)
   }
 
   const onTouchMove = e => {
-    setTouchEnd(e.targetTouches[0].clientX)
+    setTouchEndX(e.targetTouches[0].clientX)
+    setTouchEndY(e.targetTouches[0].clientY)
   }
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    if (isLeftSwipe) {
+    if (!touchStartX || !touchEndX) return
+    const distanceX = touchStartX - touchEndX
+    const distanceY = touchStartY - touchEndY
+    const isLeftSwipe = distanceX > minSwipeDistance
+    const isUpSwipe = distanceY > minSwipeDistance
+    if (isLeftSwipe || isUpSwipe) {
       setHideNavBar(true)
     } else {
       setHideNavBar(false)
     }
   }
-
-  useEffect(() => {
-    const getUser = async () => {
-      const data = await getDocs(userRef)
-    }
-
-    getUser()
-  }, [userRef])
 
   return (
     <>
