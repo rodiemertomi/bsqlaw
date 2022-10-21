@@ -187,7 +187,7 @@ export default function CaseFolders() {
                         shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
                         ref={fileNameRef}
-                        placeholder="Enter filename..."
+                        placeholder="Enter filename"
                       />
                       <select
                         className="bg-white self-center border-black outline-none border-b-[1px] 
@@ -211,7 +211,7 @@ export default function CaseFolders() {
                         className="bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                         shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="text"
-                        placeholder="Enter Court..."
+                        placeholder="Enter Court"
                         ref={courtRef}
                       />
                       <input
