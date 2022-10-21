@@ -29,6 +29,8 @@ export default function CaseFolders() {
   const [editShareId, setEditShareId] = useState();
   const [editFormData, setEditFormData] = useState({});
 
+  console.log(fileList);
+
   const handleGetFiles = async () => {
     setFileList([]);
     const colRef = collection(db, `files`);
