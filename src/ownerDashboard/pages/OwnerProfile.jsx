@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UseUserReducer from "../../UserReducer";
-import EditProfile from "./EditProfile";
+import EditProfile from "../pages/EditProfile";
 
 export default function OwnerProfile() {
   const { username } = UseUserReducer();
@@ -22,7 +22,7 @@ export default function OwnerProfile() {
             onClick={() => {
               setOpenModal(true);
             }}
-            class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out"
+            className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out"
           >
             Edit Profile
           </button>
