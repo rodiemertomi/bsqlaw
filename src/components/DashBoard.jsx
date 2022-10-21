@@ -15,8 +15,16 @@ const DashBoard = () => {
   const colRef = collection(db, 'users')
   const userRef = query(colRef, where('email', '==', user.email))
 
-  const { setUsername, setRole, setEmail, setPhotoURL, setExpertise, setAppointments, setId } =
-    UseUserReducer()
+  const {
+    setUsername,
+    setRole,
+    setEmail,
+    setPhotoURL,
+    setExpertise,
+    setAppointments,
+    setId,
+    setInitials,
+  } = UseUserReducer()
 
   const { role, id } = UseUserReducer()
 
@@ -48,6 +56,7 @@ const DashBoard = () => {
           setPhotoURL(data.photoURL)
           setExpertise(data.expertise)
           setId(doc.id)
+          setInitials(data.initials)
         })
       } catch (err) {
         console.log(err.message)
