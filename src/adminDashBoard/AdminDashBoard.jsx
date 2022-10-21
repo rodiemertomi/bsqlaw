@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { UserAuth } from '../context/AuthContext'
+import React, { useState } from 'react'
 import AdminSideNavBar from './AdminSideNavBar'
 import { useReducer } from 'react'
 import AdminReducer from './reducers/AdminReducer'
@@ -7,7 +6,6 @@ import AdminReducer from './reducers/AdminReducer'
 export default function AdminDashBoard({ username }) {
   const [hideNavBar, setHideNavBar] = useState()
   const [state, dispatch] = useReducer(AdminReducer, { page: '' })
-  const { user } = UserAuth()
   const [touchStartX, setTouchStartX] = useState(null)
   const [touchStartY, setTouchStartY] = useState(null)
   const [touchEndX, setTouchEndX] = useState(null)
