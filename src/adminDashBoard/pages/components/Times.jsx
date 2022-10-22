@@ -72,7 +72,7 @@ function Times({ props, closeShowAppointment }) {
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'time')}
             onBlur={e => (e.currentTarget.type = 'text')}
-            placeholder='Duration:'
+            placeholder='Time Duration:'
           />
 
           <input
@@ -98,7 +98,7 @@ function Times({ props, closeShowAppointment }) {
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}
             onBlur={e => (e.currentTarget.type = 'text')}
-            placeholder='Duration:'
+            placeholder='Date Duration:'
           />
           <input
             type='text'
