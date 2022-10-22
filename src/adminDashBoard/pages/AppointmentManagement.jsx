@@ -56,10 +56,6 @@ function AppointmentManagement() {
                   <div className='bg-[#9C9999] w-[100%] h-[60px] rounded-md pl-2 '>Events</div>
                   <div className='bg-[#9C9999] w-[100%] h-[60px] rounded-md pl-2 '>Events</div>
                   <div className='bg-[#9C9999] w-[100%] h-[60px] rounded-md pl-2 '>Events</div>
-                  <div className='bg-[#9C9999] w-[100%] h-[60px] rounded-md pl-2 '>Events</div>
-                  <div className='bg-[#9C9999] w-[100%] h-[60px] rounded-md pl-2 '>Events</div>
-
-                  <div className='bg-[#9C9999] w-[100%] h-[60px] rounded-md pl-2 '>Events</div>
                 </div>
                 <div className='self-end mt-2'>
                   <button
