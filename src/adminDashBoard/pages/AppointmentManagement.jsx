@@ -8,6 +8,30 @@ import Times from './components/Times'
 
 function AppointmentManagement() {
   const [showAppointment, setShowAppoitnment] = useState(false)
+  // const [date, setDate] = useState(new Date())
+  // const [showTime, setShowTime] = useState(false)
+  // const { appointments } = UseUserReducer()
+  /* <div>
+                  <Calendar onChange={setDate} value={date} onClickDay={() => setShowTime(true)} />
+                </div> */
+  /* <div>
+                  {date.length > 0 ? (
+                    <p>
+                      <span>Start:</span>
+                      {date[0].toDateString()}
+                      &nbsp; &nbsp;
+                      <span>End:</span>
+                      {date[1].toDateString()}
+                    </p>
+                  ) : (
+                    <p>
+                      <span>Default selected date: </span>
+                      {date.toDateString()}
+                    </p>
+                  )}
+                  {appointments.toString()}
+                  <Time showTime={showTime} date={date} />
+                </div> */
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
