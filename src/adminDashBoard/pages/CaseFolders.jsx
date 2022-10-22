@@ -166,7 +166,7 @@ export default function CaseFolders() {
                 </button>
                 {showModal && (
                   <div className='w-screen h-screen backdrop-blur-sm absolute top-0 left-0 flex justify-center items-center'>
-                    <div className='flex flex-col justify-center items-center bg-[#9C9999] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[80%] lg:w-[40%] '>
+                    <div className='flex flex-col justify-center items-center bg-[#BABABA] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[80%] lg:w-[40%] '>
                       <div className='flex flex-col items-center gap-2'>
                         <h1 className='font-bold text-2xl'>ADD FILE</h1>
                         <hr className='w-64' />
@@ -205,7 +205,7 @@ export default function CaseFolders() {
                           ref={courtRef}
                         />
                         <input
-                          className='bg-[#9C9999] self-center lg:h-[35px]
+                          className='bg-[#BABABA] lg:h-[40px]
                        rounded w-[70%] py-2 px-3 text-gray-700 '
                           type='file'
                           onChange={e => setFileUpload(e.target.files[0])}
@@ -244,50 +244,55 @@ export default function CaseFolders() {
                 )}
               </div>
               {/* END OF INPUTS */}
-              <div className='flex flex-col gap-10 lg:ml-10'>
+              <div className='flex flex-col mt-2 gap-2'>
                 {foldersList?.map(folder => (
                   <form onSubmit={handleEditFormSubmit}>
-                    <details className='mt-5'>
-                      <summary className='cursor-pointer' onClick={() => handleGetFiles()}>
-                        {folder}
-                      </summary>
-                      {fileList?.map(file =>
-                        file?.map(data => (
-                          <Fragment key={data.id}>
-                            {data.folder === folder ? (
-                              readState ? (
-                                <ReadOnlyRow
-                                  filename={data.filename}
-                                  shareable={data.shareable}
-                                  url={data.url}
-                                  date_created={data.date_created}
-                                  court={data.court}
-                                  initials={initials}
-                                  data={data}
-                                  handleEditClick={handleEditClick}
-                                  folder={data.folder}
-                                />
+                    <div className='bg-[#9C9999] flex items-center rounded-lg shadow-lg w-[100%]'>
+                      <details className='ml-2'>
+                        <summary
+                          className='cursor-pointer text-md uppercase font-bold lg:text-lg'
+                          onClick={() => handleGetFiles()}
+                        >
+                          {folder}
+                        </summary>
+                        {fileList?.map(file =>
+                          file?.map(data => (
+                            <Fragment key={data.id}>
+                              {data.folder === folder ? (
+                                readState ? (
+                                  <ReadOnlyRow
+                                    filename={data.filename}
+                                    shareable={data.shareable}
+                                    url={data.url}
+                                    date_created={data.date_created}
+                                    court={data.court}
+                                    initials={initials}
+                                    data={data}
+                                    handleEditClick={handleEditClick}
+                                    folder={data.folder}
+                                  />
+                                ) : (
+                                  <EditRow
+                                    editFormData={editFormData}
+                                    filename={data.filename}
+                                    shareable={data.shareable}
+                                    url={data.url}
+                                    date_created={data.date_created}
+                                    court={data.court}
+                                    initials={initials}
+                                    data={data}
+                                    handleCancel={handleCancel}
+                                    handleEdit={handleEdit}
+                                  />
+                                )
                               ) : (
-                                <EditRow
-                                  editFormData={editFormData}
-                                  filename={data.filename}
-                                  shareable={data.shareable}
-                                  url={data.url}
-                                  date_created={data.date_created}
-                                  court={data.court}
-                                  initials={initials}
-                                  data={data}
-                                  handleCancel={handleCancel}
-                                  handleEdit={handleEdit}
-                                />
-                              )
-                            ) : (
-                              ''
-                            )}
-                          </Fragment>
-                        ))
-                      )}
-                    </details>
+                                ''
+                              )}
+                            </Fragment>
+                          ))
+                        )}
+                      </details>
+                    </div>
                   </form>
                 ))}
               </div>
