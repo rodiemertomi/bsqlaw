@@ -80,13 +80,6 @@ function AppointmentManagement() {
                 </div>
               </div>
             </div>
-            {/* Calendar */}
-            <div className='flex flex-col items-start shadow-lg  text-white bg-maroon rounded-md lg:h-[47%]'>
-              <div className='flex flex-col ml-5 mt-5'>
-                <h1 className='font-bold'>Calendar</h1>
-                <h1 className='lg:mt-[180px] mb-5 lg:cursor-pointer'>Full Calendar</h1>
-              </div>
-            </div>
           </div>
         </div>
       </div>
