@@ -6,11 +6,21 @@ function EditProfile({ closeModal }) {
       <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[60%] lg:gap-3'>
         <h1 className='font-bold text-2xl'>Edit Profile</h1>
         <div className='flex flex-col justify-center items-center'>
-          <img
-            alt='user'
-            className='w-[60%]  md:w-[35%] lg:w-[30%]'
-            src={require('../../assets/user.png')}
-          />
+          <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
+            <input className='hidden' id='file' type='file' onchange='loadFile(event)' />
+            <img
+              alt='user'
+              className='w-[60%]  md:w-[35%] lg:w-[30%] object-cover z-0'
+              src={require('../../assets/user.png')}
+            />
+            <label
+              className='cursor-pointer text-transparent hover:object-center hover:z-[1000]
+              transition-all absolute'
+              for='file'
+            >
+              <span>Change Image</span>
+            </label>
+          </div>
           <h1>Name</h1>
           <hr className='w-64 mb-5' />
           <div className='w-[90%] flex flex-col gap-3'>
