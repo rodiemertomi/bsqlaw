@@ -13,13 +13,14 @@ function EditProfile({ closeModal }) {
               className='w-[60%]  md:w-[35%] lg:w-[30%] object-cover z-0'
               src={require('../../assets/user.png')}
             />
-            <label
-              className='cursor-pointer text-transparent hover:object-center hover:z-[1000]
-              transition-all absolute'
-              for='file'
+            <div
+              className='w-[170px] h-[170px] rounded-full hover:bg-[#000000] opacity-[0.8] cursor-pointer text-transparent hover:object-center hover:text-white
+              transition-all absolute flex justify-center items-center'
             >
-              <span>Change Image</span>
-            </label>
+              <label for='file' className='cursor-pointer absolute z-[1000] '>
+                <span>Change Image</span>
+              </label>
+            </div>
           </div>
           <h1>Name</h1>
           <hr className='w-64 mb-5' />
