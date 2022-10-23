@@ -153,10 +153,10 @@ export default function CaseFolders() {
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
               <form onSubmit={handleEditFormSubmit}>
-                <div className='bg-[#9C9999] flex items-center rounded-lg shadow-lg w-[100%]'>
-                  <details className='ml-2'>
+                <div className='bg-[#9C9999] flex items-center rounded-lg shadow-lg w-[100%] '>
+                  <details className='p-2'>
                     <summary
-                      className='cursor-pointer text-md uppercase pt-2 pl-2 font-bold h-[70px] '
+                      className='cursor-pointer text-md uppercase pl-2 font-bold '
                       onClick={() => handleGetFiles()}
                     >
                       {folder}
@@ -324,38 +324,32 @@ function ReadOnlyRow({
 }) {
   return (
     <>
-      <table className='w-full '>
-        <thead>
-          <tr className='flex justify-around '>
-            <th className={`text-left w-1/5`}>Case No.</th>
-            <th className={`text-left w-1/5`}>Handling Associate</th>
-            <th className={`text-left w-1/5`}>Court</th>
-            <th className={`text-left w-1/5`}>Date Created</th>
-            <th className={`text-left w-1/5`}>Shareable</th>
-            <th className={`text-left w-1/5`}>Folder</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className='flex justify-around'>
-            <td className={`text-left w-1/5`}>
-              <a href={url}>{filename}</a>
-            </td>
-            <td className={`text-left w-1/5`}>{initials}</td>
-            <td className={`text-left w-1/5`}>{court}</td>
-            <td className={`text-left w-1/5`}>{date_created}</td>
-            <td className={`text-left w-1/5`}>{shareable ? 'Shared' : 'Unshared'}</td>
-            <td>{folder}</td>
-            <td>
-              <button
-                onClick={e => handleEditClick(e, data)}
-                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
-              >
-                Edit
-              </button>
-            </td>
-          </tr>
-        </tbody>
+      <table className='w-full text-sm  border-solid border-[1px]'>
+        <thead className='text-xs text-gray-700 uppercase '></thead>
+        <tr>
+          <th scope='col' className='py-3 px-6  border-solid border-[1px]'>
+            Case No.
+          </th>
+          <th scope='col' className='py-3 px-6  border-solid border-[1px]'>
+            Handling Associate
+          </th>
+          <th scope='col' className='py-3 px-6  border-solid border-[1px]'>
+            Court
+          </th>
+        </tr>
       </table>
+      <tbody>
+        <tr className='border-b dark:bg-gray-800 dark:border-gray-700'>
+          <th
+            scope='row'
+            className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+          >
+            <a href={url}>{filename}</a>
+          </th>
+          <td className='py-4 px-6'>{initials}</td>
+          <td className='py-4 px-6'>{court}</td>
+        </tr>
+      </tbody>
     </>
   )
 }
@@ -370,55 +364,5 @@ function EditRow({
   handleCancel,
   handleEdit,
 }) {
-  return (
-    <>
-      <table className='w-full '>
-        <thead>
-          <tr className='flex justify-around '>
-            <th className={`text-left w-1/5`}>Case No.</th>
-            <th className={`text-left w-1/5`}>Handling Associate</th>
-            <th className={`text-left w-1/5`}>Court</th>
-            <th className={`text-left w-1/5`}>Date Created</th>
-            <th className={`text-left w-1/5`}>Shareable</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className='flex justify-around'>
-            <td className={`text-left w-1/5`}>
-              <a href={url}>{filename}</a>
-            </td>
-            <td className={`text-left w-1/5`}>{initials}</td>
-            <td className={`text-left w-1/5`}>{court}</td>
-            <td className={`text-left w-1/5`}>{date_created}</td>
-            <td>
-              <select onChange={handleEdit}>
-                {shareable ? (
-                  <>
-                    <option value={true}>Shared</option>
-                    <option value={false}>Unshared</option>
-                  </>
-                ) : (
-                  <>
-                    <option value={false}>Unshared</option>
-                    <option value={true}>Shared</option>
-                  </>
-                )}
-              </select>
-            </td>
-            <td>
-              <button className='w-14 h-8 rounded-md border-0 bg-maroon text-white' type='submit'>
-                Save
-              </button>
-              <button
-                onClick={handleCancel}
-                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
-              >
-                Cancel
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </>
-  )
+  return <></>
 }
