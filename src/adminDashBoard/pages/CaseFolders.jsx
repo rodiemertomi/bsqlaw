@@ -64,6 +64,7 @@ export default function CaseFolders() {
       setLoading(false)
       return
     }
+
     const extension = fileUpload.name.split('.').pop()
     const fileUrl = `caseFiles/${username}/${folderOption}/${fileNameRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
@@ -72,7 +73,7 @@ export default function CaseFolders() {
         const data = {
           active: true,
           filename: snapshot.ref.name,
-          date_created: new Date().toString(),
+          date_created: new Date().toLocaleString('en-US'),
           author: initials,
           folder: folderOption,
           shareable: false,
@@ -134,6 +135,7 @@ export default function CaseFolders() {
     const getFolders = async () => {
       const snap = await getDoc(docRef)
       const data = snap.data()
+      console.log('data: ', data)
       setFoldersList(data.folders)
     }
 
