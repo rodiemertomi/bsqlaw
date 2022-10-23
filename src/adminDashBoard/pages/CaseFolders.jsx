@@ -149,14 +149,14 @@ export default function CaseFolders() {
         {username}'s Case Files
       </h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
-        <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
+        <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
               <form onSubmit={handleEditFormSubmit}>
                 <div className='bg-[#9C9999] flex items-center rounded-lg shadow-lg w-[100%] '>
-                  <details className='p-2'>
+                  <details className='p-1 md:ml-5'>
                     <summary
-                      className='cursor-pointer text-md uppercase pl-2 font-bold '
+                      className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '
                       onClick={() => handleGetFiles()}
                     >
                       {folder}
@@ -187,6 +187,7 @@ export default function CaseFolders() {
                                 court={data.court}
                                 initials={initials}
                                 data={data}
+                                folder={data.folder}
                                 handleCancel={handleCancel}
                                 handleEdit={handleEdit}
                               />
@@ -293,7 +294,7 @@ export default function CaseFolders() {
           </div>
         </div>
         {/* Second Div */}
-        <div className='w-[100%] h-[100%] lg:h-[100%] lg:w-[30%]'>
+        <div className='w-[100%] h-[100%] lg:h-[100%] lg:w-[40%]'>
           <div className='flex flex-col gap-5 mb-5 lg:w-[95%] lg:h-[100%]'>
             <div className=' flex flex-col items-start shadow-lg  text-white bg-maroon rounded-md lg:h-[50%] '>
               {/* Todo */}
@@ -324,32 +325,62 @@ function ReadOnlyRow({
 }) {
   return (
     <>
-      <table className='w-full text-sm  border-solid border-[1px]'>
-        <thead className='text-xs text-gray-700 uppercase '></thead>
-        <tr>
-          <th scope='col' className='py-3 px-6  border-solid border-[1px]'>
-            Case No.
-          </th>
-          <th scope='col' className='py-3 px-6  border-solid border-[1px]'>
-            Handling Associate
-          </th>
-          <th scope='col' className='py-3 px-6  border-solid border-[1px]'>
-            Court
-          </th>
-        </tr>
+      <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
+        <thead className='text-xs text-gray-700 '>
+          <tr>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Case No.
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Handling Associate
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
+              Court
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=''>
+            <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
+              <a href={url}>{filename}</a>
+            </th>
+            <td className='py-4 px-6 border border-slate-700'>{initials}</td>
+            <td className='py-4 px-6 border border-slate-700'>{court}</td>
+          </tr>
+        </tbody>
+        <thead className='text-xs text-gray-700 '>
+          <tr>
+            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
+              Date Created
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Shareable
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Folder
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=''>
+            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
+              {date_created}
+            </th>
+            <td className='py-4 px-6 border border-slate-700'>
+              {shareable ? 'Shared' : 'Unshared'}
+            </td>
+            <td className='py-4 px-4 border border-slate-700'>{folder}</td>
+          </tr>
+        </tbody>
       </table>
-      <tbody>
-        <tr className='border-b dark:bg-gray-800 dark:border-gray-700'>
-          <th
-            scope='row'
-            className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white'
-          >
-            <a href={url}>{filename}</a>
-          </th>
-          <td className='py-4 px-6'>{initials}</td>
-          <td className='py-4 px-6'>{court}</td>
-        </tr>
-      </tbody>
+      <div className='flex justify-end'>
+        <button
+          onClick={e => handleEditClick(e, data)}
+          className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+        >
+          Edit
+        </button>
+      </div>
     </>
   )
 }
@@ -361,8 +392,86 @@ function EditRow({
   date_created,
   initials,
   court,
+  folder,
   handleCancel,
   handleEdit,
 }) {
-  return <></>
+  return (
+    <>
+      <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
+        <thead className='text-xs text-gray-700 '>
+          <tr>
+            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
+              Case No.
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
+              Handling Associate
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Court
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=''>
+            <th scope='row' className='py-4 px-6 font-medium border border-slate-700'>
+              <a href={url}>{filename}</a>
+            </th>
+            <td className='py-4 px-6 border border-slate-700'>{initials}</td>
+            <td className='py-4 px-6 border border-slate-700'>{court}</td>
+          </tr>
+        </tbody>
+        <thead className='text-xs text-gray-700 '>
+          <tr>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Date Created
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Shareable
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Folder
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=''>
+            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
+              {date_created}
+            </th>
+            <td className='py-4 px-6 border border-slate-700'>
+              <select onChange={handleEdit}>
+                {shareable ? (
+                  <>
+                    <option value={true}>Shared</option>
+                    <option value={false}>Unshared</option>
+                  </>
+                ) : (
+                  <>
+                    <option value={false}>Unshared</option>
+                    <option value={true}>Shared</option>
+                  </>
+                )}
+              </select>
+            </td>
+            <td className='py-4 px-4 border border-slate-700'>{folder}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className='flex justify-end gap-1'>
+        <button
+          className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+          type='submit'
+        >
+          Save
+        </button>
+        <button
+          onClick={e => handleCancel}
+          className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+        >
+          Cancel
+        </button>
+      </div>
+    </>
+  )
 }
