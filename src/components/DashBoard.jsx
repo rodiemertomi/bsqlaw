@@ -16,6 +16,10 @@ const DashBoard = () => {
   const userRef = query(colRef, where('email', '==', user.email))
 
   const {
+    setFirstName,
+    setLastName,
+    setContactNo,
+    setGender,
     setUsername,
     setRole,
     setEmail,
@@ -24,6 +28,7 @@ const DashBoard = () => {
     setAppointments,
     setId,
     setInitials,
+    setBirthday,
   } = UseUserReducer()
 
   const { role } = UseUserReducer()
@@ -49,14 +54,19 @@ const DashBoard = () => {
       try {
         querySnapshot.forEach(doc => {
           const data = doc.data()
-          setRole(data.role)
+          setFirstName(data.firstname)
+          setLastName(data.lastname)
+          setContactNo(data.contactNo)
+          setGender(data.gender)
           setUsername(data.username)
+          setRole(data.role)
           setEmail(data.email)
-          setAppointments(data.appointments)
           setPhotoURL(data.photoURL)
           setExpertise(data.expertise)
-          setId(doc.id)
+          setAppointments(data.appointments)
+          setId(data.id)
           setInitials(data.initials)
+          setBirthday(data.birthday)
         })
       } catch (err) {
         console.log(err.message)
