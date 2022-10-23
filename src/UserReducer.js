@@ -1,15 +1,36 @@
 import create from 'zustand'
 
 const UseUserReducer = create(set => ({
+  firstName: '',
+  lastName: '',
   username: '',
   role: '',
   email: '',
   photoURL: '',
-  expertise: {},
-  appointments: [{}],
+  expertise: [],
+  appointments: [],
   id: '',
   initials: '',
+  birthday: '',
+  gender: '',
+  contactNo: '',
 
+  setFirstName: newFirstName =>
+    set(() => ({
+      firstName: newFirstName,
+    })),
+  setLastName: newLastName =>
+    set(() => ({
+      lastName: newLastName,
+    })),
+  setContactNo: newContactNo =>
+    set(() => ({
+      contactNo: newContactNo,
+    })),
+  setGender: newGender =>
+    set(() => ({
+      gender: newGender,
+    })),
   setUsername: newUsername =>
     set(() => ({
       username: newUsername,
@@ -41,6 +62,10 @@ const UseUserReducer = create(set => ({
   setInitials: newInitials =>
     set(() => ({
       initials: newInitials,
+    })),
+  setBirthday: newBirthday =>
+    set(() => ({
+      birthday: newBirthday,
     })),
 }))
 
