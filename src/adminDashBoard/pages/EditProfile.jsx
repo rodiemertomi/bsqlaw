@@ -38,10 +38,7 @@ function EditProfile({ closeModal }) {
   const contactNoRef = useRef()
   const [genderState, setGenderState] = useState()
   const [birthdayState, setBirthdayState] = useState()
-  const [formatedBirthday, setFormatedBirthday] = useState()
   const [photoURLState, setPhotoURLState] = useState(photoURL)
-  let birthdayArr = []
-  let formatedBdayArr = []
 
   const handleImageChange = async () => {
     const fileUrl = `photos/${username}/${image.name}`
@@ -53,15 +50,14 @@ function EditProfile({ closeModal }) {
     })
   }
 
-  const handleBirthdayChange = () => {
-    if (!birthdayState) return
-    console.log('first')
-    birthdayArr = birthdayState.split('-', 3)
-    for (let i = birthdayArr.length - 1; i >= 0; i--) {
-      let data = birthdayArr[i]
-      formatedBdayArr.push(data)
-      setFormatedBirthday(formatedBdayArr.join('/'))
+  const formatDate = date => {
+    let dateArray = date.split('-', 3)
+    let formatedDate = []
+    for (let i = dateArray.length - 1; i >= 0; i--) {
+      let data = dateArray[i]
+      formatedDate.push(data)
     }
+    return formatedDate.join('/')
   }
   console.log(id)
   const handleSave = async () => {
@@ -72,7 +68,7 @@ function EditProfile({ closeModal }) {
     setExpertise(expertiseRef.current.value.split(','))
     setContactNo(contactNoRef.current.value)
     setGender(genderState)
-    setBirthday(formatedBirthday)
+    setBirthday(formatDate(birthdayState))
     setPhotoURL(photoURLState)
     const docRef = doc(db, `users/${id}`)
     const data = {
@@ -91,9 +87,8 @@ function EditProfile({ closeModal }) {
   }
 
   useEffect(() => {
-    handleBirthdayChange()
     handleImageChange()
-  }, [birthdayState, image])
+  }, [image])
 
   return (
     <div className='w-screen h-screen flex items-center justify-center bg-[#f8f4f4]'>
