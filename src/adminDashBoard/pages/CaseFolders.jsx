@@ -235,7 +235,6 @@ export default function CaseFolders() {
                       value={folderOption}
                       onChange={e => {
                         setFolderOption(e.target.value)
-                        console.log(e.target.value)
                       }}
                     >
                       <option default value=''>
