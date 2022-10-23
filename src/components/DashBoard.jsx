@@ -35,7 +35,7 @@ const DashBoard = () => {
 
   const handeOnIdle = () => {
     logOut()
-    console.log('User has been logged out')
+    alert('User has been logged out')
   }
 
   const handleOnActive = () => {
@@ -54,7 +54,6 @@ const DashBoard = () => {
       try {
         querySnapshot.forEach(doc => {
           const data = doc.data()
-          console.log(data)
           setFirstName(data.firstname)
           setLastName(data.lastname)
           setContactNo(data.contactNo)
@@ -70,7 +69,7 @@ const DashBoard = () => {
           setBirthday(data.birthday)
         })
       } catch (err) {
-        console.log(err.message)
+        alert(err.message)
       }
     }
     getUserInfo()
