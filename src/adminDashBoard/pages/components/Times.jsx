@@ -1,9 +1,16 @@
-import { tr } from 'date-fns/locale'
 import React from 'react'
-import { useState } from 'react'
+import { collection, addDoc, doc, setDoc, arrayUnion } from 'firebase/firestore'
+import { db } from '../../../firebase'
 import UseAppointmentStore from '../../reducers/AppointmentReducer'
+import UseUserReducer from '../../../UserReducer'
 
-function Times({ props, closeShowAppointment }) {
+function Times({ closeShowAppointment }) {
+  const appointmentsRef = collection(db, 'appointments')
+  const { initials, id } = UseUserReducer()
+  const userRef = doc(db, `users/${id}`)
+
+  const addAppointment = async () => {}
+
   const {
     setEventTimeStart,
     setEventTimeEnd,
@@ -11,33 +18,72 @@ function Times({ props, closeShowAppointment }) {
     setEventDesc,
     setEventDateEnd,
     setEventDateStart,
-    setInfo,
-    setEvent,
+    setClient,
   } = UseAppointmentStore()
-  const { eventTimeStart, eventTimeEnd, eventName, eventDateStart, eventDateEnd, eventDesc, info } =
-    UseAppointmentStore()
-  // const [eventDesc, setEventDesc] = useState('')
-  // const [eventStart, setEventStart] = useState('')
-  // const [eventEnd, setEventEnd] = useState('')
-  // const [info, setInfo] = useState('')
+  const {
+    eventTimeStart,
+    eventTimeEnd,
+    eventName,
+    eventDateStart,
+    eventDateEnd,
+    eventDesc,
+    client,
+  } = UseAppointmentStore()
 
-  function displayInfo(e) {
+  const formatDate = date => {
+    let dateArray = date.split('-', 3)
+    let formatedDate = []
+    for (let i = dateArray.length - 1; i >= 0; i--) {
+      let data = dateArray[i]
+      formatedDate.push(data)
+    }
+    return formatedDate.join('/')
+  }
+
+  const saveEvent = async e => {
     e.preventDefault()
-    setInfo(true)
-    setEvent(eventTimeStart, eventTimeEnd, eventName, eventDateStart, eventDateEnd, eventDesc, info)
+    const data = {
+      setter: initials,
+      client: client,
+      eventName: eventName,
+      eventDesc: eventDesc,
+      eventTimeStart: eventTimeStart,
+      eventTimeEnd: eventTimeEnd,
+      eventDateStart: formatDate(eventDateStart),
+      eventDateEnd: formatDate(eventDateEnd),
+    }
+    await addDoc(appointmentsRef, data).then(alert('Appointment is set!'))
+    const appointments = {
+      appointments: arrayUnion(data),
+    }
+    await setDoc(userRef, appointments, { merge: true })
+    setEventName('')
+    setEventDesc('')
+    setClient('')
+    setEventTimeStart('')
+    setEventTimeEnd('')
+    setEventDateStart('')
+    setEventDateEnd('')
   }
 
   return (
     <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#BABABA] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%]'>
       <h1 className='font-bold text-2xl'>Set Appointment</h1>
-      <form onSubmit={displayInfo} className='mt-5'>
+      <form onSubmit={saveEvent} className='mt-5'>
         <div className='mt-5 flex flex-col justify-center items-center gap-5'>
           <select
-            name='gender'
-            id='gender'
+            name='clientName'
+            id='clientName'
+            value={client}
+            onChange={e => setClient(e.target.value)}
             className='h-10 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
           >
-            <option value=''>Client Name</option>
+            <option default value=''>
+              Client Name
+            </option>
+            <option value='Jastoni'>Jastoni</option>
+            <option value='Eduard'>Eduard</option>
+            <option value='Rona'>Rona</option>
           </select>
           {/* Event Name */}
           <input
@@ -93,7 +139,7 @@ function Times({ props, closeShowAppointment }) {
             type='text'
             id='appt'
             name='appt'
-            onChange={event => setEventDateStart(event.target.value)}
+            onChange={event => setEventDateStart(event.target.value.toLocaleString('en-US'))}
             value={eventDateStart}
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}
@@ -104,7 +150,7 @@ function Times({ props, closeShowAppointment }) {
             type='text'
             id='appt'
             name='appt'
-            onChange={event => setEventDateEnd(event.target.value)}
+            onChange={event => setEventDateEnd(event.target.value.toLocaleString('en-US'))}
             value={eventDateEnd}
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}
@@ -128,14 +174,6 @@ function Times({ props, closeShowAppointment }) {
 
         {/* Results */}
       </form>
-      <div>
-        {info
-          ? ` Event name: ${eventName}
-          Event Description: ${eventDesc} 
-          Duration: ${eventTimeStart} to ${eventTimeEnd} 
-          Date: ${eventDateStart} to ${eventDateEnd}`
-          : null}
-      </div>
     </div>
   )
 }
