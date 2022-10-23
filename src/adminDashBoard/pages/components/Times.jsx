@@ -9,8 +9,6 @@ function Times({ closeShowAppointment }) {
   const { initials, id } = UseUserReducer()
   const userRef = doc(db, `users/${id}`)
 
-  const addAppointment = async () => {}
-
   const {
     setEventTimeStart,
     setEventTimeEnd,
