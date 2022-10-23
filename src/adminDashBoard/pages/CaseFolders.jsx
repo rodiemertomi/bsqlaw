@@ -47,7 +47,7 @@ export default function CaseFolders() {
       folders: arrayUnion(`${folderNameRef.current.value}`),
     }
     updateDoc(docRef, data, { merge: true }).then(() => {
-      console.log(`updated successfully`)
+      alert(`Updated successfully`)
     })
     folderNameRef.current.value = ''
   }
@@ -135,7 +135,6 @@ export default function CaseFolders() {
     const getFolders = async () => {
       const snap = await getDoc(docRef)
       const data = snap.data()
-      console.log('data: ', data)
       setFoldersList(data.folders)
     }
 
