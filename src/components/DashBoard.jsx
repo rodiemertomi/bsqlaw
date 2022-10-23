@@ -49,11 +49,12 @@ const DashBoard = () => {
   })
 
   useEffect(() => {
-    const getUserRole = async () => {
+    const getUserInfo = async () => {
       const querySnapshot = await getDocs(userRef)
       try {
         querySnapshot.forEach(doc => {
           const data = doc.data()
+          console.log(data)
           setFirstName(data.firstname)
           setLastName(data.lastname)
           setContactNo(data.contactNo)
@@ -64,7 +65,7 @@ const DashBoard = () => {
           setPhotoURL(data.photoURL)
           setExpertise(data.expertise)
           setAppointments(data.appointments)
-          setId(data.id)
+          setId(doc.id)
           setInitials(data.initials)
           setBirthday(data.birthday)
         })
@@ -72,7 +73,7 @@ const DashBoard = () => {
         console.log(err.message)
       }
     }
-    getUserRole()
+    getUserInfo()
   }, [])
 
   const renderDashboard = () => {
