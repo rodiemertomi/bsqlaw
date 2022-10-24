@@ -73,7 +73,7 @@ export default function CaseFolders() {
         const data = {
           active: true,
           filename: snapshot.ref.name,
-          date_created: new Date().toLocaleString('en-US'),
+          date_created: new Date(),
           author: initials,
           folder: folderOption,
           shareable: false,
@@ -171,7 +171,7 @@ export default function CaseFolders() {
                                 filename={data.filename}
                                 shareable={data.shareable}
                                 url={data.url}
-                                date_created={data.date_created}
+                                date_created={data.date_created.toDate()}
                                 court={data.court}
                                 initials={initials}
                                 data={data}
@@ -184,7 +184,7 @@ export default function CaseFolders() {
                                 filename={data.filename}
                                 shareable={data.shareable}
                                 url={data.url}
-                                date_created={data.date_created}
+                                date_created={data.date_created.toDate()}
                                 court={data.court}
                                 initials={initials}
                                 data={data}
@@ -342,7 +342,7 @@ function ReadOnlyRow({
             </td>
             <td className={`text-left w-1/5`}>{initials}</td>
             <td className={`text-left w-1/5`}>{court}</td>
-            <td className={`text-left w-1/5`}>{date_created}</td>
+            <td className={`text-left w-1/5`}>{date_created.toLocaleString('en-US')}</td>
             <td className={`text-left w-1/5`}>{shareable ? 'Shared' : 'Unshared'}</td>
             <td>{folder}</td>
             <td>
@@ -389,7 +389,7 @@ function EditRow({
             </td>
             <td className={`text-left w-1/5`}>{initials}</td>
             <td className={`text-left w-1/5`}>{court}</td>
-            <td className={`text-left w-1/5`}>{date_created}</td>
+            <td className={`text-left w-1/5`}>{date_created.toLocaleString('en-US')}</td>
             <td>
               <select onChange={handleEdit}>
                 {shareable ? (
