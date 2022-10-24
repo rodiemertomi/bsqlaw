@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import React from 'react'
-import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import Times from '../../adminDashBoard/pages/components/Times'
-import UseUserReducer from '../../UserReducer'
 
 export default function Appointments() {
   const [showAppointment, setShowAppoitnment] = useState(false)
