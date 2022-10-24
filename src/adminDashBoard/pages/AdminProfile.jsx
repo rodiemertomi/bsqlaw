@@ -17,6 +17,11 @@ export default function AdminProfile() {
   } = UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
+  const formatDate = date => {
+    let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+    return dateArray.join('/')
+  }
+
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-[#D9D9D9] flex flex-col items-center justify-center gap-4 lg:w-[90%] lg:h-[95%] lg:ml-24'>
@@ -33,9 +38,9 @@ export default function AdminProfile() {
           <h1>Last Name: {lastName}</h1>
           <h1>Initials: {initials}</h1>
           <h1>Email: {email}</h1>
-          <h1>Expertise: {expertise.map(data => `${data}, `)}</h1>
+          <h1>Expertise: {expertise.join(', ')}</h1>
           <h1>Gender: {gender}</h1>
-          <h1>Birthday: {birthday}</h1>
+          <h1>Birthday: {formatDate(birthday.toDate())}</h1>
           <h1>Contact Number: {contactNo}</h1>
           <button
             type='button'

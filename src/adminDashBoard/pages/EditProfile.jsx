@@ -9,38 +9,28 @@ function EditProfile({ closeModal }) {
     username,
     id,
     photoURL,
+    birthday,
+    firstName,
+    lastName,
+    initials,
     expertise,
     contactNo,
-    firstName,
-    email,
-    lastName,
     gender,
-    birthday,
-  } = UseUserReducer()
-
-  const {
-    setPhotoURL,
-    setBirthday,
-    setEmail,
-    setGender,
-    setExpertise,
-    setContactNo,
-    setFirstName,
-    setLastName,
   } = UseUserReducer()
 
   const [loading, setLoading] = useState(false)
   const [image, setImage] = useState(null)
   const firstNameRef = useRef()
   const lastNameRef = useRef()
-  const emailRef = useRef()
+  const initialsRef = useRef()
   const expertiseRef = useRef()
   const contactNoRef = useRef()
-  const [genderState, setGenderState] = useState()
-  const [birthdayState, setBirthdayState] = useState()
+  const [genderState, setGenderState] = useState(gender)
+  const [birthdayState, setBirthdayState] = useState(birthday.toDate())
   const [photoURLState, setPhotoURLState] = useState(photoURL)
 
   const handleImageChange = async () => {
+    if (image == null) return
     const fileUrl = `photos/${username}/${image.name}`
     const imgRef = ref(storage, fileUrl)
     await uploadBytes(imgRef, image).then(snapshot => {
@@ -50,36 +40,28 @@ function EditProfile({ closeModal }) {
     })
   }
 
-  const formatDate = date => {
-    let dateArray = date.split('-', 3)
-    let formatedDate = []
-    for (let i = dateArray.length - 1; i >= 0; i--) {
-      let data = dateArray[i]
-      formatedDate.push(data)
-    }
-    return formatedDate.join('/')
-  }
-  console.log(id)
+  // const formatDate = date => {
+  //   const newDate = new Date(date)
+  //   const formatedDate = newDate.toDateString()
+  //   return formatedDate.getFullYear()
+  // }
+
+  // console.log('date: ', formatDate(birthdayState))
+
+  console.log(birthdayState)
+
   const handleSave = async () => {
     setLoading(true)
-    setFirstName(firstNameRef.current.value)
-    setLastName(lastNameRef.current.value)
-    setEmail(emailRef.current.value)
-    setExpertise(expertiseRef.current.value.split(','))
-    setContactNo(contactNoRef.current.value)
-    setGender(genderState)
-    setBirthday(formatDate(birthdayState))
-    setPhotoURL(photoURLState)
     const docRef = doc(db, `users/${id}`)
     const data = {
-      firstname: firstName,
-      lastname: lastName,
-      email: email,
-      expertise: expertise,
-      contactNo: contactNo,
-      gender: gender,
-      birthday: birthday,
-      photoURL: photoURL,
+      firstname: firstNameRef.current.value,
+      lastname: lastNameRef.current.value,
+      initials: initialsRef.current.value,
+      expertise: expertiseRef.current.value.split(','),
+      contactNo: contactNoRef.current.value,
+      gender: genderState,
+      birthday: new Date(birthdayState),
+      photoURL: photoURLState,
     }
     setDoc(docRef, data, { merge: true }).then(alert('Updated profile successfully'))
     closeModal(false)
@@ -125,6 +107,7 @@ function EditProfile({ closeModal }) {
               <input
                 required
                 ref={firstNameRef}
+                value={firstName}
                 type='text'
                 name='firstname'
                 placeholder='First Name'
@@ -133,6 +116,7 @@ function EditProfile({ closeModal }) {
               <input
                 required
                 ref={lastNameRef}
+                value={lastName}
                 type='text'
                 name='lastname'
                 placeholder='Last Name'
@@ -140,15 +124,17 @@ function EditProfile({ closeModal }) {
               />
               <input
                 required
-                ref={emailRef}
-                type='email'
-                name='email'
-                placeholder='Email'
+                ref={initialsRef}
+                value={initials}
+                type='text'
+                name='initials'
+                placeholder='Initials'
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
               <input
                 required
                 ref={expertiseRef}
+                value={expertise.join(', ')}
                 type='text'
                 name='expertise'
                 placeholder='Expertise separate by comma'
@@ -159,6 +145,7 @@ function EditProfile({ closeModal }) {
               <input
                 required
                 ref={contactNoRef}
+                value={contactNo}
                 type='tel'
                 name='phone'
                 placeholder='Contact Number'
@@ -173,10 +160,38 @@ function EditProfile({ closeModal }) {
                     id='gender'
                     className='h-10 shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
                   >
-                    <option value=''>Select Gender</option>
-                    <option value='male'>Male</option>
-                    <option value='female'>Female</option>
-                    <option value='others'>Others</option>
+                    {gender === '' ? (
+                      <>
+                        <option value=''>Select Gender</option>
+                        <option value='male'>Male</option>
+                        <option value='female'>Female</option>
+                        <option value='others'>Others</option>
+                      </>
+                    ) : gender !== '' && gender === 'male' ? (
+                      <>
+                        <option selected value='male'>
+                          Male
+                        </option>
+                        <option value='female'>Female</option>
+                        <option value='others'>Others</option>
+                      </>
+                    ) : gender !== '' && gender === 'female' ? (
+                      <>
+                        <option value='male'>Male</option>
+                        <option selected value='female'>
+                          Female
+                        </option>
+                        <option value='others'>Others</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value='male'>Male</option>
+                        <option value='female'>Female</option>
+                        <option selected value='others'>
+                          Others
+                        </option>
+                      </>
+                    )}
                   </select>
                 </div>
                 <div className='flex flex-col w-1/2 pr-20'>
@@ -189,6 +204,7 @@ function EditProfile({ closeModal }) {
                     }}
                     placeholder='Birthdate'
                     id='date'
+                    value={birthdayState.toISOString().substr(0, 10)}
                   />
                 </div>
               </div>
