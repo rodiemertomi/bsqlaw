@@ -3,6 +3,7 @@ import { collection, addDoc, doc, setDoc, arrayUnion } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import UseAppointmentStore from '../../reducers/AppointmentReducer'
 import UseUserReducer from '../../../UserReducer'
+import { nanoid } from 'nanoid'
 
 function Times({ closeShowAppointment }) {
   const appointmentsRef = collection(db, 'appointments')
@@ -41,6 +42,7 @@ function Times({ closeShowAppointment }) {
   const saveEvent = async e => {
     e.preventDefault()
     const data = {
+      id: nanoid(10),
       setter: initials,
       client: client,
       eventName: eventName,
