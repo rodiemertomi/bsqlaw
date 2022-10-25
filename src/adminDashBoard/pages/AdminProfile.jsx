@@ -32,15 +32,15 @@ export default function AdminProfile() {
           <img
             alt='user'
             className='w-96 h-96 rounded-full mb-4'
-            src={photoURL === '' ? require('../../assets/user.png') : `${photoURL}`}
+            src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
           />
           <h1>First Name: {firstName}</h1>
           <h1>Last Name: {lastName}</h1>
           <h1>Initials: {initials}</h1>
           <h1>Email: {email}</h1>
-          <h1>Expertise: {expertise.join(', ')}</h1>
+          <h1>Expertise: {expertise?.join(', ')}</h1>
           <h1>Gender: {gender}</h1>
-          <h1>Birthday: {formatDate(birthday.toDate())}</h1>
+          <h1>Birthday: {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}</h1>
           <h1>Contact Number: {contactNo}</h1>
           <button
             type='button'

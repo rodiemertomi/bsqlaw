@@ -12,21 +12,21 @@ function EditProfile({ closeModal }) {
     birthday,
     firstName,
     lastName,
-    initials,
-    expertise,
     contactNo,
     gender,
+    initials,
+    expertise,
   } = UseUserReducer()
 
   const [loading, setLoading] = useState(false)
   const [image, setImage] = useState(null)
   const firstNameRef = useRef()
   const lastNameRef = useRef()
+  const contactNoRef = useRef()
   const initialsRef = useRef()
   const expertiseRef = useRef()
-  const contactNoRef = useRef()
   const [genderState, setGenderState] = useState(gender)
-  const [birthdayState, setBirthdayState] = useState(birthday.toDate())
+  const [birthdayState, setBirthdayState] = useState(birthday?.toDate())
   const [photoURLState, setPhotoURLState] = useState(photoURL)
 
   const handleImageChange = async () => {
@@ -40,29 +40,31 @@ function EditProfile({ closeModal }) {
     })
   }
 
-  // const formatDate = date => {
-  //   const newDate = new Date(date)
-  //   const formatedDate = newDate.toDateString()
-  //   return formatedDate.getFullYear()
-  // }
-
-  // console.log('date: ', formatDate(birthdayState))
-
-  console.log(birthdayState)
-
   const handleSave = async () => {
     setLoading(true)
     const docRef = doc(db, `users/${id}`)
-    const data = {
-      firstname: firstNameRef.current.value,
-      lastname: lastNameRef.current.value,
-      initials: initialsRef.current.value,
-      expertise: expertiseRef.current.value.split(','),
-      contactNo: contactNoRef.current.value,
-      gender: genderState,
-      birthday: new Date(birthdayState),
-      photoURL: photoURLState,
-    }
+    let data = {}
+    if (photoURLState === '' || photoURLState === null || !photoURLState) {
+      data = {
+        firstname: firstNameRef.current.value,
+        lastname: lastNameRef.current.value,
+        contactNo: contactNoRef.current.value,
+        gender: genderState,
+        initials: initialsRef.current.value,
+        expertise: expertiseRef.current.value.split(','),
+        birthday: new Date(birthdayState),
+      }
+    } else
+      data = {
+        firstname: firstNameRef.current.value,
+        lastname: lastNameRef.current.value,
+        contactNo: contactNoRef.current.value,
+        gender: genderState,
+        initials: initialsRef.current.value,
+        expertise: expertiseRef.current.value.split(','),
+        birthday: new Date(birthdayState),
+        photoURL: photoURLState,
+      }
     setDoc(docRef, data, { merge: true }).then(alert('Updated profile successfully'))
     closeModal(false)
     setLoading(false)
@@ -71,6 +73,8 @@ function EditProfile({ closeModal }) {
   useEffect(() => {
     handleImageChange()
   }, [image])
+
+  console.log(photoURLState)
 
   return (
     <div className='w-screen h-screen flex items-center justify-center bg-[#f8f4f4]'>
@@ -90,7 +94,11 @@ function EditProfile({ closeModal }) {
             <img
               alt='user'
               className='w-[170px] h-[170px] object-cover z-0 rounded-full'
-              src={photoURLState === '' ? require('../../assets/user.png') : `${photoURLState}`}
+              src={
+                photoURLState === '' || !photoURLState
+                  ? require('../../assets/user.png')
+                  : `${photoURLState}`
+              }
             />
             <div
               className='w-[170px] h-[170px] rounded-full hover:bg-[#000000] opacity-0 hover:opacity-80 cursor-pointer text-transparent hover:object-center hover:text-white
@@ -134,9 +142,9 @@ function EditProfile({ closeModal }) {
               <input
                 required
                 ref={expertiseRef}
-                value={expertise.join(', ')}
-                type='text'
-                name='expertise'
+                value={expertise?.join(', ')}
+                type='expertise'
+                name='lastname'
                 placeholder='Expertise separate by comma'
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
@@ -160,16 +168,18 @@ function EditProfile({ closeModal }) {
                     id='gender'
                     className='h-10 shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
                   >
-                    {gender === '' ? (
+                    {gender === '' || !gender ? (
                       <>
-                        <option value=''>Select Gender</option>
+                        <option defaultValue value=''>
+                          Select Gender
+                        </option>
                         <option value='male'>Male</option>
                         <option value='female'>Female</option>
                         <option value='others'>Others</option>
                       </>
                     ) : gender !== '' && gender === 'male' ? (
                       <>
-                        <option selected value='male'>
+                        <option defaultValue value='male'>
                           Male
                         </option>
                         <option value='female'>Female</option>
@@ -178,7 +188,7 @@ function EditProfile({ closeModal }) {
                     ) : gender !== '' && gender === 'female' ? (
                       <>
                         <option value='male'>Male</option>
-                        <option selected value='female'>
+                        <option defaultValue value='female'>
                           Female
                         </option>
                         <option value='others'>Others</option>
@@ -187,7 +197,7 @@ function EditProfile({ closeModal }) {
                       <>
                         <option value='male'>Male</option>
                         <option value='female'>Female</option>
-                        <option selected value='others'>
+                        <option defaultValue value='others'>
                           Others
                         </option>
                       </>
@@ -204,7 +214,7 @@ function EditProfile({ closeModal }) {
                     }}
                     placeholder='Birthdate'
                     id='date'
-                    value={birthdayState.toISOString().substr(0, 10)}
+                    value={birthdayState}
                   />
                 </div>
               </div>
