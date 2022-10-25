@@ -85,16 +85,7 @@ function AdminSideNavBar({
             }
           />
           <p className='text-center text-sm pt-0 mb-3 font-Lora'>Admin Control</p>
-          <SideBarIcon
-            icon={
-              <img
-                alt='dashboard icon'
-                onClick={viewDashboard}
-                className='w-10 h-10 invert'
-                src={require('../assets/dashboard.jpg')}
-              />
-            }
-          />
+
           <p className='text-center text-sm pt-0 mb-3 font-Lora'>Dashboard</p>
           <SideBarIcon
             icon={
