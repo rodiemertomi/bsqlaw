@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { storage, db } from '../../firebase'
 import { doc, setDoc } from 'firebase/firestore'
@@ -20,11 +20,11 @@ function EditProfile({ closeModal }) {
 
   const [loading, setLoading] = useState(false)
   const [image, setImage] = useState(null)
-  const firstNameRef = useRef()
-  const lastNameRef = useRef()
-  const contactNoRef = useRef()
-  const initialsRef = useRef()
-  const expertiseRef = useRef()
+  const [firstNameState, setFirstNameState] = useState(firstName)
+  const [lastNameState, setLastNameState] = useState(lastName)
+  const [contactNoState, setContactNumberState] = useState(contactNo)
+  const [initialsState, setInitialsState] = useState(initials)
+  const [expertiseState, setExpertiseState] = useState(expertise)
   const [genderState, setGenderState] = useState(gender)
   const [birthdayState, setBirthdayState] = useState(birthday?.toDate())
   const [photoURLState, setPhotoURLState] = useState(photoURL)
@@ -40,28 +40,30 @@ function EditProfile({ closeModal }) {
     })
   }
 
+  console.log(birthday.toDate())
+
   const handleSave = async () => {
     setLoading(true)
     const docRef = doc(db, `users/${id}`)
     let data = {}
     if (photoURLState === '' || photoURLState === null || !photoURLState) {
       data = {
-        firstname: firstNameRef.current.value,
-        lastname: lastNameRef.current.value,
-        contactNo: contactNoRef.current.value,
+        firstname: firstNameState,
+        lastname: lastNameState,
+        contactNo: contactNoState,
         gender: genderState,
-        initials: initialsRef.current.value,
-        expertise: expertiseRef.current.value.split(','),
+        initials: initialsState,
+        expertise: expertiseState.split(','),
         birthday: new Date(birthdayState),
       }
     } else
       data = {
-        firstname: firstNameRef.current.value,
-        lastname: lastNameRef.current.value,
-        contactNo: contactNoRef.current.value,
+        firstname: firstNameState,
+        lastname: lastNameState,
+        contactNo: contactNoState,
         gender: genderState,
-        initials: initialsRef.current.value,
-        expertise: expertiseRef.current.value.split(','),
+        initials: initialsState,
+        expertise: expertiseState.split(','),
         birthday: new Date(birthdayState),
         photoURL: photoURLState,
       }
@@ -112,8 +114,8 @@ function EditProfile({ closeModal }) {
             <div className='flex flex-col items-center w-[100%] gap-3 mt-3'>
               <input
                 required
-                ref={firstNameRef}
-                value={firstName}
+                value={firstNameState}
+                onChange={e => setFirstNameState(e.target.value)}
                 type='text'
                 name='firstname'
                 placeholder='First Name'
@@ -121,8 +123,8 @@ function EditProfile({ closeModal }) {
               />
               <input
                 required
-                ref={lastNameRef}
-                value={lastName}
+                value={lastNameState}
+                onChange={e => setLastNameState(e.target.value)}
                 type='text'
                 name='lastname'
                 placeholder='Last Name'
@@ -130,8 +132,8 @@ function EditProfile({ closeModal }) {
               />
               <input
                 required
-                ref={initialsRef}
-                value={initials}
+                value={contactNoState}
+                onChange={e => setContactNumberState(e.target.value)}
                 type='text'
                 name='initials'
                 placeholder='Initials'
@@ -139,8 +141,8 @@ function EditProfile({ closeModal }) {
               />
               <input
                 required
-                ref={expertiseRef}
-                value={expertise?.join(', ')}
+                value={expertiseState?.join(', ')}
+                onChange={e => setExpertiseState(e.target.value)}
                 type='expertise'
                 name='lastname'
                 placeholder='Expertise separate by comma'
@@ -150,8 +152,8 @@ function EditProfile({ closeModal }) {
             <div className='flex flex-col items-center w-[100%] gap-3 '>
               <input
                 required
-                ref={contactNoRef}
-                value={contactNo}
+                value={initialsState}
+                onChange={e => setInitialsState(e.target.value)}
                 type='tel'
                 name='phone'
                 placeholder='Contact Number'
@@ -216,7 +218,7 @@ function EditProfile({ closeModal }) {
                     }}
                     placeholder='Birthdate'
                     id='date'
-                    value={birthdayState}
+                    value={birthdayState.toISOString().substr(0, 10)}
                   />
                 </div>
               </div>

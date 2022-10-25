@@ -364,7 +364,7 @@ function ReadOnlyRow({
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {date_created}
+              {date_created.toLocaleString('en-US')}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               {shareable ? 'Shared' : 'Unshared'}
@@ -429,10 +429,29 @@ function EditRow({
             <th scope='row' className='py-4 px-6 font-medium border border-slate-700'>
               <a href={url}>{filename}</a>
             </th>
-            <td className={`text-left w-1/5`}>{initials}</td>
-            <td className={`text-left w-1/5`}>{court}</td>
-            <td className={`text-left w-1/5`}>{date_created.toLocaleString('en-US')}</td>
-            <td>
+            <td className='py-4 px-6 border border-slate-700'>{initials}</td>
+            <td className='py-4 px-6 border border-slate-700'>{court}</td>
+          </tr>
+        </tbody>
+        <thead className='text-xs text-gray-700 '>
+          <tr>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Date Created
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Shareable
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+              Folder
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=''>
+            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
+              {date_created.toLocaleString('en-US')}
+            </th>
+            <td className='py-4 px-6 border border-slate-700'>
               <select onChange={handleEdit}>
                 {shareable ? (
                   <>
@@ -459,7 +478,7 @@ function EditRow({
           Save
         </button>
         <button
-          onClick={e => handleCancel}
+          onClick={handleCancel}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
         >
           Cancel

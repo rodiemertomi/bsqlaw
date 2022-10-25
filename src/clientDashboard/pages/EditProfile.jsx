@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { storage, db } from '../../firebase'
 import { doc, setDoc } from 'firebase/firestore'
@@ -10,9 +10,9 @@ function EditProfile({ closeModal }) {
 
   const [loading, setLoading] = useState(false)
   const [image, setImage] = useState(null)
-  const firstNameRef = useRef()
-  const lastNameRef = useRef()
-  const contactNoRef = useRef()
+  const [firstNameState, setFirstNameState] = useState(firstName)
+  const [lastNameState, setLastNameState] = useState(lastName)
+  const [contactNoState, setContactNumberState] = useState(contactNo)
   const [genderState, setGenderState] = useState(gender)
   const [birthdayState, setBirthdayState] = useState(birthday?.toDate())
   const [photoURLState, setPhotoURLState] = useState(photoURL)
@@ -34,17 +34,17 @@ function EditProfile({ closeModal }) {
     let data = {}
     if (photoURLState === '' || photoURLState === null || !photoURLState) {
       data = {
-        firstname: firstNameRef.current.value,
-        lastname: lastNameRef.current.value,
-        contactNo: contactNoRef.current.value,
+        firstname: firstNameState,
+        lastname: lastNameState,
+        contactNo: contactNoState,
         gender: genderState,
         birthday: new Date(birthdayState),
       }
     } else
       data = {
-        firstname: firstNameRef.current.value,
-        lastname: lastNameRef.current.value,
-        contactNo: contactNoRef.current.value,
+        firstname: firstNameState,
+        lastname: lastNameState,
+        contactNo: contactNoState,
         gender: genderState,
         birthday: new Date(birthdayState),
         photoURL: photoURLState,
@@ -62,7 +62,7 @@ function EditProfile({ closeModal }) {
     <div className='w-screen h-screen flex items-center justify-center bg-[#f8f4f4]'>
       <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[60%] lg:gap-3'>
         <h1 className='font-bold text-2xl'>Edit Profile</h1>
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col justify-center items-center gap-2'>
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
               className='hidden'
@@ -96,34 +96,34 @@ function EditProfile({ closeModal }) {
             <div className='flex flex-col items-center w-[100%] gap-3 mt-3'>
               <input
                 required
-                ref={firstNameRef}
-                value={firstName}
+                value={firstNameState}
+                onChange={e => setFirstNameState(e.target.value)}
                 type='text'
                 name='firstname'
                 placeholder='First Name'
-                className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className=' h-9 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
               <input
                 required
-                ref={lastNameRef}
-                value={lastName}
+                value={lastNameState}
+                onChange={e => setLastNameState(e.target.value)}
                 type='text'
                 name='lastname'
                 placeholder='Last Name'
+                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              />
+              <input
+                required
+                value={contactNoState}
+                onChange={e => setContactNumberState(e.target.value)}
+                type='text'
+                name='initials'
+                placeholder='Initials'
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
             <div className='flex flex-col items-center w-[100%] gap-3 '>
-              <input
-                required
-                ref={contactNoRef}
-                value={contactNo}
-                type='tel'
-                name='phone'
-                placeholder='Contact Number'
-                className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              />
-              <div className='flex justify-center items-center w-[116%] gap-2 '>
+              <div className='flex justify-center items-center w-[110%] gap-2 '>
                 <div className='flex flex-col w-1/2 pl-20'>
                   <label htmlFor='gender' className='font-semibold'>
                     Gender
@@ -132,7 +132,7 @@ function EditProfile({ closeModal }) {
                     name='gender'
                     onChange={e => setGenderState(e.target.value)}
                     id='gender'
-                    className='h-9  shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    className='h-9  shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
                   >
                     {gender === '' || !gender ? (
                       <>
@@ -182,11 +182,11 @@ function EditProfile({ closeModal }) {
                     }}
                     placeholder='Birthdate'
                     id='date'
-                    value={birthdayState}
+                    value={birthdayState.toISOString().substr(0, 10)}
                   />
                 </div>
               </div>
-              <div className='w-[100%] flex justify-end mr-24 gap-1 md:mr-[190px] lg:mr-[100px]'>
+              <div className='w-[100%] flex justify-end mr-24 gap-2 md:mr-[190px] lg:mr-[110px]'>
                 <button
                   onClick={() => closeModal(false)}
                   className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'

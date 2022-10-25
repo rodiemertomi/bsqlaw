@@ -31,37 +31,19 @@ function AppointmentManagement() {
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20 '>
           {/* Card View */}
-          <div className='w-[100%] pl-5 pt-5 pr-5 flex flex-wrap gap-2 justify-center lg:w-[100%] overflow-auto scrollbar-hide'>
+          <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-wrap gap-2 justify-center lg:w-[100%] overflow-auto scrollbar-hide'>
             {appointments?.map(appointment => (
               <div
                 key={appointment.id}
-                className='bg-[#9C9999] w-[100%] h-60 rounded-md pl-2 flex flex-col justify-center gap-2 shadow-lg '
+                className='bg-[#9C9999] w-[100%] h-60 rounded-md pl-2 flex flex-col gap-2 '
               >
-                <div>
-                  <span className='font-bold text-2xl'> {appointment.eventName} </span>
-                </div>
-                <div>
-                  <span className='font-bold'>Client:</span> {appointment.client}
-                </div>
-                <div>
-                  <span className='font-bold'>Event Desc:</span> {appointment.eventDesc}
-                </div>
-                <div>
-                  <span className='font-bold'>Event Time Start: </span>
-                  {appointment.eventTimeStart}
-                </div>
-                <div>
-                  <span className='font-bold'>Event Time End: </span>
-                  {appointment.eventTimeEnd}
-                </div>
-                <div>
-                  <span className='font-bold'>Event Date Start: </span>
-                  {formatDate(appointment.eventDateStart.toDate())}
-                </div>
-                <div>
-                  <span className='font-bold'>Event Date End: </span>
-                  {formatDate(appointment.eventDateEnd.toDate())}
-                </div>
+                <div>Client: {appointment.client}</div>
+                <div>Event Name: {appointment.eventName}</div>
+                <div>Event Desc: {appointment.eventDesc}</div>
+                <div>Event Time Start: {appointment.eventTimeStart}</div>
+                <div>Event Time End: {appointment.eventTimeEnd}</div>
+                <div>Event Date Start: {formatDate(appointment.eventDateStart.toDate())}</div>
+                <div>Event Date End: {formatDate(appointment.eventDateEnd.toDate())}</div>
               </div>
             ))}
             {/* <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
