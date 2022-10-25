@@ -35,15 +35,33 @@ function AppointmentManagement() {
             {appointments?.map(appointment => (
               <div
                 key={appointment.id}
-                className='bg-[#9C9999] w-[100%] h-60 rounded-md pl-2 flex flex-col justify-center gap-2 '
+                className='bg-[#9C9999] w-[100%] h-60 rounded-md pl-2 flex flex-col justify-center gap-2 shadow-lg '
               >
-                <div>Client: {appointment.client}</div>
-                <div>Event Name: {appointment.eventName}</div>
-                <div>Event Desc: {appointment.eventDesc}</div>
-                <div>Event Time Start: {appointment.eventTimeStart}</div>
-                <div>Event Time End: {appointment.eventTimeEnd}</div>
-                <div>Event Date Start: {formatDate(appointment.eventDateStart.toDate())}</div>
-                <div>Event Date End: {formatDate(appointment.eventDateEnd.toDate())}</div>
+                <div>
+                  <span className='font-bold text-2xl'> {appointment.eventName} </span>
+                </div>
+                <div>
+                  <span className='font-bold'>Client:</span> {appointment.client}
+                </div>
+                <div>
+                  <span className='font-bold'>Event Desc:</span> {appointment.eventDesc}
+                </div>
+                <div>
+                  <span className='font-bold'>Event Time Start: </span>
+                  {appointment.eventTimeStart}
+                </div>
+                <div>
+                  <span className='font-bold'>Event Time End: </span>
+                  {appointment.eventTimeEnd}
+                </div>
+                <div>
+                  <span className='font-bold'>Event Date Start: </span>
+                  {formatDate(appointment.eventDateStart.toDate())}
+                </div>
+                <div>
+                  <span className='font-bold'>Event Date End: </span>
+                  {formatDate(appointment.eventDateEnd.toDate())}
+                </div>
               </div>
             ))}
             {/* <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
