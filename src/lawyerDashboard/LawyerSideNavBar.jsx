@@ -52,7 +52,6 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
           </div>
         </div>
         <div className=' h-screen w-sreen overflow-scroll scrollbar-hide mt-28 mb-28'>
-          <p className='text-sm pt-0 mb-3 text-center'>Dashboard</p>
           <SideBarIcon
             icon={
               <img

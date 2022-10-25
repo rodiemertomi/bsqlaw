@@ -85,8 +85,6 @@ function AdminSideNavBar({
             }
           />
           <p className='text-center text-sm pt-0 mb-3 font-Lora'>Admin Control</p>
-
-          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Dashboard</p>
           <SideBarIcon
             icon={
               <img
