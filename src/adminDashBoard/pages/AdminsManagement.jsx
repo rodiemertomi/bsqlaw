@@ -31,7 +31,7 @@ export default function AdminsManagement() {
     }
 
     setDoc(docRef, editedAdmin, { merge: true }).then(() => {
-      console.log('Document updated Successfully')
+      alert('Document updated Successfully')
     })
 
     setEditAdminId(null)
@@ -67,7 +67,7 @@ export default function AdminsManagement() {
           data.expertise.some(item => item.toLowerCase().includes(searchKeyword))
       )
     } catch (err) {
-      console.log(err.message)
+      alert(err.message)
     }
   }
 
@@ -77,7 +77,7 @@ export default function AdminsManagement() {
         const data = await getDocs(adminRef)
         setAdmins(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
       } catch (err) {
-        console.log(err.message)
+        alert(err.message)
       }
     }
 

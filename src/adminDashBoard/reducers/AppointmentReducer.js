@@ -7,56 +7,55 @@ const UseAppointmentStore = create(set => ({
   eventDesc: '',
   eventDateStart: '',
   eventDateEnd: '',
-  info: false,
   event: {},
+  client: '',
 
   setEventTimeStart: newEventTimeStart =>
-    set(state => ({
+    set(() => ({
       eventTimeStart: newEventTimeStart,
     })),
   setEventTimeEnd: newEventTimeEnd =>
-    set(state => ({
+    set(() => ({
       eventTimeEnd: newEventTimeEnd,
     })),
   setEventName: newEventName =>
-    set(state => ({
+    set(() => ({
       eventName: newEventName,
     })),
   setEventDesc: newEventDesc =>
-    set(state => ({
+    set(() => ({
       eventDesc: newEventDesc,
     })),
   setEventDateStart: newEventDateStart =>
-    set(state => ({
+    set(() => ({
       eventDateStart: newEventDateStart,
     })),
   setEventDateEnd: newEventDateEnd =>
-    set(state => ({
+    set(() => ({
       eventDateEnd: newEventDateEnd,
     })),
-
-  setInfo: info =>
-    set(state => ({
-      info: !state.info,
+  setClient: newClient =>
+    set(() => ({
+      client: newClient,
     })),
   setEvent: (
-    newEventStart,
-    newEventEnd,
+    newClient,
     newEventName,
     newEventDesc,
+    newEventStart,
+    newEventEnd,
     newEventDateStart,
-    newEventDateEnd,
-    newInfo
+    newEventDateEnd
   ) =>
     set(() => ({
       event: {
+        client: newClient,
+        eventName: newEventName,
+        eventDesc: newEventDesc,
         eventStart: newEventStart,
         eventEnd: newEventEnd,
-        eventDesc: newEventDesc,
-        eventName: newEventName,
         eventDateStart: newEventDateStart,
         eventDateEnd: newEventDateEnd,
-        info: newInfo,
       },
     })),
 }))

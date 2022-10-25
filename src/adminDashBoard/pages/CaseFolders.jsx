@@ -47,7 +47,7 @@ export default function CaseFolders() {
       folders: arrayUnion(`${folderNameRef.current.value}`),
     }
     updateDoc(docRef, data, { merge: true }).then(() => {
-      console.log(`updated successfully`)
+      alert(`Updated successfully`)
     })
     folderNameRef.current.value = ''
   }
@@ -64,6 +64,7 @@ export default function CaseFolders() {
       setLoading(false)
       return
     }
+
     const extension = fileUpload.name.split('.').pop()
     const fileUrl = `caseFiles/${username}/${folderOption}/${fileNameRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
@@ -72,7 +73,7 @@ export default function CaseFolders() {
         const data = {
           active: true,
           filename: snapshot.ref.name,
-          date_created: new Date().toString(),
+          date_created: new Date(),
           author: initials,
           folder: folderOption,
           shareable: false,
@@ -170,7 +171,7 @@ export default function CaseFolders() {
                                 filename={data.filename}
                                 shareable={data.shareable}
                                 url={data.url}
-                                date_created={data.date_created}
+                                date_created={data.date_created.toDate()}
                                 court={data.court}
                                 initials={initials}
                                 data={data}
@@ -183,7 +184,7 @@ export default function CaseFolders() {
                                 filename={data.filename}
                                 shareable={data.shareable}
                                 url={data.url}
-                                date_created={data.date_created}
+                                date_created={data.date_created.toDate()}
                                 court={data.court}
                                 initials={initials}
                                 data={data}
@@ -363,7 +364,7 @@ function ReadOnlyRow({
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {date_created}
+              {date_created.toLocaleString('en-US')}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               {shareable ? 'Shared' : 'Unshared'}
@@ -436,7 +437,7 @@ function EditRow({
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {date_created}
+              {date_created.toLocaleString('en-US')}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               <select onChange={handleEdit}>
@@ -465,7 +466,7 @@ function EditRow({
           Save
         </button>
         <button
-          onClick={e => handleCancel}
+          onClick={handleCancel}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
         >
           Cancel

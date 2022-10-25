@@ -26,7 +26,7 @@ export default function LawyersManagement() {
       }
       await addDoc(colRef, data)
     } catch (err) {
-      console.log(err.message)
+      alert(err.message)
     }
     setLoading(false)
     setEmail('')

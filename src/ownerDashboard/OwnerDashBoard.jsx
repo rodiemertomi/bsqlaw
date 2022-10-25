@@ -37,7 +37,6 @@ export default function OwnerDashboard({ username }) {
     } else {
       setHideNavBar(false)
     }
-    console.log(distanceY)
   }
 
   return (

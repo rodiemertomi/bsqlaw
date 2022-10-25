@@ -1,6 +1,4 @@
-import { tr } from 'date-fns/locale'
 import React from 'react'
-import { useState } from 'react'
 import UseAppointmentStore from '../../reducers/AppointmentReducer'
 
 function Times(props) {
@@ -16,10 +14,6 @@ function Times(props) {
   } = UseAppointmentStore()
   const { eventTimeStart, eventTimeEnd, eventName, eventDateStart, eventDateEnd, eventDesc, info } =
     UseAppointmentStore()
-  // const [eventDesc, setEventDesc] = useState('')
-  // const [eventStart, setEventStart] = useState('')
-  // const [eventEnd, setEventEnd] = useState('')
-  // const [info, setInfo] = useState('')
 
   function displayInfo(e) {
     e.preventDefault()
