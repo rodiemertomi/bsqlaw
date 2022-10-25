@@ -1,9 +1,11 @@
 import React from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { ACTIONS } from './reducers/OwnerReducer'
+import UseUserReducer from '../UserReducer'
 
 function OwnerSideNavBar({ dispatch, hideNavBar }) {
   const { logOut } = UserAuth()
+  const { photoURL } = UseUserReducer()
 
   const handleSignOut = async () => {
     try {
@@ -52,7 +54,13 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
     shadow-lg bg-[#632121] hover:bg-[#ab940b]
     rounded-xl hover:rounded-3xl transition-all duration-300 ease-linear cursor-pointer'
           >
-            {<img alt='user icon' className='w-14 h-14' src={require('../assets/user.png')} />}
+            {
+              <img
+                alt='user icon'
+                className='w-14 h-14'
+                src={photoURL === '' || !photoURL ? require('../assets/user.png') : `${photoURL}`}
+              />
+            }
           </div>
         </div>
         <div className=' h-screen w-sreen overflow-scroll scrollbar-hide mt-28 mb-28'>
