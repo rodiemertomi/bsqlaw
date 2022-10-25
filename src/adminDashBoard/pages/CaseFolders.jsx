@@ -223,6 +223,7 @@ export default function CaseFolders() {
                       Add Folder
                     </button>
                   </div>
+                  {/* secret */}
                   <div className='flex flex-col items-center justify-evenly gap-2'>
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] 
