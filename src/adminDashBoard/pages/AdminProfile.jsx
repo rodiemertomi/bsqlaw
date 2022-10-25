@@ -17,6 +17,11 @@ export default function AdminProfile() {
   } = UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
+  const formatDate = date => {
+    let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+    return dateArray.join('/')
+  }
+
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-[#D9D9D9] flex flex-col items-center justify-center lg:w-[90%] lg:h-[95%] lg:ml-24'>
@@ -26,33 +31,17 @@ export default function AdminProfile() {
         <div className='flex flex-col justify-center items-center gap-1'>
           <img
             alt='user'
-            className='w-[60%] lg:w-[20%] rounded-full mb-2'
-            src={photoURL === '' ? require('../../assets/user.png') : `${photoURL}`}
+            className='w-96 h-96 rounded-full mb-4'
+            src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
           />
-          <h1>
-            <span className='font-bold'>First Name:</span> {firstName}
-          </h1>
-          <h1>
-            <span className='font-bold'>Last Name:</span> {lastName}
-          </h1>
-          <h1>
-            <span className='font-bold'>Initials:</span> {initials}
-          </h1>
-          <h1>
-            <span className='font-bold'>Email:</span> {email}
-          </h1>
-          <h1>
-            <span className='font-bold'>Expertise:</span> {expertise.map(data => `${data}, `)}
-          </h1>
-          <h1>
-            <span className='font-bold'>Gender:</span> {gender}
-          </h1>
-          <h1>
-            <span className='font-bold'>Birthday:</span> {birthday}
-          </h1>
-          <h1>
-            <span className='font-bold'>Contact Number:</span> {contactNo}
-          </h1>
+          <h1>First Name: {firstName}</h1>
+          <h1>Last Name: {lastName}</h1>
+          <h1>Initials: {initials}</h1>
+          <h1>Email: {email}</h1>
+          <h1>Expertise: {expertise?.join(', ')}</h1>
+          <h1>Gender: {gender}</h1>
+          <h1>Birthday: {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}</h1>
+          <h1>Contact Number: {contactNo}</h1>
           <button
             type='button'
             onClick={() => {

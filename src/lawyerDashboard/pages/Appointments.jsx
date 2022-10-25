@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import React from 'react'
-import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import Time from './components/Time'
-import UseUserReducer from '../../UserReducer'
 import Times from './components/Times'
 
 export default function Appointments() {

@@ -20,7 +20,7 @@ function AdminSideNavBar({
     try {
       await logOut()
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
 

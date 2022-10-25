@@ -76,7 +76,7 @@ export default function ClientsManagement() {
         role: 'client',
       })
     } catch (err) {
-      console.log(err.message)
+      alert(err.message)
     }
     setLoading(false)
   }
@@ -92,7 +92,7 @@ export default function ClientsManagement() {
     }
 
     setDoc(docRef, editedUser, { merge: true }).then(docRef => {
-      console.log('Document updated Successfully')
+      alert('Document updated Successfully')
     })
 
     setEditClientId(null)

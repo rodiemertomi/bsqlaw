@@ -47,7 +47,7 @@ export default function CaseFolders() {
       folders: arrayUnion(`${folderNameRef.current.value}`),
     }
     updateDoc(docRef, data, { merge: true }).then(() => {
-      console.log(`updated successfully`)
+      alert(`Updated successfully`)
     })
     folderNameRef.current.value = ''
   }
@@ -64,6 +64,7 @@ export default function CaseFolders() {
       setLoading(false)
       return
     }
+
     const extension = fileUpload.name.split('.').pop()
     const fileUrl = `caseFiles/${username}/${folderOption}/${fileNameRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
@@ -72,7 +73,7 @@ export default function CaseFolders() {
         const data = {
           active: true,
           filename: snapshot.ref.name,
-          date_created: new Date().toString(),
+          date_created: new Date(),
           author: initials,
           folder: folderOption,
           shareable: false,
@@ -170,7 +171,7 @@ export default function CaseFolders() {
                                 filename={data.filename}
                                 shareable={data.shareable}
                                 url={data.url}
-                                date_created={data.date_created}
+                                date_created={data.date_created.toDate()}
                                 court={data.court}
                                 initials={initials}
                                 data={data}
@@ -183,7 +184,7 @@ export default function CaseFolders() {
                                 filename={data.filename}
                                 shareable={data.shareable}
                                 url={data.url}
-                                date_created={data.date_created}
+                                date_created={data.date_created.toDate()}
                                 court={data.court}
                                 initials={initials}
                                 data={data}
@@ -368,7 +369,19 @@ function ReadOnlyRow({
             <td className='py-4 px-6 border border-slate-700'>
               {shareable ? 'Shared' : 'Unshared'}
             </td>
-            <td className='py-4 px-4 border border-slate-700'>{folder}</td>
+            <td className={`text-left w-1/5`}>{initials}</td>
+            <td className={`text-left w-1/5`}>{court}</td>
+            <td className={`text-left w-1/5`}>{date_created.toLocaleString('en-US')}</td>
+            <td className={`text-left w-1/5`}>{shareable ? 'Shared' : 'Unshared'}</td>
+            <td>{folder}</td>
+            <td>
+              <button
+                onClick={e => handleEditClick(e, data)}
+                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+              >
+                Edit
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -416,29 +429,10 @@ function EditRow({
             <th scope='row' className='py-4 px-6 font-medium border border-slate-700'>
               <a href={url}>{filename}</a>
             </th>
-            <td className='py-4 px-6 border border-slate-700'>{initials}</td>
-            <td className='py-4 px-6 border border-slate-700'>{court}</td>
-          </tr>
-        </tbody>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
-              Date Created
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
-              Shareable
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
-              Folder
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {date_created}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
+            <td className={`text-left w-1/5`}>{initials}</td>
+            <td className={`text-left w-1/5`}>{court}</td>
+            <td className={`text-left w-1/5`}>{date_created.toLocaleString('en-US')}</td>
+            <td>
               <select onChange={handleEdit}>
                 {shareable ? (
                   <>
