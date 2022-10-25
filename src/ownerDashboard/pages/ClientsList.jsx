@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import React, { Fragment, useEffect, useState } from 'react'
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  setDoc,
+  arrayUnion,
+  getDoc,
+} from 'firebase/firestore'
 import { db } from '../../firebase'
 
 export default function ClientsList() {
@@ -8,6 +17,59 @@ export default function ClientsList() {
   const q2 = query(colRef, where('role', '==', 'lawyer'))
   const [clientsList, setClientsList] = useState()
   const [lawyersList, setLawyersList] = useState()
+  const [clientEditId, setClientEditId] = useState()
+  const [selectedLawyer, setSelectedLawyer] = useState()
+  const [editFormData, setEditFormData] = useState()
+
+  const handleEditClick = (e, client) => {
+    e.preventDefault()
+    setClientEditId(client.id)
+    const formValues = {
+      lawyer: client.lawyer,
+    }
+    setEditFormData(formValues)
+  }
+
+  const handleEdit = e => {
+    const selectedOption = e.target.value
+    setSelectedLawyer(selectedOption)
+  }
+
+  const handleEditFormSubmit = async (e, client) => {
+    e.preventDefault()
+    const colRef = collection(db, 'users')
+    const lq1 = query(colRef, where('initials', '==', `${selectedLawyer}`))
+    const data = await getDocs(lq1)
+    const lawyer = data.docs.map(doc => {
+      return doc.id
+    })
+    console.log(lawyer)
+    const lawyerRef = doc(db, `users/${lawyer}`)
+    const clientRef = doc(db, `users/${clientEditId}`)
+
+    const editedClient = {
+      lawyer: selectedLawyer,
+    }
+
+    const editedLawyer = {
+      clients: arrayUnion(`${client.firstname} ${client.lastname}`),
+    }
+
+    await setDoc(clientRef, editedClient, { merge: true }).then(() => {
+      alert(`${selectedLawyer} assigned to ${client.firstname} ${client.lastname}`)
+    })
+
+    await setDoc(lawyerRef, editedLawyer, { merge: true }).then(() => {
+      alert(`${client.firstname} ${client.lastname} assigned to ${selectedLawyer}`)
+    })
+
+    setClientEditId(null)
+    setSelectedLawyer(null)
+  }
+
+  const handleCancelClick = () => {
+    setClientEditId(null)
+  }
 
   useEffect(() => {
     const getClients = async () => {
@@ -20,8 +82,6 @@ export default function ClientsList() {
     }
     getClients()
     getLawyers()
-    console.log('clients: ', clientsList)
-    console.log('lawyers: ', lawyersList)
   }, [])
   return (
     <div>
@@ -32,31 +92,30 @@ export default function ClientsList() {
             {/* Card View */}
             <div className='w-[100%] flex gap-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
               {clientsList?.map(client => (
-                <div
-                  key={client.id}
-                  className='bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'
-                >
-                  <img
-                    alt='user'
-                    className='w-20 md:w-40 rounded-full'
-                    src={
-                      client.photoURL === '' || !client.photoURL
-                        ? require('../../assets/user.png')
-                        : `${client.photoURL}`
-                    }
-                  />
-                  <h1 className='text-white'>{`${client.firstname} ${client.lastname}`}</h1>
-                  <select name='appoint-lawyer'>
-                    <option defaultValue=''>Appoint Lawyer</option>
-                    {lawyersList?.map(lawyer => (
-                      <>
-                        <option
-                          value={lawyer?.initials}
-                        >{`${lawyer?.firstname} ${lawyer?.lastname}`}</option>
-                      </>
-                    ))}
-                  </select>
-                </div>
+                <Fragment key={client.id}>
+                  {clientEditId === client.id ? (
+                    <EditClient
+                      photoURL={client.photoURL}
+                      id={client.id}
+                      firstname={client.firstname}
+                      lastname={client.lastname}
+                      client={client}
+                      lawyersList={lawyersList}
+                      handleEdit={handleEdit}
+                      handleCancelClick={handleCancelClick}
+                      handleEditFormSubmit={handleEditFormSubmit}
+                    />
+                  ) : (
+                    <ReadClients
+                      photoURL={client.photoURL}
+                      id={client.id}
+                      firstname={client.firstname}
+                      lastname={client.lastname}
+                      handleAppointClick={handleEditClick}
+                      client={client}
+                    />
+                  )}
+                </Fragment>
               ))}
             </div>
           </div>
@@ -83,6 +142,56 @@ export default function ClientsList() {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function ReadClients({ photoURL, id, firstname, lastname, handleAppointClick, client }) {
+  return (
+    <div className='bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'>
+      <img
+        alt='user'
+        className='w-20 md:w-40 rounded-full'
+        src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
+      />
+      <h1 className='text-white'>{`${firstname} ${lastname}`}</h1>
+      {client.lawyer ? <h1 className='text-white'>Appointed Lawyer: {client.lawyer}</h1> : ''}
+      <button className='text-white' onClick={e => handleAppointClick(e, client)}>
+        Appoint Lawyer
+      </button>
+    </div>
+  )
+}
+
+function EditClient({
+  photoURL,
+  id,
+  firstname,
+  lastname,
+  handleCancelClick,
+  lawyersList,
+  handleEdit,
+  handleEditFormSubmit,
+  client,
+}) {
+  return (
+    <div className='bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'>
+      <img
+        alt='user'
+        className='w-20 md:w-40 rounded-full'
+        src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
+      />
+      <h1 className='text-white'>{`${firstname} ${lastname}`}</h1>
+      <select name='appoint-lawyer' onChange={handleEdit}>
+        <option value=''>Select Lawyer</option>
+        {lawyersList?.map(lawyer => (
+          <>
+            <option value={lawyer?.initials}>{`${lawyer?.firstname} ${lawyer?.lastname}`}</option>
+          </>
+        ))}
+      </select>
+      <button onClick={e => handleEditFormSubmit(e, client)}>Save</button>
+      <button onClick={handleCancelClick}>Cancel</button>
     </div>
   )
 }
