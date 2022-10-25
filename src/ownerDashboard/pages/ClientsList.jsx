@@ -1,14 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  doc,
-  setDoc,
-  arrayUnion,
-  getDoc,
-} from 'firebase/firestore'
+import { collection, getDocs, query, where, doc, setDoc, arrayUnion } from 'firebase/firestore'
 import { db } from '../../firebase'
 
 export default function ClientsList() {
@@ -43,7 +34,6 @@ export default function ClientsList() {
     const lawyer = data.docs.map(doc => {
       return doc.id
     })
-    console.log(lawyer)
     const lawyerRef = doc(db, `users/${lawyer}`)
     const clientRef = doc(db, `users/${clientEditId}`)
 
