@@ -84,9 +84,19 @@ function LoginSignUp() {
       setLoading(true)
       await signup(signUpEmailRef.current.value, setPasswordRef.current.value)
       const data = {
-        username: signUpUserNameRef.current.value,
+        appointments: [],
+        birthday: new Date(),
+        contactNo: '',
         email: signUpEmailRef.current.value,
+        expertise: [],
+        firstname: '',
+        folders: [],
+        gender: '',
+        initials: '',
+        lastname: '',
+        photoURL: '',
         role: 'user',
+        username: signUpUserNameRef.current.value,
       }
       await addDoc(colRef, data)
     } catch (error) {
