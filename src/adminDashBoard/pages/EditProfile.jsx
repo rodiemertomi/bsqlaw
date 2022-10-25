@@ -40,6 +40,8 @@ function EditProfile({ closeModal }) {
     })
   }
 
+  console.log(birthday.toDate())
+
   const handleSave = async () => {
     setLoading(true)
     const docRef = doc(db, `users/${id}`)
@@ -216,7 +218,7 @@ function EditProfile({ closeModal }) {
                     }}
                     placeholder='Birthdate'
                     id='date'
-                    value={birthdayState}
+                    value={birthdayState.toISOString().substr(0, 10)}
                   />
                 </div>
               </div>
