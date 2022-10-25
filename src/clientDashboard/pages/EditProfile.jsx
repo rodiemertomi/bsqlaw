@@ -91,7 +91,7 @@ function EditProfile({ closeModal }) {
               </label>
             </div>
           </div>
-          <hr className='w-64 mb-5' />
+
           <div className='w-[90%] flex flex-col gap-3'>
             <div className='flex flex-col items-center w-[100%] gap-3 mt-3'>
               <input
@@ -123,18 +123,20 @@ function EditProfile({ closeModal }) {
                 placeholder='Contact Number'
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
-              <div className='flex justify-center items-center w-[95%] gap-[1px] '>
+              <div className='flex justify-center items-center w-[116%] gap-2 '>
                 <div className='flex flex-col w-1/2 pl-20'>
-                  <label htmlFor='gender'>Gender</label>
+                  <label htmlFor='gender' className='font-semibold'>
+                    Gender
+                  </label>
                   <select
                     name='gender'
                     onChange={e => setGenderState(e.target.value)}
                     id='gender'
-                    className='h-10 shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+                    className='h-9  shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   >
                     {gender === '' || !gender ? (
                       <>
-                        <option selected value=''>
+                        <option defaultValue value=''>
                           Select Gender
                         </option>
                         <option value='male'>Male</option>
@@ -143,7 +145,7 @@ function EditProfile({ closeModal }) {
                       </>
                     ) : gender !== '' && gender === 'male' ? (
                       <>
-                        <option selected value='male'>
+                        <option defaultValue value='male'>
                           Male
                         </option>
                         <option value='female'>Female</option>
@@ -152,7 +154,7 @@ function EditProfile({ closeModal }) {
                     ) : gender !== '' && gender === 'female' ? (
                       <>
                         <option value='male'>Male</option>
-                        <option selected value='female'>
+                        <option defaultValue value='female'>
                           Female
                         </option>
                         <option value='others'>Others</option>
@@ -161,7 +163,7 @@ function EditProfile({ closeModal }) {
                       <>
                         <option value='male'>Male</option>
                         <option value='female'>Female</option>
-                        <option selected value='others'>
+                        <option defaultValue value='others'>
                           Others
                         </option>
                       </>
@@ -169,9 +171,11 @@ function EditProfile({ closeModal }) {
                   </select>
                 </div>
                 <div className='flex flex-col w-1/2 pr-20'>
-                  <label htmlFor=''>Birthday</label>
+                  <label htmlFor='' className='font-semibold'>
+                    Birthday
+                  </label>
                   <input
-                    className=' h-10 shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+                    className=' h-9  shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
                     type='date'
                     onChange={e => {
                       setBirthdayState(e.target.value)
@@ -182,7 +186,7 @@ function EditProfile({ closeModal }) {
                   />
                 </div>
               </div>
-              <div className='w-[100%] flex justify-end mr-24 gap-3 md:mr-[190px] lg:mr-[190px]'>
+              <div className='w-[100%] flex justify-end mr-24 gap-1 md:mr-[190px] lg:mr-[100px]'>
                 <button
                   onClick={() => closeModal(false)}
                   className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'

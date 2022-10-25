@@ -55,17 +55,6 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
           <SideBarIcon
             icon={
               <img
-                alt='dashboard icon'
-                onClick={viewDashboard}
-                className='w-10 h-10 invert'
-                src={require('../assets/dashboard.jpg')}
-              />
-            }
-          />
-          <p className='text-sm pt-0 mb-3 text-center'>Dashboard</p>
-          <SideBarIcon
-            icon={
-              <img
                 alt='client icon'
                 onClick={viewClients}
                 className='w-8 h-8'

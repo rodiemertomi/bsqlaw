@@ -31,17 +31,34 @@ export default function AdminProfile() {
         <div className='flex flex-col justify-center items-center gap-1'>
           <img
             alt='user'
-            className='w-96 h-96 rounded-full mb-4'
+            className='w-[60%] lg:w-[20%] rounded-full mb-2'
             src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
           />
-          <h1>First Name: {firstName}</h1>
-          <h1>Last Name: {lastName}</h1>
-          <h1>Initials: {initials}</h1>
-          <h1>Email: {email}</h1>
-          <h1>Expertise: {expertise?.join(', ')}</h1>
-          <h1>Gender: {gender}</h1>
-          <h1>Birthday: {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}</h1>
-          <h1>Contact Number: {contactNo}</h1>
+          <h1>
+            <span className='font-bold'>First Name:</span> {firstName}
+          </h1>
+          <h1>
+            <span className='font-bold'>Last Name:</span> {lastName}
+          </h1>
+          <h1>
+            <span className='font-bold'>Initials:</span> {initials}
+          </h1>
+          <h1>
+            <span className='font-bold'>Email:</span> {email}
+          </h1>
+          <h1>
+            <span className='font-bold'>Expertise:</span> {expertise?.join(', ')}
+          </h1>
+          <h1>
+            <span className='font-bold'>Gender:</span> {gender}
+          </h1>
+          <h1>
+            <span className='font-bold'>Birthday:</span>{' '}
+            {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}
+          </h1>
+          <h1>
+            <span className='font-bold'>Contact Number:</span> {contactNo}
+          </h1>
           <button
             type='button'
             onClick={() => {

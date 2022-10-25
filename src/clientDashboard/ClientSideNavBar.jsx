@@ -49,17 +49,6 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
           <SideBarIcon
             icon={
               <img
-                alt='dashboard'
-                onClick={viewDashboard}
-                className='w-10 h-10 invert'
-                src={require('../assets/dashboard.jpg')}
-              />
-            }
-          />
-          <p className='text-sm pt-0 mb-3 font-Lora text-center'>Dashboard</p>
-          <SideBarIcon
-            icon={
-              <img
                 alt='lawyers'
                 onClick={viewLawyers}
                 className='w-10 h-10 invert'

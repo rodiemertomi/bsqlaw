@@ -77,7 +77,7 @@ function NavigationBar() {
           ))}
           <Link to={'/login'}>
             <LightButton isScrolled={isScrolled} setOpen={setOpen}>
-              GET STARTED
+              LOGIN/SIGN UP
             </LightButton>
           </Link>
         </ul>
