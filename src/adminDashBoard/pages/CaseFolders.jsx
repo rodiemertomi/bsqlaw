@@ -18,9 +18,13 @@ export default function CaseFolders() {
   const [loading, setLoading] = useState(false)
   const [fileUpload, setFileUpload] = useState(null)
   const [foldersList, setFoldersList] = useState([])
-  const fileNameRef = useRef()
+  const caseTitleRef = useRef()
+  const pleadingRef = useRef()
+  const caseNoRef = useRef()
   const folderNameRef = useRef()
   const courtRef = useRef()
+  const branchRef = useRef()
+  const [pleadingDate, setPleadingDate] = useState()
   const [folderOption, setFolderOption] = useState('')
   const [fileList, setFileList] = useState([])
   const { username, id, initials } = UseUserReducer()
@@ -66,31 +70,31 @@ export default function CaseFolders() {
     }
 
     const extension = fileUpload.name.split('.').pop()
-    const fileUrl = `caseFiles/${username}/${folderOption}/${fileNameRef.current.value}.${extension}`
+    const fileUrl = `caseFiles/${username}/${folderOption}/${caseTitleRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
     await uploadBytes(fileRef, fileUpload).then(snapshot => {
       getDownloadURL(snapshot.ref).then(async url => {
         const data = {
           active: true,
-          filename: snapshot.ref.name,
+          casenumber: caseNoRef.current.value,
+          casetitle: caseTitleRef.current.value,
+          pleading: pleadingRef.current.value,
+          pleadingdate: new Date(pleadingDate),
           date_created: new Date(),
           author: initials,
           folder: folderOption,
           shareable: false,
           url: url,
           court: courtRef.current.value,
+          branch: branchRef.current.value,
         }
         const colRef = collection(db, `files`)
         const docRef = doc(colRef)
-        await setDoc(docRef, data).then(() => {
-          alert('successfully added file in firestore')
+        await setDoc(docRef, data, { merge: true }).then(() => {
+          alert('Successfully added file in firestore')
         })
       })
     })
-    setFileUpload(null)
-    setFolderOption('')
-    fileNameRef.current.value = ''
-    courtRef.current.value = ''
     setLoading(false)
   }
 
@@ -167,28 +171,11 @@ export default function CaseFolders() {
                         <Fragment key={data.id}>
                           {data.folder === folder ? (
                             readState ? (
-                              <ReadOnlyRow
-                                filename={data.filename}
-                                shareable={data.shareable}
-                                url={data.url}
-                                date_created={data.date_created.toDate()}
-                                court={data.court}
-                                initials={initials}
-                                data={data}
-                                handleEditClick={handleEditClick}
-                                folder={data.folder}
-                              />
+                              <ReadOnlyRow data={data} handleEditClick={handleEditClick} />
                             ) : (
                               <EditRow
                                 editFormData={editFormData}
-                                filename={data.filename}
-                                shareable={data.shareable}
-                                url={data.url}
-                                date_created={data.date_created.toDate()}
-                                court={data.court}
-                                initials={initials}
                                 data={data}
-                                folder={data.folder}
                                 handleCancel={handleCancel}
                                 handleEdit={handleEdit}
                               />
@@ -221,14 +208,22 @@ export default function CaseFolders() {
                     <h1 className='font-bold text-2xl'>ADD FILE</h1>
                     <hr className='w-64' />
                   </div>
-                  <div className='flex flex-col items-center justify-evenly gap-5 mt-5'>
+                  <div className='flex justify-center gap-2'>
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                         shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
-                      ref={fileNameRef}
-                      placeholder='Enter Filename'
+                      ref={folderNameRef}
+                      placeholder='Enter folder name'
                     />
+                    <button
+                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      onClick={addFolder}
+                    >
+                      Add Folder
+                    </button>
+                  </div>
+                  <div className='flex flex-col items-center justify-evenly gap-5 mt-5'>
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] 
                         shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -248,10 +243,47 @@ export default function CaseFolders() {
                     </select>
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='text'
+                      ref={caseNoRef}
+                      placeholder='Case Number'
+                    />
+                    <input
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='text'
+                      ref={caseTitleRef}
+                      placeholder='Case Title'
+                    />
+                    <input
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='text'
+                      ref={pleadingRef}
+                      placeholder='Pleading / Order'
+                    />
+                    <label htmlFor='pleading-date'>Pleading Date</label>
+                    <input
+                      name='pleading-date'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='date'
+                      placeholder='Pleading Date'
+                      onChange={e => setPleadingDate(e.target.value)}
+                    />
+                    <input
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                         shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       placeholder='Enter Court'
                       ref={courtRef}
+                    />
+                    <input
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                        shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='text'
+                      placeholder='Enter Branch (1-300)'
+                      ref={branchRef}
                     />
                     <input
                       className='bg-[#BABABA] lg:h-[40px]
@@ -267,21 +299,7 @@ export default function CaseFolders() {
                       Upload
                     </button>
                   </div>
-                  <div className='flex justify-center gap-2'>
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                         shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      ref={folderNameRef}
-                      placeholder='Enter folder name'
-                    />
-                    <button
-                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-                      onClick={addFolder}
-                    >
-                      Add Folder
-                    </button>
-                  </div>
+
                   <p
                     className='text-maroon font-bold cursor-pointer hover:text-white'
                     onClick={() => setShowModal(false)}
@@ -293,36 +311,12 @@ export default function CaseFolders() {
             )}
           </div>
         </div>
-        {/* Second Div */}
-        <div className='w-[100%] h-[100%] lg:h-[100%] lg:w-[40%]'>
-          <div className='flex flex-col gap-5 mb-5 lg:w-[95%] lg:h-[100%]'>
-            <div className=' flex flex-col items-start shadow-lg  text-white bg-maroon rounded-md lg:h-[50%] '>
-              {/* Todo */}
-              <div className='flex flex-col m-5 text-justify '>
-                <div className='flex'>
-                  <h1 className='font-bold'>To-Do</h1>
-                  <h1 className='font-bold'>+</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )
 }
 
-function ReadOnlyRow({
-  filename,
-  url,
-  shareable,
-  date_created,
-  initials,
-  court,
-  handleEditClick,
-  data,
-  folder,
-}) {
+function ReadOnlyRow({ data, handleEditClick }) {
   return (
     <>
       <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
@@ -332,20 +326,38 @@ function ReadOnlyRow({
               Case No.
             </th>
             <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Case Title
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Pleading / Order
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Pleading / Order Date
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
               Handling Associate
             </th>
             <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
               Court
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
+              Branch
             </th>
           </tr>
         </thead>
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
-              <a href={url}>{filename}</a>
+              <a href={data.url}>{data.casenumber}</a>
             </th>
-            <td className='py-4 px-6 border border-slate-700'>{initials}</td>
-            <td className='py-4 px-6 border border-slate-700'>{court}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.casetitle}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.pleading}</td>
+            <td className='py-4 px-6 border border-slate-700'>
+              {data.pleadingdate?.toDate().toLocaleString('en-US')}
+            </td>
+            <td className='py-4 px-6 border border-slate-700'>{data.author}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.court}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.branch}</td>
           </tr>
         </tbody>
         <thead className='text-xs text-gray-700 '>
@@ -362,26 +374,14 @@ function ReadOnlyRow({
           </tr>
         </thead>
         <tbody>
-          <tr className=''>
+          <tr className='text-center'>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {date_created.toLocaleString('en-US')}
+              {data.date_created.toDate().toLocaleString('en-US')}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
-              {shareable ? 'Shared' : 'Unshared'}
+              {data.shareable ? 'Shared' : 'Unshared'}
             </td>
-            <td className={`text-left w-1/5`}>{initials}</td>
-            <td className={`text-left w-1/5`}>{court}</td>
-            <td className={`text-left w-1/5`}>{date_created.toLocaleString('en-US')}</td>
-            <td className={`text-left w-1/5`}>{shareable ? 'Shared' : 'Unshared'}</td>
-            <td>{folder}</td>
-            <td>
-              <button
-                onClick={e => handleEditClick(e, data)}
-                className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
-              >
-                Edit
-              </button>
-            </td>
+            <td className={`text-center w-1/5 `}>{data.folder}</td>
           </tr>
         </tbody>
       </table>
@@ -397,51 +397,59 @@ function ReadOnlyRow({
   )
 }
 
-function EditRow({
-  filename,
-  url,
-  shareable,
-  date_created,
-  initials,
-  court,
-  folder,
-  handleCancel,
-  handleEdit,
-}) {
+function EditRow({ handleCancel, handleEdit, data }) {
   return (
     <>
       <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
         <thead className='text-xs text-gray-700 '>
           <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
               Case No.
             </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Case Title
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Pleading / Order
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+              Pleading / Order Date
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
               Handling Associate
             </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
               Court
+            </th>
+            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
+              Branch
             </th>
           </tr>
         </thead>
         <tbody>
           <tr className=''>
-            <th scope='row' className='py-4 px-6 font-medium border border-slate-700'>
-              <a href={url}>{filename}</a>
+            <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
+              <a href={data.url}>{data.casenumber}</a>
             </th>
-            <td className='py-4 px-6 border border-slate-700'>{initials}</td>
-            <td className='py-4 px-6 border border-slate-700'>{court}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.casetitle}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.pleading}</td>
+            <td className='py-4 px-6 border border-slate-700'>
+              {data.pleadingdate?.toDate().toLocaleString('en-US')}
+            </td>
+            <td className='py-4 px-6 border border-slate-700'>{data.author}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.court}</td>
+            <td className='py-4 px-6 border border-slate-700'>{data.branch}</td>
           </tr>
         </tbody>
         <thead className='text-xs text-gray-700 '>
           <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
               Date Created
             </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
               Shareable
             </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm border border-slate-600'>
+            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
               Folder
             </th>
           </tr>
@@ -449,11 +457,11 @@ function EditRow({
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {date_created.toLocaleString('en-US')}
+              {data.date_created.toDate().toLocaleString('en-US')}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               <select onChange={handleEdit}>
-                {shareable ? (
+                {data.shareable ? (
                   <>
                     <option value={true}>Shared</option>
                     <option value={false}>Unshared</option>
@@ -466,7 +474,7 @@ function EditRow({
                 )}
               </select>
             </td>
-            <td className='py-4 px-4 border border-slate-700'>{folder}</td>
+            <td className='py-4 px-4 border border-slate-700'>{data.folder}</td>
           </tr>
         </tbody>
       </table>
