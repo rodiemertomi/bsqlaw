@@ -203,7 +203,7 @@ export default function CaseFolders() {
             </button>
             {showModal && (
               <div className='w-screen h-screen backdrop-blur-sm absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#BABABA] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[80%] lg:w-[40%] '>
+                <div className='flex flex-col justify-center items-center bg-[#BABABA] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[95%] lg:w-[40%] '>
                   <div className='flex flex-col items-center gap-2'>
                     <h1 className='font-bold text-2xl'>ADD FILE</h1>
                     <hr className='w-64' />
@@ -223,7 +223,7 @@ export default function CaseFolders() {
                       Add Folder
                     </button>
                   </div>
-                  <div className='flex flex-col items-center justify-evenly gap-5 mt-5'>
+                  <div className='flex flex-col items-center justify-evenly gap-2'>
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] 
                         shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
