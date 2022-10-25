@@ -1,38 +1,30 @@
-import { useState } from 'react'
-import React from 'react'
-import Calendar from 'react-calendar'
+import { collection, doc, getDocs, orderBy, query, where } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
 import 'react-calendar/dist/Calendar.css'
-import Time from './components/Time'
 import UseUserReducer from '../../UserReducer'
+import { db } from '../../firebase'
 import Times from './components/Times'
 
 function AppointmentManagement() {
   const [showAppointment, setShowAppoitnment] = useState(false)
-  // const [date, setDate] = useState(new Date())
-  // const [showTime, setShowTime] = useState(false)
-  // const { appointments } = UseUserReducer()
-  /* <div>
-                  <Calendar onChange={setDate} value={date} onClickDay={() => setShowTime(true)} />
-                </div> */
-  /* <div>
-                  {date.length > 0 ? (
-                    <p>
-                      <span>Start:</span>
-                      {date[0].toDateString()}
-                      &nbsp; &nbsp;
-                      <span>End:</span>
-                      {date[1].toDateString()}
-                    </p>
-                  ) : (
-                    <p>
-                      <span>Default selected date: </span>
-                      {date.toDateString()}
-                    </p>
-                  )}
-                  {appointments.toString()}
-                  <Time showTime={showTime} date={date} />
-                </div> */
+  const [appointments, setAppointments] = useState([])
+  const { initials } = UseUserReducer()
+  const { id } = UseUserReducer()
+  const colRef = collection(db, 'appointments')
+  const q = query(colRef, where('setter', '==', `${initials}`), orderBy('eventDateStart', 'asc'))
 
+  const formatDate = date => {
+    let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
+    return dateArray.join('/')
+  }
+
+  useEffect(() => {
+    const getData = async () => {
+      const snap = await getDocs(q)
+      setAppointments(snap.docs.map(doc => ({ ...doc.data() })))
+    }
+    getData()
+  }, [])
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>Appointments</h1>
@@ -40,6 +32,21 @@ function AppointmentManagement() {
         <div className='w-[100%] h-[1000%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col gap-2 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
           {/* Card View */}
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-wrap gap-2 justify-center lg:w-[100%] overflow-auto scrollbar-hide'>
+            {appointments?.map(appointment => (
+              <div
+                key={appointment.id}
+                className='bg-[#9C9999] w-[100%] h-60 rounded-md pl-2 flex flex-col gap-2 '
+              >
+                <div>Client: {appointment.client}</div>
+                <div>Event Name: {appointment.eventName}</div>
+                <div>Event Desc: {appointment.eventDesc}</div>
+                <div>Event Time Start: {appointment.eventTimeStart}</div>
+                <div>Event Time End: {appointment.eventTimeEnd}</div>
+                <div>Event Date Start: {formatDate(appointment.eventDateStart.toDate())}</div>
+                <div>Event Date End: {formatDate(appointment.eventDateEnd.toDate())}</div>
+              </div>
+            ))}
+            {/* <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
             <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
             <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
             <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
@@ -49,8 +56,7 @@ function AppointmentManagement() {
             <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
             <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
             <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
-            <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
-            <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div>
+            <div className='bg-[#9C9999] w-[100%] h-[80px] rounded-md pl-2 '>Events</div> */}
           </div>
           <div className='h-[50px] flex flex-col justify-center item-center self-end mb-2 mr-5'>
             <button

@@ -8,7 +8,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
     try {
       await logOut()
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
 

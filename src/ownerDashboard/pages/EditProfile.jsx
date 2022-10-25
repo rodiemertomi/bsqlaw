@@ -74,8 +74,6 @@ function EditProfile({ closeModal }) {
     handleImageChange()
   }, [image])
 
-  console.log(photoURLState)
-
   return (
     <div className='w-screen h-screen flex items-center justify-center bg-[#f8f4f4]'>
       <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[60%] lg:gap-3'>

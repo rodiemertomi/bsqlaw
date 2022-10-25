@@ -29,16 +29,6 @@ function Times({ closeShowAppointment }) {
     client,
   } = UseAppointmentStore()
 
-  const formatDate = date => {
-    let dateArray = date.split('-', 3)
-    let formatedDate = []
-    for (let i = dateArray.length - 1; i >= 0; i--) {
-      let data = dateArray[i]
-      formatedDate.push(data)
-    }
-    return formatedDate.join('/')
-  }
-
   const saveEvent = async e => {
     e.preventDefault()
     const data = {
@@ -49,8 +39,8 @@ function Times({ closeShowAppointment }) {
       eventDesc: eventDesc,
       eventTimeStart: eventTimeStart,
       eventTimeEnd: eventTimeEnd,
-      eventDateStart: formatDate(eventDateStart),
-      eventDateEnd: formatDate(eventDateEnd),
+      eventDateStart: new Date(eventDateStart),
+      eventDateEnd: new Date(eventDateEnd),
     }
     await addDoc(appointmentsRef, data).then(alert('Appointment is set!'))
     const appointments = {
@@ -139,7 +129,7 @@ function Times({ closeShowAppointment }) {
             type='text'
             id='appt'
             name='appt'
-            onChange={event => setEventDateStart(event.target.value.toLocaleString('en-US'))}
+            onChange={event => setEventDateStart(event.target.value)}
             value={eventDateStart}
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}
@@ -150,7 +140,7 @@ function Times({ closeShowAppointment }) {
             type='text'
             id='appt'
             name='appt'
-            onChange={event => setEventDateEnd(event.target.value.toLocaleString('en-US'))}
+            onChange={event => setEventDateEnd(event.target.value)}
             value={eventDateEnd}
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}

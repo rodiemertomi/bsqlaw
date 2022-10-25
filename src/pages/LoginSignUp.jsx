@@ -23,7 +23,7 @@ function LoginSignUp() {
     try {
       await googleSignIn()
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
 
@@ -31,7 +31,7 @@ function LoginSignUp() {
     try {
       await facebookSignIn()
     } catch (error) {
-      console.log(error)
+      alert(error)
     }
   }
 
