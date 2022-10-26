@@ -354,7 +354,7 @@ function ReadOnlyRow({ data, handleEditClick }) {
             <td className='py-4 px-6 border border-slate-700'>{data.casetitle}</td>
             <td className='py-4 px-6 border border-slate-700'>{data.pleading}</td>
             <td className='py-4 px-6 border border-slate-700'>
-              {data.pleadingdate?.toDate().toLocaleString('en-US')}
+              {data.pleadingdate?.toDate().toISOString().substr(0, 10)}
             </td>
             <td className='py-4 px-6 border border-slate-700'>{data.author}</td>
             <td className='py-4 px-6 border border-slate-700'>{data.court}</td>
@@ -377,7 +377,7 @@ function ReadOnlyRow({ data, handleEditClick }) {
         <tbody>
           <tr className='text-center'>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {data.date_created.toDate().toLocaleString('en-US')}
+              {data.date_created.toDate().toISOString().substr(0, 10)}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               {data.shareable ? 'Shared' : 'Unshared'}
@@ -435,7 +435,7 @@ function EditRow({ handleCancel, handleEdit, data }) {
             <td className='py-4 px-6 border border-slate-700'>{data.casetitle}</td>
             <td className='py-4 px-6 border border-slate-700'>{data.pleading}</td>
             <td className='py-4 px-6 border border-slate-700'>
-              {data.pleadingdate?.toDate().toLocaleString('en-US')}
+              {data.pleadingdate?.toDate().toISOString().substr(0, 10)}
             </td>
             <td className='py-4 px-6 border border-slate-700'>{data.author}</td>
             <td className='py-4 px-6 border border-slate-700'>{data.court}</td>
@@ -458,7 +458,7 @@ function EditRow({ handleCancel, handleEdit, data }) {
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {data.date_created.toDate().toLocaleString('en-US')}
+              {data.date_created.toDate().toISOString().substr(0, 10)}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               <select onChange={handleEdit}>
