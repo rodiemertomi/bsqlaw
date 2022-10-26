@@ -31,7 +31,7 @@ export default function AdminProfile() {
         <div className='flex flex-col justify-center items-center gap-1'>
           <img
             alt='user'
-            className='w-96 h-96 rounded-full mb-4'
+            className='w-[200px] h-[200px] rounded-full mb-2'
             src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
           />
           <h1>First Name: {firstName}</h1>
