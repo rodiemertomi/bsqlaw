@@ -75,9 +75,8 @@ function EditProfile({ closeModal }) {
   }, [image])
 
   return (
-    <div className='w-screen h-screen flex items-center justify-center bg-[#f8f4f4]'>
-      <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[60%] lg:gap-3'>
-        <h1 className='font-bold text-2xl'>Edit Profile</h1>
+    <div className='w-screen h-screen flex items-center justify-center backdrop-blur-sm'>
+      <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[50%] lg:gap-3'>
         <div className='flex flex-col justify-center items-center gap-2'>
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
