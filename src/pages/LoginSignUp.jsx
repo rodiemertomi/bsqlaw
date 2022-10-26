@@ -95,7 +95,7 @@ function LoginSignUp() {
         initials: '',
         lastname: '',
         photoURL: '',
-        role: 'user',
+        role: 'client',
         username: signUpUserNameRef.current.value,
       }
       await addDoc(colRef, data)
