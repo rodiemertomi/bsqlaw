@@ -86,10 +86,10 @@ export default function AdminsManagement() {
 
   return (
     <>
-      <div className='h-screen w-screen'>
-        <div className='m-1 lg:ml-24'>
-          <h1 className='text-3xl font-bold'>Create Admin</h1>
-          <div className='mt-5'>
+      <div className='h-screen w-screen p-5'>
+        <h1 className='self-start text-[30px] font-bold lg:ml-20'>Create Admin</h1>
+        <div className='mt-2 overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md lg:w-[94%] lg:h-[93%]'>
+          <div>
             <input
               className='w-1/2 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               type='text'
@@ -99,20 +99,28 @@ export default function AdminsManagement() {
             />
           </div>
 
-          <div className='mt-5 flex flex-col justify-center items-center'>
+          <div className='mt-2 flex flex-col justify-center'>
             <div className='flex self-start'>
               <h1 className='font-semibold text-xl'>Admin Details</h1>
             </div>
             {/* ADMIN DETAILS */}
-            <div className='mt-2 xl:ml-40'>
+            <div className='mt-2'>
               <form onSubmit={handleEditFormSubmit}>
-                <table className='w-screen'>
-                  <thead className={`w-screen`}>
-                    <tr className={`flex text-left w-screen justify-around`}>
-                      <th className={`text-left w-1/4`}>Username</th>
-                      <th className={`text-left w-1/4`}>Email Address</th>
-                      <th className={`text-left w-1/4`}>Role</th>
-                      <th className={`text-left w-1/4`}>Expertise</th>
+                <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
+                  <thead className={`text-xs text-gray-700 `}>
+                    <tr>
+                      <th th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                        Username
+                      </th>
+                      <th th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                        Email Address
+                      </th>
+                      <th th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                        Role
+                      </th>
+                      <th th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                        Expertise
+                      </th>
                     </tr>
                   </thead>
                   {/* {loading ? ( */}
