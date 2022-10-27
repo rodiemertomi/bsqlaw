@@ -46,11 +46,6 @@ function LoginSignUp() {
     setShowLogin(true)
   }
 
-  const handleSignUpClick = () => {
-    setShowLogin(false)
-    setShowSignUp(true)
-  }
-
   async function handleLogin(e) {
     e.preventDefault()
 
@@ -124,24 +119,16 @@ function LoginSignUp() {
   return (
     <div className='bg-white flex justify-center items-center h-screen transition-all duration-200 '>
       <div
-        className={`shadow-2xl flex flex-col items-center w-[350px] border-black border-[3px] rounded-3xl gap-5 h-[600px] lg:h-[522px] lg:mt-14`}
+        className={`shadow-2xl flex flex-col jus items-center w-[350px] border-black border-[3px] rounded-3xl h-[600px] lg:h-[450px] lg:mt-14`}
       >
         <div className='flex'>
           <div
             onClick={handleLoginClick}
-            className={`font-Lora flex justify-center items-center font-semibold border-black border-[2px] rounded-tl-3xl w-[175px] h-14 cursor-pointer ${
+            className={`font-Lora flex justify-center items-center font-semibold border-black border-[2px] w-[345px] rounded-t-2xl h-14 ${
               showLogin ? `bg-[#632121] text-white` : ``
             }`}
           >
-            LOGIN
-          </div>
-          <div
-            onClick={handleSignUpClick}
-            className={`font-Lora flex justify-center items-center font-semibold border-black border-[2px] rounded-tr-3xl w-[175px] h-14 cursor-pointer ${
-              showSignUp ? `bg-[#632121] text-white` : ``
-            }`}
-          >
-            SIGN UP
+            BSQ Law
           </div>
         </div>
 
@@ -149,8 +136,11 @@ function LoginSignUp() {
         {showLogin && (
           <div className='flex justify-center flex-col w-[270px] h-[500px]'>
             {error && <AlertBox>{error}</AlertBox>}
-            <form onSubmit={handleLogin} className='flex flex-col mt-4 gap-2 w-[270px] h-[290px]'>
-              <label htmlFor='email' className=' font-Lora font-semibold'>
+            <form onSubmit={handleLogin} className='flex flex-col gap-2 w-[270px] h-[300px]'>
+              <p className='font-Lora text-xs text-center text-[#8C760A]'>
+                Login with the email provided by the firm
+              </p>
+              <label htmlFor='email' className=' font-Lora font-semibold mt-2'>
                 EMAIL:
               </label>
               <input
@@ -181,112 +171,6 @@ function LoginSignUp() {
                 LOG IN
               </button>
             </form>
-            <div className='flex flex-col items-center'>
-              <p className=' text-sm font-Lora font-semibold'>Login With</p>
-              <hr className='w-64 mt-2' />
-              <div className='flex gap-28 mt-2'>
-                <img
-                  onClick={handleFacebookSignIn}
-                  className='w-12 h-12 cursor-pointer'
-                  alt='fb.png'
-                  src={require('../assets/fb.png')}
-                />
-                <img
-                  onClick={handleGoogleSignIn}
-                  className='w-12 h-12 cursor-pointer'
-                  alt='gmail.png'
-                  src={require('../assets/gmail.png')}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* SIGNUP */}
-        {showSignUp && (
-          <div className='flex flex-col w-[270px] h-full '>
-            {error && <AlertBox>{error}</AlertBox>}
-            <form onSubmit={handleSignup} className='flex flex-col gap-1 w-[270px]'>
-              <label htmlFor='email' className='text-sm font-Lora font-semibold'>
-                EMAIL ADDRESS:
-              </label>
-              <input
-                required
-                ref={signUpEmailRef}
-                type='email'
-                name='email'
-                placeholder='Email'
-                className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              />
-              <label htmlFor='username' className='mt-3 text-sm font-Lora font-semibold'>
-                USERNAME:
-              </label>
-              <input
-                required
-                ref={signUpUserNameRef}
-                type='text'
-                name='username'
-                placeholder='Username'
-                className='bg-white self-center  border-black outline-none border-b-[1px] lg:h-[35px]
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              />
-              <label htmlFor='password' className='mt-3 text-sm font-Lora font-semibold'>
-                SET PASSWORD:
-              </label>
-              <input
-                required
-                ref={setPasswordRef}
-                type='password'
-                name='password'
-                placeholder='Set Password'
-                className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              />
-              <label htmlFor='confirmPassword' className='mt-3 text-sm font-Lora font-semibold'>
-                CONFIRM PASSWORD:
-              </label>
-              <input
-                required
-                ref={confirmPasswordRef}
-                type='password'
-                name='confirmPassword'
-                placeholder='Confirm Password'
-                className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              />
-              {/* <div className='flex gap-2 h-10 items-center mt-3 font-Lora'>
-                <input required type='checkbox' name='checkbox' />
-                <label htmlFor='checkbox' className='text-xs'>
-                  I HAVE READ THE TERMS & CONDITIONS
-                </label>
-              </div> */}
-              <button
-                type='submit'
-                disabled={loading}
-                className='font-Lora font-bold mt-2 px-8 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white text-white md:text-sm md:py-3 md:px-4'
-              >
-                SIGN UP
-              </button>
-            </form>
-            <div className='flex flex-col items-center'>
-              <p className='mt-4 text-sm font-Lora font-semibold'>Login With</p>
-              <hr className='w-64' />
-              <div className='flex gap-28 cursor-pointer'>
-                <img
-                  onClick={handleFacebookSignIn}
-                  className='w-12 h-12'
-                  alt='fb.png'
-                  src={require('../assets/fb.png')}
-                />
-                <img
-                  onClick={handleGoogleSignIn}
-                  className='w-12 h-12 cursor-pointer'
-                  alt='gmail.png'
-                  src={require('../assets/gmail.png')}
-                />
-              </div>
-            </div>
           </div>
         )}
       </div>
