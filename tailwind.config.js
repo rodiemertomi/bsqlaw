@@ -11,6 +11,7 @@ module.exports = {
       black: '#1e1e1e',
       clearWhite: '#FFFFFF',
       pink: '#FF00FF',
+      red: '#d0342c',
     },
     fontFamily: {
       Lora: ['Lora', 'sans-serif'],
