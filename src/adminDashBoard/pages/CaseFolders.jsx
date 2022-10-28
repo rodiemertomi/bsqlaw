@@ -319,8 +319,8 @@ export default function CaseFolders() {
 function ReadOnlyRow({ data, handleEditClick }) {
   return (
     <>
-      <div className='overflow-x-auto relative shadow-lg rounded-lg'>
-        <table className='w-full text-sm text-center text-gray-500'>
+      <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
             <tr>
               <th scope='col' className='py-3 px-6 '>
@@ -388,8 +388,8 @@ function ReadOnlyRow({ data, handleEditClick }) {
 function EditRow({ handleCancel, handleEdit, data }) {
   return (
     <>
-      <div className='overflow-x-auto relative shadow-lg rounded-lg'>
-        <table className='w-full text-sm text-center text-gray-500'>
+      <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
             <tr>
               <th scope='col' className='py-3 px-6 '>
