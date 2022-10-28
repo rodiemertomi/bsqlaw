@@ -12,7 +12,6 @@ import {
 import { db } from '../../firebase'
 import ClientsEditRow from './components/ClientsEditRow'
 import ClientsReadOnlyRow from './components/ClientsReadOnlyRow'
-import { formatDistanceToNowStrict } from 'date-fns'
 
 export default function ClientsManagement() {
   const colRef = collection(db, 'users')
