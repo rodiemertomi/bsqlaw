@@ -128,14 +128,13 @@ function LoginSignUp() {
               showLogin ? `bg-[#632121] text-white` : ``
             }`}
           >
-            BSQ Law
+            BSQ LAW
           </div>
         </div>
 
         {/* LOGIN */}
         {showLogin && (
           <div className='flex justify-center flex-col w-[270px] h-[500px]'>
-            {error && <AlertBox>{error}</AlertBox>}
             <form onSubmit={handleLogin} className='flex flex-col gap-2 w-[270px] h-[300px]'>
               <p className='font-Lora text-xs text-center text-[#8C760A]'>
                 Login with the email provided by the firm
@@ -164,9 +163,10 @@ function LoginSignUp() {
                 className='bg-white self-center h-11 border-black outline-none border-b-[1px] 
                 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
+              {error && <AlertBox>{error}</AlertBox>}
               <button
                 type='submit'
-                className='font-Lora font-bold mt-5 py-4 px-8 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white text-white md:text-sm md:py-3 md:px-4 '
+                className='font-Lora font-bold mt-2 py-4 px-8 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white text-white md:text-sm md:py-3 md:px-4 '
               >
                 LOG IN
               </button>
