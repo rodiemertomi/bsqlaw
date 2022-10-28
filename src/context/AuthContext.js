@@ -1,13 +1,10 @@
 import React from 'react'
 import { useContext, createContext, useEffect, useState } from 'react'
 import {
-  GoogleAuthProvider,
-  signInWithPopup,
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  FacebookAuthProvider,
 } from 'firebase/auth'
 import { auth } from '../firebase'
 
@@ -16,16 +13,6 @@ const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
   const [user, setuser] = useState({})
   const [loading, setLoading] = useState(true)
-
-  const googleSignIn = () => {
-    const provider = new GoogleAuthProvider()
-    signInWithPopup(auth, provider)
-  }
-
-  const facebookSignIn = () => {
-    const provider = new FacebookAuthProvider()
-    signInWithPopup(auth, provider)
-  }
 
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -50,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ googleSignIn, logOut, user, signup, login, facebookSignIn }}>
+    <AuthContext.Provider value={{ logOut, user, signup, login }}>
       {!loading && children}
     </AuthContext.Provider>
   )
