@@ -12,6 +12,7 @@ import {
 import { db } from '../../firebase'
 import ClientsEditRow from './components/ClientsEditRow'
 import ClientsReadOnlyRow from './components/ClientsReadOnlyRow'
+import { formatDistanceToNowStrict } from 'date-fns'
 
 export default function ClientsManagement() {
   const colRef = collection(db, 'users')
@@ -23,6 +24,13 @@ export default function ClientsManagement() {
     username: '',
     email: '',
     role: 'client',
+    birthday: new Date(),
+    contactno: '',
+    firstname: '',
+    gender: '',
+    lastname: '',
+    lawyer: '',
+    password: '',
   })
 
   const [editFormData, setEditFormData] = useState({
@@ -60,12 +68,18 @@ export default function ClientsManagement() {
   const handleAddFormSubmit = async e => {
     e.preventDefault()
     setLoading(true)
-    if (!addFormData.email || !addFormData.username) return
+    if (!addFormData.email || !addFormData.username || !addFormData.password) return
 
     const newClient = {
       username: addFormData.username,
       email: addFormData.email,
       role: addFormData.role,
+      password: addFormData.password,
+      birthday: addFormData.birthday,
+      contactno: addFormData.contactno,
+      gender: addFormData.gender,
+      firstname: addFormData.firstname,
+      lastname: addFormData.lastname,
     }
 
     try {
@@ -74,6 +88,13 @@ export default function ClientsManagement() {
         username: '',
         email: '',
         role: 'client',
+        password: '',
+        birthday: new Date(),
+        contactno: '',
+        firstname: '',
+        gender: '',
+        lastname: '',
+        lawyer: '',
       })
     } catch (err) {
       alert(err.message)
@@ -91,7 +112,7 @@ export default function ClientsManagement() {
       role: editFormData.role,
     }
 
-    setDoc(docRef, editedUser, { merge: true }).then(docRef => {
+    setDoc(docRef, editedUser, { merge: true }).then(() => {
       alert('Document updated Successfully')
     })
 
@@ -116,17 +137,10 @@ export default function ClientsManagement() {
   }
 
   const handleDeleteClick = async clientId => {
+    setLoading(true)
     await deleteDoc(doc(db, 'users', clientId))
+    setLoading(false)
   }
-
-  useEffect(() => {
-    const getAdmins = async () => {
-      const data = await getDocs(clientRef)
-      setClients(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-    }
-
-    getAdmins()
-  }, [clientRef])
 
   useEffect(() => {
     const getClients = async () => {
@@ -135,7 +149,7 @@ export default function ClientsManagement() {
     }
 
     getClients()
-  }, [clientRef])
+  }, [])
 
   return (
     <>
@@ -161,6 +175,14 @@ export default function ClientsManagement() {
                 name='username'
                 value={addFormData.username}
                 placeholder='Username'
+                onChange={handleAddFormChange}
+              />
+              <input
+                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                type='text'
+                name='password'
+                value={addFormData.password}
+                placeholder='Password'
                 onChange={handleAddFormChange}
               />
               <button
@@ -189,7 +211,7 @@ export default function ClientsManagement() {
                     </tr>
                   </thead>
                   <tbody>
-                    {clients.map(client => (
+                    {clients?.map(client => (
                       <Fragment key={client.id}>
                         {editClientId === client.id ? (
                           <tr>
