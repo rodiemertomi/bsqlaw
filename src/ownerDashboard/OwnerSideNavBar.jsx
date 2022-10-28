@@ -64,7 +64,6 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
           </div>
         </div>
         <div className=' h-screen w-sreen overflow-scroll scrollbar-hide mt-28 mb-28'>
-          {' '}
           <SideBarIcon
             icon={
               <img
