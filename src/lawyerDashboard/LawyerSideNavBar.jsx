@@ -54,7 +54,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
             {
               <img
                 alt='user icon'
-                className='w-14 h-14'
+                className='w-[52px] h-[52px] rounded-full'
                 src={photoURL === '' || !photoURL ? require('../assets/user.png') : `${photoURL}`}
               />
             }

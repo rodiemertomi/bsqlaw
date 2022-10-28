@@ -76,7 +76,7 @@ function AdminSideNavBar({
             {
               <img
                 alt='user icon'
-                className='w-14 h-14 rounded-full'
+                className='w-[52px] h-[52px] rounded-full'
                 src={photoURL === '' || !photoURL ? require('../assets/user.png') : `${photoURL}`}
               />
             }

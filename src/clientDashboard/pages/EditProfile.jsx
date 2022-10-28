@@ -59,9 +59,8 @@ function EditProfile({ closeModal }) {
   }, [image])
 
   return (
-    <div className='w-screen h-screen flex items-center justify-center bg-[#f8f4f4]'>
-      <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[60%] lg:gap-3'>
-        <h1 className='font-bold text-2xl'>Edit Profile</h1>
+    <div className='w-screen h-screen flex items-center justify-center backdrop-blur-sm'>
+      <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[90%] lg:w-[50%] lg:gap-3'>
         <div className='flex flex-col justify-center items-center gap-2'>
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
@@ -93,7 +92,7 @@ function EditProfile({ closeModal }) {
           </div>
 
           <div className='w-[90%] flex flex-col gap-3'>
-            <div className='flex flex-col items-center w-[100%] gap-3 mt-3'>
+            <div className='flex flex-col items-center w-[100%] gap-4 mt-3'>
               <input
                 required
                 value={firstNameState}
@@ -122,8 +121,8 @@ function EditProfile({ closeModal }) {
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
-            <div className='flex flex-col items-center w-[100%] gap-3 '>
-              <div className='flex justify-center items-center w-[110%] gap-2 '>
+            <div className='flex flex-col items-center w-[100%] gap-4 '>
+              <div className='flex justify-center items-center w-[116%] gap-2 '>
                 <div className='flex flex-col w-1/2 pl-20'>
                   <label htmlFor='gender' className='font-semibold'>
                     Gender
@@ -186,7 +185,7 @@ function EditProfile({ closeModal }) {
                   />
                 </div>
               </div>
-              <div className='w-[100%] flex justify-end mr-24 gap-2 md:mr-[190px] lg:mr-[110px]'>
+              <div className='w-[100%] flex justify-end mr-24 gap-1 md:mr-[190px] lg:mr-[110px]'>
                 <button
                   onClick={() => closeModal(false)}
                   className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
