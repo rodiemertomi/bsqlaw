@@ -96,7 +96,7 @@ function AppointmentManagement() {
             </button>
           </div>
           {showAppointment && (
-            <div className='w-screen h-screen backdrop-blur-sm absolute top-0 left-0 flex justify-center items-center'>
+            <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
               <Times closeShowAppointment={setShowAppoitnment} />
             </div>
           )}

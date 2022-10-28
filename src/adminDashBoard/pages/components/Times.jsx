@@ -57,7 +57,7 @@ function Times({ closeShowAppointment }) {
   }
 
   return (
-    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#BABABA] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%]'>
+    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#e1dfdf] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%]'>
       <h1 className='font-bold text-2xl'>Set Appointment</h1>
       <form onSubmit={saveEvent} className='mt-5'>
         <div className='mt-5 flex flex-col justify-center items-center gap-5'>
