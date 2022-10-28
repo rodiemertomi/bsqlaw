@@ -42,7 +42,7 @@ function AppointmentManagement() {
                     {appointment.eventName}
                   </span>
                 </div>
-                <div className='overflow-x-auto relative shadow-lg rounded-lg  '>
+                <div className='overflow-x-auto relative shadow-lg rounded-lg '>
                   <table className='w-full text-sm text-center text-gray-500 border border-gray'>
                     <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
                       <tr>
