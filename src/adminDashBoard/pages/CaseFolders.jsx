@@ -203,31 +203,28 @@ export default function CaseFolders() {
             </button>
             {showModal && (
               <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[95%] lg:w-[40%] '>
-                  <div className='flex flex-col items-center gap-2'>
-                    <h1 className='font-bold text-2xl'>ADD FILE</h1>
-                    <hr className='w-64' />
-                  </div>
-                  <div className='flex justify-center gap-2'>
+                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[70%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[60%] md:w-[70%] lg:h-[85%] lg:w-[30%] '>
+                  <div className='flex justify-center gap-2 flex-col'>
+                    <h1 className='font-bold text-2xl text-center'>Add File</h1>
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                         shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='mt-2 bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                         shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={folderNameRef}
                       placeholder='Enter folder name'
                     />
                     <button
-                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      className=' inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       onClick={addFolder}
                     >
                       Add Folder
                     </button>
                   </div>
                   {/* secret */}
-                  <div className='flex flex-col items-center justify-evenly gap-2'>
+                  <div className='flex flex-col items-center justify-evenly gap-[5px]'>
                     <select
-                      className='bg-white self-center border-black outline-none border-b-[1px] 
-                        shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                        shadow border rounded w-[65%] pl-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       name='folders'
                       id='folders'
                       value={folderOption}
@@ -243,45 +240,47 @@ export default function CaseFolders() {
                       ))}
                     </select>
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={caseNoRef}
                       placeholder='Case Number'
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={caseTitleRef}
                       placeholder='Case Title'
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={pleadingRef}
                       placeholder='Pleading / Order'
                     />
-                    <label htmlFor='pleading-date'>Pleading Date</label>
+                    <label className='text-maroon text-sm' htmlFor='pleading-date'>
+                      Pleading Date
+                    </label>
                     <input
                       name='pleading-date'
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='date'
                       placeholder='Pleading Date'
                       onChange={e => setPleadingDate(e.target.value)}
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                        shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       placeholder='Enter Court'
                       ref={courtRef}
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[30px]
+                        shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       placeholder='Enter Branch (1-300)'
                       ref={branchRef}
@@ -293,7 +292,7 @@ export default function CaseFolders() {
                       onChange={e => setFileUpload(e.target.files[0])}
                     />
                     <button
-                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon w-[65%] hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       disabled={loading}
                       onClick={uploadFile}
                     >
@@ -302,7 +301,7 @@ export default function CaseFolders() {
                   </div>
 
                   <p
-                    className='text-maroon font-bold cursor-pointer hover:text-white'
+                    className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold'
                     onClick={() => setShowModal(false)}
                   >
                     Close

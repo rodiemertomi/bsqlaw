@@ -35,7 +35,7 @@ function AppointmentManagement() {
             {appointments?.map(appointment => (
               <div
                 key={appointment.id}
-                className='bg-[#FFF] drop-shadow-2xl p-2 w-[100%] rounded-md flex flex-col gap-2 '
+                className='bg-[#FFF] drop-shadow-lg p-2 w-[100%] rounded-md flex flex-col gap-2 '
               >
                 <div>
                   <span className='mb-4 text-xl font-bold text-maroon leading-none '>
