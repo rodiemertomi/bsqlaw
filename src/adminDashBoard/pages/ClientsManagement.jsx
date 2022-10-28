@@ -178,7 +178,7 @@ export default function ClientsManagement() {
               />
               <input
                 className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
-                type='text'
+                type='password'
                 name='password'
                 value={addFormData.password}
                 placeholder='Password'

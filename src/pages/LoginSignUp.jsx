@@ -20,6 +20,7 @@ function LoginSignUp() {
   }, [user, navigate])
 
   async function handleLogin(e) {
+    setLoading(true)
     e.preventDefault()
     if (await checkUser(loginEmailRef.current.value, loginPasswordRef.current.value)) {
       try {
@@ -55,7 +56,11 @@ function LoginSignUp() {
   }
 
   return (
-    <div className='bg-white flex justify-center items-center h-screen transition-all duration-200 '>
+    <div
+      className={`bg-white flex justify-center items-center h-screen transition-all duration-200 ${
+        loading ? 'cursor-wait' : ''
+      }`}
+    >
       <div
         className={`shadow-2xl flex flex-col jus items-center w-[350px] border-black border-[3px] rounded-3xl h-[600px] lg:h-[450px] lg:mt-14`}
       >
