@@ -12,7 +12,7 @@ export default function AdminReadOnlyRow({ admin, handleDeleteClick, handleEditC
         <td className='py-4 px-6 border border-slate-700'>
           <button
             onClick={e => handleEditClick(e, admin)}
-            className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+            className='w-14 h-8 rounded-md border-0 bg-maroon text-white mr-1'
           >
             Edit
           </button>

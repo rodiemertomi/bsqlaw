@@ -60,15 +60,20 @@ export default function AdminEditRow({
           />
         </td>
         <td className='py-4 px-6 border border-slate-700'>
-          <button className='w-14 h-8 rounded-md border-0 bg-maroon text-white' type='submit'>
-            Save
-          </button>
-          <button
-            className='w-16 h-8 rounded-md border-0 bg-maroon text-white'
-            onClick={handleCancelClick}
-          >
-            Cancel
-          </button>
+          <div className='flex'>
+            <button
+              className='w-14 h-8 rounded-md border-0 mr-1 bg-maroon text-white'
+              type='submit'
+            >
+              Save
+            </button>
+            <button
+              className='w-16 h-8 rounded-md border-0 bg-maroon text-white'
+              onClick={handleCancelClick}
+            >
+              Cancel
+            </button>
+          </div>
         </td>
       </tr>
     </>
