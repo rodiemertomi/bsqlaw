@@ -62,8 +62,8 @@ function EditProfile({ closeModal }) {
   }, [image])
 
   return (
-    <div className='w-screen h-screen flex items-center justify-center backdrop-blur-sm'>
-      <div className='bg-[#BABABA] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[50%] lg:gap-3'>
+    <div className='w-screen h-screen flex items-center justify-center bg-modalbg'>
+      <div className='bg-[#e1dfdf] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:mt-2 lg:h-[95%] lg:w-[50%] lg:gap-3'>
         <div className='flex flex-col justify-center items-center gap-2'>
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
@@ -77,7 +77,7 @@ function EditProfile({ closeModal }) {
             />
             <img
               alt='user'
-              className='w-[170px] h-[170px] object-cover z-0 rounded-full'
+              className='w-[200px] h-[200px] object-cover z-0 rounded-full'
               src={
                 photoURLState === '' || !photoURLState
                   ? require('../../assets/user.png')
