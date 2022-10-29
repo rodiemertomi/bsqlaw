@@ -8,7 +8,6 @@ import {
   getDocs,
   doc,
   setDoc,
-  updateDoc,
   arrayUnion,
   getDoc,
 } from 'firebase/firestore'
@@ -18,42 +17,55 @@ export default function CaseFolders() {
   const [loading, setLoading] = useState(false)
   const [fileUpload, setFileUpload] = useState(null)
   const [foldersList, setFoldersList] = useState([])
+  const [pleadingDate, setPleadingDate] = useState()
+  const [folderOption, setFolderOption] = useState('')
+  const [fileList, setFileList] = useState([])
+  const [readState, setReadState] = useState(true)
+  const [share, setShare] = useState()
+  const [editShareId, setEditShareId] = useState()
+  const [editFormData, setEditFormData] = useState({})
+  const [selectedLawyer, setSelectedLawyer] = useState()
+  const [lawyers, setLawyers] = useState()
+
   const caseTitleRef = useRef()
   const pleadingRef = useRef()
   const caseNoRef = useRef()
   const folderNameRef = useRef()
   const courtRef = useRef()
   const branchRef = useRef()
-  const [pleadingDate, setPleadingDate] = useState()
-  const [folderOption, setFolderOption] = useState('')
-  const [fileList, setFileList] = useState([])
-  const { username, id, initials } = UseUserReducer()
-  const [readState, setReadState] = useState(true)
-  const [share, setShare] = useState()
-  const [editShareId, setEditShareId] = useState()
-  const [editFormData, setEditFormData] = useState({})
 
-  const handleGetFiles = async () => {
+  const { username, initials } = UseUserReducer()
+
+  const userColRef = collection(db, 'users')
+  const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
+  const foldersRef = collection(db, 'folders')
+
+  const handleGetFiles = async folderid => {
     setFileList([])
-    const colRef = collection(db, `files`)
-    const authorRef = query(colRef, where('author', '==', `${initials}`))
-    const shareRef = query(colRef, where('shareable', '==', true))
-    const authorDocs = await getDocs(authorRef)
-    const shareDocs = await getDocs(shareRef)
-    const data1 = authorDocs.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-    const data2 = shareDocs.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-    setFileList([data1, data2])
+    const folderRef = doc(db, `folders/${folderid}`)
+
+    const snap = await getDoc(folderRef)
+
+    setFileList(snap.data().files)
   }
 
-  const addFolder = () => {
-    const docRef = doc(db, `users/${id}`)
+  const addFolder = async () => {
     const data = {
       folders: arrayUnion(`${folderNameRef.current.value}`),
     }
-    updateDoc(docRef, data, { merge: true }).then(() => {
+    const folderData = {
+      foldername: folderNameRef.current.value,
+      files: [],
+      lawyer: selectedLawyer,
+    }
+    const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
+
+    await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData)
+    await setDoc(lawyer, data, { merge: true }).then(() => {
       alert(`Updated successfully`)
     })
     folderNameRef.current.value = ''
+    await getFolders()
   }
 
   const uploadFile = async () => {
@@ -69,11 +81,21 @@ export default function CaseFolders() {
       return
     }
 
+    const selectedFolderRef = doc(db, `folders/${folderOption}`)
+    const snap = await getDoc(selectedFolderRef)
+    const lawyerInitials = snap.data().lawyer
+
     const extension = fileUpload.name.split('.').pop()
     const fileUrl = `caseFiles/${username}/${folderOption}/${caseTitleRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
     await uploadBytes(fileRef, fileUpload).then(snapshot => {
       getDownloadURL(snapshot.ref).then(async url => {
+        const dateNow = new Date()
+        const setPleadingDate = new Date(pleadingDate)
+        if (dateNow.getTime() > setPleadingDate.getTime()) {
+          alert('Date set has already passed.')
+          return
+        }
         const data = {
           active: true,
           casenumber: caseNoRef.current.value,
@@ -81,16 +103,18 @@ export default function CaseFolders() {
           pleading: pleadingRef.current.value,
           pleadingdate: new Date(pleadingDate),
           date_created: new Date(),
-          author: initials,
+          uploadby: initials,
+          lawyer: lawyerInitials,
           folder: folderOption,
           shareable: false,
           url: url,
           court: courtRef.current.value,
           branch: branchRef.current.value,
         }
-        const colRef = collection(db, `files`)
-        const docRef = doc(colRef)
-        await setDoc(docRef, data, { merge: true }).then(() => {
+        const fileInput = {
+          files: arrayUnion(data),
+        }
+        await setDoc(selectedFolderRef, fileInput, { merge: true }).then(() => {
           alert('Successfully added file in firestore')
         })
       })
@@ -134,15 +158,19 @@ export default function CaseFolders() {
     setEditShareId(null)
   }
 
-  useEffect(() => {
-    const docRef = doc(db, `users/${id}`)
-    const getFolders = async () => {
-      const snap = await getDoc(docRef)
-      const data = snap.data()
-      setFoldersList(data.folders)
-    }
+  const getFolders = async () => {
+    const snap = await getDocs(foldersRef)
+    setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
 
+  const getLawyers = async () => {
+    const snap = await getDocs(lawyerRef)
+    setLawyers(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
+
+  useEffect(() => {
     getFolders()
+    getLawyers()
     handleGetFiles()
   }, [])
 
@@ -157,6 +185,40 @@ export default function CaseFolders() {
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
+              <form onSubmit={handleEditFormSubmit}>
+                <details className='p-1 md:ml-5'>
+                  <summary
+                    onClick={() => handleGetFiles(folder.id)}
+                    className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'
+                  >
+                    {folder.foldername}
+                  </summary>
+                  {fileList?.map(
+                    file => (
+                      // file?.map(data => (
+                      <Fragment key={file.id}>
+                        {file.folder === folder.foldername ? (
+                          readState ? (
+                            <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
+                          ) : (
+                            <EditRow
+                              editFormData={editFormData}
+                              file={file}
+                              handleCancel={handleCancel}
+                              handleEdit={handleEdit}
+                            />
+                          )
+                        ) : (
+                          ''
+                        )}
+                      </Fragment>
+                    )
+                    // ))
+                  )}
+                </details>
+              </form>
+            ))}
+            {/* {foldersList?.map(folder => (
               <form onSubmit={handleEditFormSubmit}>
                 <div className='bg-[#9C9999] flex items-center rounded-lg shadow-lg w-[100%] '>
                   <details className='p-1 md:ml-5'>
@@ -189,7 +251,7 @@ export default function CaseFolders() {
                   </details>
                 </div>
               </form>
-            ))}
+            ))} */}
           </div>
           <div className='h-[50px] flex flex-col justify-center item-center self-end mb-2 mt-1 mr-6'>
             <button
@@ -216,6 +278,18 @@ export default function CaseFolders() {
                       ref={folderNameRef}
                       placeholder='Enter folder name'
                     />
+                    <select
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                      shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => setSelectedLawyer(e.target.value)}
+                    >
+                      <option value=''>Select Lawyer</option>
+                      {lawyers.map(lawyer => (
+                        <option value={lawyer.initials}>
+                          {lawyer.firstname} {lawyer.lastname}
+                        </option>
+                      ))}
+                    </select>
                     <button
                       className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       onClick={addFolder}
@@ -223,7 +297,6 @@ export default function CaseFolders() {
                       Add Folder
                     </button>
                   </div>
-                  {/* secret */}
                   <div className='flex flex-col items-center justify-evenly gap-2'>
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] 
@@ -231,15 +304,13 @@ export default function CaseFolders() {
                       name='folders'
                       id='folders'
                       value={folderOption}
-                      onChange={e => {
-                        setFolderOption(e.target.value)
-                      }}
+                      onChange={e => setFolderOption(e.target.value)}
                     >
                       <option default value=''>
                         -Select Folder-
                       </option>
                       {foldersList?.map(folder => (
-                        <option value={`${folder}`}>{folder}</option>
+                        <option value={`${folder.foldername}`}>{folder.foldername}</option>
                       ))}
                     </select>
                     <input
@@ -317,7 +388,7 @@ export default function CaseFolders() {
   )
 }
 
-function ReadOnlyRow({ data, handleEditClick }) {
+function ReadOnlyRow({ file, handleEditClick }) {
   return (
     <>
       <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
@@ -348,17 +419,19 @@ function ReadOnlyRow({ data, handleEditClick }) {
         </thead>
         <tbody>
           <tr className=''>
-            <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
-              <a href={data.url}>{data.casenumber}</a>
+            <th scope='row' className='py-4 px-6 border border-slate-700'>
+              {file.casenumber}
             </th>
-            <td className='py-4 px-6 border border-slate-700'>{data.casetitle}</td>
-            <td className='py-4 px-6 border border-slate-700'>{data.pleading}</td>
-            <td className='py-4 px-6 border border-slate-700'>
-              {data.pleadingdate?.toDate().toISOString().substr(0, 10)}
+            <td className='py-4 px-6 font-bold border border-slate-700'>
+              <a href={file.url}>{file.casetitle}</a>
             </td>
-            <td className='py-4 px-6 border border-slate-700'>{data.author}</td>
-            <td className='py-4 px-6 border border-slate-700'>{data.court}</td>
-            <td className='py-4 px-6 border border-slate-700'>{data.branch}</td>
+            <td className='py-4 px-6 border border-slate-700'>{file.pleading}</td>
+            <td className='py-4 px-6 border border-slate-700'>
+              {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+            </td>
+            <td className='py-4 px-6 border border-slate-700'>{file.author}</td>
+            <td className='py-4 px-6 border border-slate-700'>{file.court}</td>
+            <td className='py-4 px-6 border border-slate-700'>{file.branch}</td>
           </tr>
         </tbody>
         <thead className='text-xs text-gray-700 '>
@@ -377,18 +450,18 @@ function ReadOnlyRow({ data, handleEditClick }) {
         <tbody>
           <tr className='text-center'>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {data.date_created.toDate().toISOString().substr(0, 10)}
+              {file.date_created.toDate().toISOString().substr(0, 10)}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
-              {data.shareable ? 'Shared' : 'Unshared'}
+              {file.shareable ? 'Shared' : 'Unshared'}
             </td>
-            <td className={`text-center w-1/5 border border-slate-700`}>{data.folder}</td>
+            <td className={`text-center w-1/5 border border-slate-700`}>{file.folder}</td>
           </tr>
         </tbody>
       </table>
       <div className='flex justify-end'>
         <button
-          onClick={e => handleEditClick(e, data)}
+          onClick={e => handleEditClick(e, file)}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
         >
           Edit
@@ -398,7 +471,7 @@ function ReadOnlyRow({ data, handleEditClick }) {
   )
 }
 
-function EditRow({ handleCancel, handleEdit, data }) {
+function EditRow({ handleCancel, handleEdit, file }) {
   return (
     <>
       <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
@@ -430,16 +503,18 @@ function EditRow({ handleCancel, handleEdit, data }) {
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
-              <a href={data.url}>{data.casenumber}</a>
+              {file.casenumber}
             </th>
-            <td className='py-4 px-6 border border-slate-700'>{data.casetitle}</td>
-            <td className='py-4 px-6 border border-slate-700'>{data.pleading}</td>
             <td className='py-4 px-6 border border-slate-700'>
-              {data.pleadingdate?.toDate().toISOString().substr(0, 10)}
+              <a href={file.url}>{file.casetitle}</a>
             </td>
-            <td className='py-4 px-6 border border-slate-700'>{data.author}</td>
-            <td className='py-4 px-6 border border-slate-700'>{data.court}</td>
-            <td className='py-4 px-6 border border-slate-700'>{data.branch}</td>
+            <td className='py-4 px-6 border border-slate-700'>{file.pleading}</td>
+            <td className='py-4 px-6 border border-slate-700'>
+              {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+            </td>
+            <td className='py-4 px-6 border border-slate-700'>{file.author}</td>
+            <td className='py-4 px-6 border border-slate-700'>{file.court}</td>
+            <td className='py-4 px-6 border border-slate-700'>{file.branch}</td>
           </tr>
         </tbody>
         <thead className='text-xs text-gray-700 '>
@@ -458,11 +533,11 @@ function EditRow({ handleCancel, handleEdit, data }) {
         <tbody>
           <tr className=''>
             <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {data.date_created.toDate().toISOString().substr(0, 10)}
+              {file.date_created.toDate().toISOString().substr(0, 10)}
             </th>
             <td className='py-4 px-6 border border-slate-700'>
               <select onChange={handleEdit}>
-                {data.shareable ? (
+                {file.shareable ? (
                   <>
                     <option value={true}>Shared</option>
                     <option value={false}>Unshared</option>
@@ -475,7 +550,7 @@ function EditRow({ handleCancel, handleEdit, data }) {
                 )}
               </select>
             </td>
-            <td className='py-4 px-4 border border-slate-700'>{data.folder}</td>
+            <td className='py-4 px-4 border border-slate-700'>{file.folder}</td>
           </tr>
         </tbody>
       </table>

@@ -7,56 +7,69 @@ const UseAppointmentStore = create(set => ({
   eventDesc: '',
   eventDateStart: '',
   eventDateEnd: '',
-  info: false,
   event: {},
+  clientId: '',
+  clientFirstName: '',
+  clientLastName: '',
 
+  setClientFirstName: newClientFirstName =>
+    set(() => ({
+      clientFirstName: newClientFirstName,
+    })),
+  setClientLastName: newClientLastName =>
+    set(() => ({
+      clientLastName: newClientLastName,
+    })),
   setEventTimeStart: newEventTimeStart =>
-    set(state => ({
+    set(() => ({
       eventTimeStart: newEventTimeStart,
     })),
   setEventTimeEnd: newEventTimeEnd =>
-    set(state => ({
+    set(() => ({
       eventTimeEnd: newEventTimeEnd,
     })),
   setEventName: newEventName =>
-    set(state => ({
+    set(() => ({
       eventName: newEventName,
     })),
   setEventDesc: newEventDesc =>
-    set(state => ({
+    set(() => ({
       eventDesc: newEventDesc,
     })),
   setEventDateStart: newEventDateStart =>
-    set(state => ({
+    set(() => ({
       eventDateStart: newEventDateStart,
     })),
   setEventDateEnd: newEventDateEnd =>
-    set(state => ({
+    set(() => ({
       eventDateEnd: newEventDateEnd,
     })),
-
-  setInfo: info =>
-    set(state => ({
-      info: !state.info,
+  setClientId: newClientId =>
+    set(() => ({
+      clientId: newClientId,
     })),
   setEvent: (
-    newEventStart,
-    newEventEnd,
+    newClientFirstName,
+    newClientLastName,
+    newClientId,
     newEventName,
     newEventDesc,
+    newEventStart,
+    newEventEnd,
     newEventDateStart,
-    newEventDateEnd,
-    newInfo
+    newEventDateEnd
   ) =>
     set(() => ({
       event: {
+        clientFirstName: newClientFirstName,
+        clientLastName: newClientLastName,
+        clientId: newClientId,
+        eventName: newEventName,
+        eventDesc: newEventDesc,
         eventStart: newEventStart,
         eventEnd: newEventEnd,
-        eventDesc: newEventDesc,
-        eventName: newEventName,
         eventDateStart: newEventDateStart,
         eventDateEnd: newEventDateEnd,
-        info: newInfo,
       },
     })),
 }))

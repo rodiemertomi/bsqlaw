@@ -5,45 +5,43 @@ import UseAppointmentStore from '../../reducers/AppointmentReducer'
 import UseUserReducer from '../../../UserReducer'
 import { nanoid } from 'nanoid'
 
-function Times({ closeShowAppointment, clients }) {
+function Times({ closeShowAppointment, getData }) {
+  const appointmentsRef = collection(db, 'appointments')
+  const { initials, id } = UseUserReducer()
+  const ownerRef = doc(db, `users/${id}`)
+
   const {
-    setClientFirstName,
-    setClientLastName,
     setEventTimeStart,
     setEventTimeEnd,
     setEventName,
     setEventDesc,
     setEventDateEnd,
     setEventDateStart,
-    setClientId,
+    setClient,
   } = UseAppointmentStore()
   const {
-    clientFirstName,
-    clientLastName,
     eventTimeStart,
     eventTimeEnd,
     eventName,
     eventDateStart,
     eventDateEnd,
     eventDesc,
-    clientId,
+    client,
   } = UseAppointmentStore()
 
-  const appointmentsRef = collection(db, 'appointments')
-  const { initials, id } = UseUserReducer()
-  const lawyerRef = doc(db, `users/${id}`)
-  const clientRef = doc(db, `users/${clientId}`)
-
-  const saveEvent = async (e, clients) => {
+  const saveEvent = async e => {
     e.preventDefault()
-    setClientFirstName(clients.firstname)
-    setClientLastName(clients.firstname)
+    const date1 = new Date()
+    const date2 = new Date(eventDateStart)
+    const date3 = new Date(eventDateEnd)
+    if (date1.getTime() > date2.getTime() || date1.getTime > date2.getTime()) {
+      alert('Date set has already passed.')
+      return
+    }
     const data = {
       id: nanoid(10),
       setter: initials,
-      clientId: clientId,
-      clientFirstName: clientFirstName,
-      clientLastName: clientLastName,
+      client: client,
       eventName: eventName,
       eventDesc: eventDesc,
       eventTimeStart: eventTimeStart,
@@ -55,11 +53,10 @@ function Times({ closeShowAppointment, clients }) {
     const appointments = {
       appointments: arrayUnion(data),
     }
-    await setDoc(lawyerRef, appointments, { merge: true })
-    await setDoc(clientRef, appointments, { merge: true })
+    await setDoc(ownerRef, appointments, { merge: true }).then(() => getData)
     setEventName('')
     setEventDesc('')
-    setClientId('')
+    setClient('')
     setEventTimeStart('')
     setEventTimeEnd('')
     setEventDateStart('')
@@ -69,25 +66,22 @@ function Times({ closeShowAppointment, clients }) {
   return (
     <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#BABABA] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%]'>
       <h1 className='font-bold text-2xl'>Set Appointment</h1>
-      <form onSubmit={e => saveEvent(clients)} className='mt-5'>
+      <form onSubmit={saveEvent} className='mt-5'>
         <div className='mt-5 flex flex-col justify-center items-center gap-5'>
           <select
             name='clientName'
             id='clientName'
-            value={clientId}
-            onChange={e => setClientId(e.target.value)}
+            value={client}
+            onChange={e => setClient(e.target.value)}
             className='h-10 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
           >
             <option default value=''>
               Client Name
             </option>
-            {clients?.map(client => (
-              <option key={client.id} value={client.id}>
-                {client.firstname} {client.lastname}
-              </option>
-            ))}
+            <option value='Jastoni'>Jastoni</option>
+            <option value='Eduard'>Eduard</option>
+            <option value='Rona'>Rona</option>
           </select>
-          {/* Event Name */}
           <input
             type='text'
             id='eventName'
@@ -97,8 +91,6 @@ function Times({ closeShowAppointment, clients }) {
             onChange={event => setEventName(event.target.value)}
             value={eventName}
           />
-
-          {/* Event Description */}
           <textarea
             rows='4'
             cols='30'
@@ -109,7 +101,6 @@ function Times({ closeShowAppointment, clients }) {
             onChange={event => setEventDesc(event.target.value)}
           ></textarea>
         </div>
-        {/* Time Picker */}
         <div className='flex flex-row items-center justify-center mt-5 gap-1'>
           <input
             type='text'
@@ -135,7 +126,6 @@ function Times({ closeShowAppointment, clients }) {
             placeholder='To:'
           />
         </div>
-        {/* Date Picker */}
         <div className='flex flex-row items-center justify-center mt-5 gap-1'>
           <input
             type='text'
@@ -173,8 +163,6 @@ function Times({ closeShowAppointment, clients }) {
             Close
           </p>
         </div>
-
-        {/* Results */}
       </form>
     </div>
   )

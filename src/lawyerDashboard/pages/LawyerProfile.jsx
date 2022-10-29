@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 
-export default function AdminProfile() {
+export default function LawyerProfile() {
   const {
     firstName,
     lastName,

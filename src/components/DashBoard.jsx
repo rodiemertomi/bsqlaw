@@ -16,6 +16,7 @@ const DashBoard = () => {
   const userRef = query(colRef, where('email', '==', user.email))
 
   const {
+    setClients,
     setFirstName,
     setLastName,
     setContactNo,
@@ -67,6 +68,7 @@ const DashBoard = () => {
           setId(doc.id)
           setInitials(data.initials)
           setBirthday(data.birthday)
+          setClients(data.clients)
         })
       } catch (err) {
         alert(err.message)

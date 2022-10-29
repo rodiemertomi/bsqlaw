@@ -205,8 +205,10 @@ export default function ClientsManagement() {
                   <thead>
                     <tr>
                       <th className='p-2'>Username</th>
+                      <th className='p-2'>First Name</th>
+                      <th className='p-2'>Last Name</th>
+                      <th className='p-2'>Assigned Lawyer</th>
                       <th className='p-2'>Email Address</th>
-                      <th className='p-2'>Role</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -4,8 +4,10 @@ export default function ClientsReadOnlyRow({ client, handleEditClick, handleDele
   return (
     <>
       <td>{client.username}</td>
+      <td>{client.firstname}</td>
+      <td>{client.lastname}</td>
+      <td>{client.lawyer}</td>
       <td>{client.email}</td>
-      <td>{client.role}</td>
       <td>
         <button
           onClick={e => handleEditClick(e, client)}

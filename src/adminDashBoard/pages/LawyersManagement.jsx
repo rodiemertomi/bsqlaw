@@ -17,7 +17,7 @@ export default function LawyersManagement() {
   const colRef = collection(db, 'users')
   const lawyerRef = query(colRef, where('role', '==', 'lawyer'))
   const [loading, setLoading] = useState(false)
-  const [lawyers, setClients] = useState([])
+  const [lawyers, setLawyers] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
 
   const [addFormData, setAddFormData] = useState({
@@ -168,7 +168,7 @@ export default function LawyersManagement() {
   useEffect(() => {
     const getLawyers = async () => {
       const data = await getDocs(lawyerRef)
-      setClients(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+      setLawyers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     }
 
     getLawyers()

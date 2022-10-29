@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 
-export default function AdminProfile() {
+export default function OwnerProfile() {
   const {
+    clients,
     firstName,
     lastName,
     username,
@@ -44,8 +45,9 @@ export default function AdminProfile() {
             <span className='font-bold'>Email:</span> {email}
           </h1>
           <h1>
-            <span className='font-bold'>Expertise:</span> {expertise?.join(', ')}
+            <span className='font-bold'>Clients:</span>{' '}
           </h1>
+          {clients?.map(client => `${client.firstname} ${client.lastname}\n`)}
           <h1>
             <span className='font-bold'>Gender:</span> {gender}
           </h1>

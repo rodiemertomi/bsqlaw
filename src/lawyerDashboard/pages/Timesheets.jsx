@@ -2,17 +2,17 @@ import React from 'react'
 
 const month = [
   { name: 'January', id: 1 },
-  { name: 'February', id: 1 },
-  { name: 'March', id: 1 },
-  { name: 'April', id: 1 },
-  { name: 'May', id: 1 },
-  { name: 'June', id: 1 },
-  { name: 'July', id: 1 },
-  { name: 'August', id: 1 },
-  { name: 'September', id: 1 },
-  { name: 'October', id: 1 },
-  { name: 'November', id: 1 },
-  { name: 'December', id: 1 },
+  { name: 'February', id: 2 },
+  { name: 'March', id: 3 },
+  { name: 'April', id: 4 },
+  { name: 'May', id: 5 },
+  { name: 'June', id: 6 },
+  { name: 'July', id: 7 },
+  { name: 'August', id: 8 },
+  { name: 'September', id: 9 },
+  { name: 'October', id: 10 },
+  { name: 'November', id: 11 },
+  { name: 'December', id: 12 },
 ]
 
 const selectMonth = month.map(months => <option key={months.id}>{months.name}</option>)

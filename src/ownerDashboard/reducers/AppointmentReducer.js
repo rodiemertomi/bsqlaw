@@ -8,18 +8,8 @@ const UseAppointmentStore = create(set => ({
   eventDateStart: '',
   eventDateEnd: '',
   event: {},
-  clientId: '',
-  clientFirstName: '',
-  clientLastName: '',
+  client: '',
 
-  setClientFirstName: newClientFirstName =>
-    set(() => ({
-      clientFirstName: newClientFirstName,
-    })),
-  setClientLastName: newClientLastName =>
-    set(() => ({
-      clientLastName: newClientLastName,
-    })),
   setEventTimeStart: newEventTimeStart =>
     set(() => ({
       eventTimeStart: newEventTimeStart,
@@ -44,14 +34,12 @@ const UseAppointmentStore = create(set => ({
     set(() => ({
       eventDateEnd: newEventDateEnd,
     })),
-  setClientId: newClientId =>
+  setClient: newClient =>
     set(() => ({
-      clientId: newClientId,
+      client: newClient,
     })),
   setEvent: (
-    newClientFirstName,
-    newClientLastName,
-    newClientId,
+    newClient,
     newEventName,
     newEventDesc,
     newEventStart,
@@ -61,9 +49,7 @@ const UseAppointmentStore = create(set => ({
   ) =>
     set(() => ({
       event: {
-        clientFirstName: newClientFirstName,
-        clientLastName: newClientLastName,
-        clientId: newClientId,
+        client: newClient,
         eventName: newEventName,
         eventDesc: newEventDesc,
         eventStart: newEventStart,
