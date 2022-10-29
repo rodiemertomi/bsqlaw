@@ -3,21 +3,21 @@ import React from 'react'
 export default function ClientsReadOnlyRow({ client, handleEditClick, handleDeleteClick }) {
   return (
     <>
-      <td>{client.username}</td>
-      <td>{client.firstname}</td>
-      <td>{client.lastname}</td>
-      <td>{client.lawyer}</td>
-      <td>{client.email}</td>
-      <td>
+      <td className='py-4 px-6 border border-slate-700'>{client.username}</td>
+      <td className='py-4 px-6 border border-slate-700'>{client.firstname}</td>
+      <td className='py-4 px-6 border border-slate-700'>{client.lastname}</td>
+      <td className='py-4 px-6 border border-slate-700'>{client.lawyer}</td>
+      <td className='py-4 px-6 border border-slate-700'>{client.email}</td>
+      <td className='py-4 px-6 border border-slate-700'>
         <button
           onClick={e => handleEditClick(e, client)}
-          className='w-16 h-7 rounded-md border-0 bg-maroon text-white'
+          className='w-14 h-8 rounded-md border-0 bg-maroon text-white mr-1'
         >
           Edit
         </button>
         <button
           onClick={e => handleDeleteClick(client.id)}
-          className='w-20 h-7 rounded-md border-0 bg-maroon text-white'
+          className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
         >
           Delete
         </button>

@@ -152,16 +152,17 @@ export default function ClientsManagement() {
 
   return (
     <>
-      <div className='h-screen w-screen font-Lora'>
-        <div className='m-1 lg:ml-24'>
-          <h1 className='text-3xl font-bold'>Create Client</h1>
-          <div className='mt-5'>
-            <form onSubmit={handleAddFormSubmit} action=''>
-              <label className='text-semibold text-lg' htmlFor='email'>
-                Email:
-              </label>
+      <div className='h-screen w-screen pl-5 pr-3 pt-1 mb-20'>
+        <div className='lg:ml-[83px]'>
+          <h1 className='self-start text-[30px] font-bold'>Create Client</h1>
+          <div>
+            <form
+              className='flex flex-col lg:flex-row gap-[1px] lg:gap-1'
+              onSubmit={handleAddFormSubmit}
+              action=''
+            >
               <input
-                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
                 type='email'
                 name='email'
                 value={addFormData.email}
@@ -169,7 +170,7 @@ export default function ClientsManagement() {
                 onChange={handleAddFormChange}
               />
               <input
-                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
                 type='text'
                 name='username'
                 value={addFormData.username}
@@ -177,7 +178,7 @@ export default function ClientsManagement() {
                 onChange={handleAddFormChange}
               />
               <input
-                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
                 type='password'
                 name='password'
                 value={addFormData.password}
@@ -185,7 +186,7 @@ export default function ClientsManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`w-28 h-7 rounded-md border-0 bg-maroon text-white ml-2 ${
+                className={`w-28 h-8 lg:self-center rounded-md border-0 bg-maroon text-white ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'
@@ -195,46 +196,61 @@ export default function ClientsManagement() {
               </button>
             </form>
           </div>
-          <div className='mt-5 flex flex-col justify-center items-center'>
-            <div className='flex self-start'>
-              <h1 className='font-semibold text-xl'>Client Details</h1>
-            </div>
-            <div className='mt-2'>
+        </div>
+        <div className='overflow-auto mt-2 scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:w-[94%] lg:h-[93%] md:h-[86%]'>
+          <div className='flex flex-col justify-center'>
+            {/* CLIENT DETAILS */}
+            <div>
               <form onSubmit={handleEditFormSubmit}>
-                <table className='w-screen text-center'>
-                  <thead>
-                    <tr>
-                      <th className='p-2'>Username</th>
-                      <th className='p-2'>First Name</th>
-                      <th className='p-2'>Last Name</th>
-                      <th className='p-2'>Assigned Lawyer</th>
-                      <th className='p-2'>Email Address</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {clients?.map(client => (
-                      <Fragment key={client.id}>
-                        {editClientId === client.id ? (
-                          <tr>
-                            <ClientsEditRow
-                              editFormData={editFormData}
-                              handleEditFormChange={handleEditFormChange}
-                              handleCancelClick={handleCancelClick}
-                            />
-                          </tr>
-                        ) : (
-                          <tr>
-                            <ClientsReadOnlyRow
-                              client={client}
-                              handleEditClick={handleEditClick}
-                              handleDeleteClick={handleDeleteClick}
-                            />
-                          </tr>
-                        )}
-                      </Fragment>
-                    ))}
-                  </tbody>
-                </table>
+                <div className='overflow-x-auto relative bg-white shadow-lg sm:rounded-lg p-2'>
+                  <table className='w-full text-sm text-center text-gray-500 border-collapse border border-slate-500 mt-2 mb-2'>
+                    <thead className={`text-xs text-gray-700 `}>
+                      <tr>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Username
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          First Name
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Last Name
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Assigned Lawyer
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Email Address
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {clients?.map(client => (
+                        <Fragment key={client.id}>
+                          {editClientId === client.id ? (
+                            <tr>
+                              <ClientsEditRow
+                                editFormData={editFormData}
+                                handleEditFormChange={handleEditFormChange}
+                                handleCancelClick={handleCancelClick}
+                              />
+                            </tr>
+                          ) : (
+                            <tr>
+                              <ClientsReadOnlyRow
+                                client={client}
+                                handleEditClick={handleEditClick}
+                                handleDeleteClick={handleDeleteClick}
+                              />
+                            </tr>
+                          )}
+                        </Fragment>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </form>
             </div>
           </div>
