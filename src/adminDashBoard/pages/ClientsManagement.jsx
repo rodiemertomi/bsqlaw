@@ -145,7 +145,7 @@ export default function ClientsManagement() {
           <form
             onSubmit={handleAddFormSubmit}
             action=''
-            className='flex flex-col lg:flex-row gap-2'
+            className='flex flex-col lg:flex-row lg:gap-2'
           >
             <input
               className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[30%] lg:ml-[81px]'
@@ -174,7 +174,7 @@ export default function ClientsManagement() {
             </button>
           </form>
         </div>
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[88%] shadow-lg bg-[#D9D9D9] rounded-md lg:w-[94%] lg:h-[85%] md:h-[92%]'>
+        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[76%] shadow-lg bg-[#D9D9D9] rounded-md lg:w-[94%] lg:h-[85%] md:h-[80%]'>
           <div className='flex flex-col justify-center'>
             {/* CLIENT DETAILS */}
             <div>
