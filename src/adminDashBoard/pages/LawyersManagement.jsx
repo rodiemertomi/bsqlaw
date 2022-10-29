@@ -176,7 +176,7 @@ export default function LawyersManagement() {
 
   return (
     <>
-      <div className='h-screen w-screen pl-5 pr-3 pt-1 mb-20'>
+      <div className='h-screen w-screen pl-5 pr-5 lg:pr-24 pt-1 pb-24'>
         <div className='lg:ml-[83px]'>
           <h1 className='self-start text-[30px] font-bold'>Create Lawyer</h1>
           <div>
@@ -231,7 +231,7 @@ export default function LawyersManagement() {
           </div>
         </div>
 
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:w-[94%] lg:h-[90%] md:h-[86%]'>
+        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:h-[92%] md:h-[86%]'>
           <div className=' flex flex-col justify-center'>
             {/* LAWYER DETAILS */}
             <div>
