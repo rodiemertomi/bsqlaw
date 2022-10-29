@@ -31,7 +31,7 @@ export default function Folders() {
   const courtRef = useRef()
   const branchRef = useRef()
 
-  const { username, initials } = UseUserReducer()
+  const { username, initials, firstName, lastName } = UseUserReducer()
 
   const foldersRef = collection(db, 'folders')
 
@@ -147,7 +147,7 @@ export default function Folders() {
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
-        {username}'s Case Files
+        {firstName} {lastName}'s Case Files
       </h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>

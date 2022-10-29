@@ -25,6 +25,8 @@ export default function CaseFolders() {
   const [editShareId, setEditShareId] = useState()
   const [editFormData, setEditFormData] = useState({})
   const [selectedLawyer, setSelectedLawyer] = useState()
+  const [lawyerClients, setLawyerClients] = useState()
+  const [selectedLawyerClient, setSelectedLawyerClient] = useState()
   const [lawyers, setLawyers] = useState()
 
   const caseTitleRef = useRef()
@@ -34,7 +36,7 @@ export default function CaseFolders() {
   const courtRef = useRef()
   const branchRef = useRef()
 
-  const { username, initials } = UseUserReducer()
+  const { username, initials, firstName, lastName } = UseUserReducer()
 
   const userColRef = collection(db, 'users')
   const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
@@ -49,14 +51,24 @@ export default function CaseFolders() {
     setFileList(snap.data().files)
   }
 
+  const getLawyerClients = async () => {
+    const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
+    await getDocs(lawyer).then(snap => {
+      let datas = snap.docs.map(doc => doc.data())
+      datas.forEach(data => {
+        setLawyerClients(data.clients)
+      })
+    })
+  }
+
   const addFolder = async () => {
     const data = {
       folders: arrayUnion(`${folderNameRef.current.value}`),
     }
     const folderData = {
       foldername: folderNameRef.current.value,
-      files: [],
       lawyer: selectedLawyer,
+      clientid: selectedLawyerClient,
     }
     const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
 
@@ -167,19 +179,18 @@ export default function CaseFolders() {
     const snap = await getDocs(lawyerRef)
     setLawyers(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
-
   useEffect(() => {
     getFolders()
     getLawyers()
-    handleGetFiles()
-  }, [])
+    getLawyerClients()
+  }, [selectedLawyer])
 
   const [showModal, setShowModal] = useState(false)
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
-        {username}'s Case Files
+        {firstName} {lastName}'s Case Files
       </h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
@@ -193,65 +204,27 @@ export default function CaseFolders() {
                   >
                     {folder.foldername}
                   </summary>
-                  {fileList?.map(
-                    file => (
-                      // file?.map(data => (
-                      <Fragment key={file.id}>
-                        {file.folder === folder.foldername ? (
-                          readState ? (
-                            <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
-                          ) : (
-                            <EditRow
-                              editFormData={editFormData}
-                              file={file}
-                              handleCancel={handleCancel}
-                              handleEdit={handleEdit}
-                            />
-                          )
+                  {fileList?.map(file => (
+                    <Fragment key={file.id}>
+                      {file.folder === folder.foldername ? (
+                        readState ? (
+                          <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
                         ) : (
-                          ''
-                        )}
-                      </Fragment>
-                    )
-                    // ))
-                  )}
+                          <EditRow
+                            editFormData={editFormData}
+                            file={file}
+                            handleCancel={handleCancel}
+                            handleEdit={handleEdit}
+                          />
+                        )
+                      ) : (
+                        ''
+                      )}
+                    </Fragment>
+                  ))}
                 </details>
               </form>
             ))}
-            {/* {foldersList?.map(folder => (
-              <form onSubmit={handleEditFormSubmit}>
-                <div className='bg-[#9C9999] flex items-center rounded-lg shadow-lg w-[100%] '>
-                  <details className='p-1 md:ml-5'>
-                    <summary
-                      className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '
-                      onClick={() => handleGetFiles()}
-                    >
-                      {folder}
-                    </summary>
-                    {fileList?.map(file =>
-                      file?.map(data => (
-                        <Fragment key={data.id}>
-                          {data.folder === folder ? (
-                            readState ? (
-                              <ReadOnlyRow data={data} handleEditClick={handleEditClick} />
-                            ) : (
-                              <EditRow
-                                editFormData={editFormData}
-                                data={data}
-                                handleCancel={handleCancel}
-                                handleEdit={handleEdit}
-                              />
-                            )
-                          ) : (
-                            ''
-                          )}
-                        </Fragment>
-                      ))
-                    )}
-                  </details>
-                </div>
-              </form>
-            ))} */}
           </div>
           <div className='h-[50px] flex flex-col justify-center item-center self-end mb-2 mt-1 mr-6'>
             <button
@@ -281,12 +254,27 @@ export default function CaseFolders() {
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] 
                       shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      onChange={e => setSelectedLawyer(e.target.value)}
+                      onChange={e => {
+                        setSelectedLawyer(e.target.value)
+                        getLawyerClients()
+                      }}
                     >
                       <option value=''>Select Lawyer</option>
                       {lawyers.map(lawyer => (
                         <option value={lawyer.initials}>
                           {lawyer.firstname} {lawyer.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                      shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => setSelectedLawyerClient(e.target.value)}
+                    >
+                      <option value=''>-Select Client-</option>
+                      {lawyerClients?.map(client => (
+                        <option value={client.id}>
+                          {client.firstname} {client.lastname}
                         </option>
                       ))}
                     </select>

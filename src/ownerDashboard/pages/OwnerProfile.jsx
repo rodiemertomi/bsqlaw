@@ -3,19 +3,8 @@ import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 
 export default function OwnerProfile() {
-  const {
-    clients,
-    firstName,
-    lastName,
-    username,
-    email,
-    photoURL,
-    expertise,
-    initials,
-    birthday,
-    gender,
-    contactNo,
-  } = UseUserReducer()
+  const { clients, firstName, lastName, email, photoURL, initials, birthday, gender, contactNo } =
+    UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
   const formatDate = date => {

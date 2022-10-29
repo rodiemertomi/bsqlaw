@@ -1,17 +1,14 @@
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import 'react-calendar/dist/Calendar.css'
-import UseUserReducer from '../../UserReducer'
 import { db } from '../../firebase'
 import Times from './components/Times'
 
 function Appointments() {
   const [showAppointment, setShowAppoitnment] = useState(false)
   const [appointments, setAppointments] = useState([])
-  const { initials } = UseUserReducer()
-  const { id } = UseUserReducer()
   const colRef = collection(db, 'appointments')
-  const q = query(colRef, where('setter', '==', `${initials}`), orderBy('eventDateStart', 'asc'))
+  const q = query(colRef, orderBy('eventDateStart', 'asc'))
 
   const formatDate = date => {
     let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
@@ -41,7 +38,8 @@ function Appointments() {
                   <span className='font-bold text-2xl'> {appointment.eventName} </span>
                 </div>
                 <div>
-                  <span className='font-bold'>Client:</span> {appointment.client}
+                  <span className='font-bold'>Client:</span> {appointment.clientFirstName}{' '}
+                  {appointment.clientLastName}
                 </div>
                 <div>
                   <span className='font-bold'>Event Desc:</span> {appointment.eventDesc}

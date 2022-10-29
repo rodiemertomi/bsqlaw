@@ -5,18 +5,8 @@ import { doc, setDoc } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 
 function EditProfile({ closeModal }) {
-  const {
-    username,
-    id,
-    photoURL,
-    birthday,
-    firstName,
-    lastName,
-    contactNo,
-    gender,
-    initials,
-    expertise,
-  } = UseUserReducer()
+  const { username, id, photoURL, birthday, firstName, lastName, contactNo, gender, initials } =
+    UseUserReducer()
 
   const [loading, setLoading] = useState(false)
   const [image, setImage] = useState(null)
@@ -24,7 +14,6 @@ function EditProfile({ closeModal }) {
   const [lastNameState, setLastNameState] = useState(lastName)
   const [contactNoState, setContactNumberState] = useState(contactNo)
   const [initialsState, setInitialsState] = useState(initials)
-  const [expertiseState, setExpertiseState] = useState(expertise)
   const [genderState, setGenderState] = useState(gender)
   const [birthdayState, setBirthdayState] = useState(birthday?.toDate())
   const [photoURLState, setPhotoURLState] = useState(photoURL)
@@ -51,7 +40,6 @@ function EditProfile({ closeModal }) {
         contactNo: contactNoState,
         gender: genderState,
         initials: initialsState,
-        expertise: expertiseState.split(','),
         birthday: new Date(birthdayState),
       }
     } else
@@ -61,7 +49,6 @@ function EditProfile({ closeModal }) {
         contactNo: contactNoState,
         gender: genderState,
         initials: initialsState,
-        expertise: expertiseState.split(','),
         birthday: new Date(birthdayState),
         photoURL: photoURLState,
       }
@@ -128,28 +115,19 @@ function EditProfile({ closeModal }) {
               />
               <input
                 required
-                value={contactNoState}
-                onChange={e => setContactNumberState(e.target.value)}
+                value={initialsState}
+                onChange={e => setInitialsState(e.target.value)}
                 type='text'
                 name='initials'
                 placeholder='Initials'
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
-              <input
-                required
-                value={expertiseState?.join(', ')}
-                onChange={e => setExpertiseState(e.target.value)}
-                type='expertise'
-                name='lastname'
-                placeholder='Expertise separate by comma'
-                className='h-9 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              />
             </div>
             <div className='flex flex-col items-center w-[100%] gap-3 '>
               <input
                 required
-                value={initialsState}
-                onChange={e => setInitialsState(e.target.value)}
+                value={contactNoState}
+                onChange={e => setContactNumberState(e.target.value)}
                 type='tel'
                 name='phone'
                 placeholder='Contact Number'
@@ -214,7 +192,7 @@ function EditProfile({ closeModal }) {
                     }}
                     placeholder='Birthdate'
                     id='date'
-                    value={birthdayState.toISOString().substr(0, 10)}
+                    value={birthdayState?.toISOString().substr(0, 10)}
                   />
                 </div>
               </div>

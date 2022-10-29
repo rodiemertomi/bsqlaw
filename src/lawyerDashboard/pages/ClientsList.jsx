@@ -42,27 +42,6 @@ export default function ClientsList() {
             ))}
           </div>
         </div>
-        {/* Second Div */}
-        <div className='w-[100%] h-[100%] lg:h-[100%] lg:w-[30%]'>
-          <div className='flex flex-col gap-5 mb-5 lg:w-[95%] lg:h-[100%]'>
-            <div className=' flex flex-col items-start shadow-lg  text-white bg-maroon rounded-md lg:h-[50%] '>
-              {/* Todo */}
-              <div className='flex flex-col m-5 text-justify '>
-                <div className='flex'>
-                  <h1 className='font-bold'>To-Do</h1>
-                  <h1 className='font-bold'>+</h1>
-                </div>
-              </div>
-            </div>
-            {/* Calendar */}
-            <div className='flex flex-col items-start shadow-lg  text-white bg-maroon rounded-md lg:h-[47%]'>
-              <div className='flex flex-col ml-5 mt-5'>
-                <h1 className='font-bold'>Calendar</h1>
-                <h1 className='lg:mt-[180px] mb-5 lg:cursor-pointer'>Full Calendar</h1>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   )

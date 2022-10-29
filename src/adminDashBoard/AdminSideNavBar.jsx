@@ -108,18 +108,6 @@ function AdminSideNavBar({
           <SideBarIcon
             icon={
               <img
-                alt='timesheet icon'
-                onClick={viewTimesheets}
-                className='w-8 h-8'
-                src={require('../assets/timesheets.png')}
-              />
-            }
-          />
-
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheet</p>
-          <SideBarIcon
-            icon={
-              <img
                 alt='appointment'
                 onClick={viewAppointments}
                 className='w-8 h-8 invert'
