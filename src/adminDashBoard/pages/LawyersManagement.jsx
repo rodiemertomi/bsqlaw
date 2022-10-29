@@ -176,13 +176,17 @@ export default function LawyersManagement() {
 
   return (
     <>
-      <div className='h-screen w-screen font-Lora'>
-        <div className='m-1 lg:ml-24'>
-          <h1 className='text-3xl font-bold'>Create Lawyer</h1>
-          <div className='mt-5'>
-            <form onSubmit={handleAddFormSubmit} action=''>
+      <div className='h-screen w-screen pl-5 pr-3 pt-1 mb-20'>
+        <div className='lg:ml-[83px]'>
+          <h1 className='self-start text-[30px] font-bold'>Create Lawyer</h1>
+          <div>
+            <form
+              className='flex flex-col lg:flex-row gap-2'
+              onSubmit={handleAddFormSubmit}
+              action=''
+            >
               <input
-                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                className='w-3/4 pl-2 lg:w-[20%]  rounded-md border-2 border-gray'
                 type='email'
                 name='email'
                 value={addFormData.email}
@@ -190,7 +194,7 @@ export default function LawyersManagement() {
                 onChange={handleAddFormChange}
               />
               <input
-                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                className='w-3/4 pl-2 lg:w-[20%]  rounded-md border-2 border-gray'
                 type='text'
                 name='username'
                 value={addFormData.username}
@@ -198,7 +202,7 @@ export default function LawyersManagement() {
                 onChange={handleAddFormChange}
               />
               <input
-                className='w-38 pl-2 ml-2 rounded-md border-2 border-gray'
+                className='w-3/4 pl-2 lg:w-[20%]  rounded-md border-2 border-gray'
                 type='password'
                 name='password'
                 value={addFormData.password}
@@ -206,7 +210,7 @@ export default function LawyersManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`w-28 h-7 rounded-md border-0 bg-maroon text-white ml-2 ${
+                className={`w-28 h-7 rounded-md border-0 bg-maroon text-white ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'
@@ -215,65 +219,72 @@ export default function LawyersManagement() {
                 Create New
               </button>
             </form>
-          </div>
-          <h1 className='text-3xl font-bold pt-4'>Search Lawyer</h1>
-          <input
-            className='w-1/2 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            type='text'
-            placeholder='Enter Username, Firstname, Lastname, Initials or Email...'
-            value={searchKeyword}
-            onChange={e => setSearchKeyword(e.target.value)}
-          />
-          <div className='mt-5 flex flex-col justify-center items-center'>
-            <div className='flex self-start'>
-              <h1 className='font-semibold text-xl'>Lawyer Details</h1>
+            <div>
+              <input
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[40.5%]'
+                type='text'
+                placeholder='Enter Username, Firstname, Lastname, Initials or Email...'
+                value={searchKeyword}
+                onChange={e => setSearchKeyword(e.target.value)}
+              />
             </div>
-            <div className='mt-2'>
+          </div>
+        </div>
+
+        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:w-[94%] lg:h-[90%] md:h-[86%]'>
+          <div className=' flex flex-col justify-center'>
+            {/* LAWYER DETAILS */}
+            <div>
               <form onSubmit={handleEditFormSubmit}>
-                <table className='w-screen text-center'>
-                  <thead>
-                    <tr>
-                      <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-                        Username
-                      </th>
-                      <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-                        First Name
-                      </th>
-                      <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-                        Last Name
-                      </th>
-                      <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-                        Initials
-                      </th>
-                      <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-                        Email Address
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {search(lawyers).map(lawyer => (
-                      <Fragment key={lawyer.id}>
-                        {editLawyerId === lawyer.id ? (
-                          <tr>
-                            <LawyersEditRow
-                              editFormData={editFormData}
-                              handleEditFormChange={handleEditFormChange}
-                              handleCancelClick={handleCancelClick}
-                            />
-                          </tr>
-                        ) : (
-                          <tr>
-                            <LawyersReadOnlyRow
-                              lawyer={lawyer}
-                              handleEditClick={handleEditClick}
-                              handleDeleteClick={handleDeleteClick}
-                            />
-                          </tr>
-                        )}
-                      </Fragment>
-                    ))}
-                  </tbody>
-                </table>
+                <div className='overflow-x-auto relative bg-white shadow-lg sm:rounded-lg p-2'>
+                  <table className='w-full text-sm text-center text-gray-500 border-collapse border border-slate-500 mt-2 mb-2'>
+                    <thead>
+                      <tr>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Username
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          First Name
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Last Name
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Initials
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Email Address
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {search(lawyers).map(lawyer => (
+                        <Fragment key={lawyer.id}>
+                          {editLawyerId === lawyer.id ? (
+                            <tr>
+                              <LawyersEditRow
+                                editFormData={editFormData}
+                                handleEditFormChange={handleEditFormChange}
+                                handleCancelClick={handleCancelClick}
+                              />
+                            </tr>
+                          ) : (
+                            <tr>
+                              <LawyersReadOnlyRow
+                                lawyer={lawyer}
+                                handleEditClick={handleEditClick}
+                                handleDeleteClick={handleDeleteClick}
+                              />
+                            </tr>
+                          )}
+                        </Fragment>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </form>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from 'react'
 export default function ClientsEditRow({ editFormData, handleEditFormChange, handleCancelClick }) {
   return (
     <>
-      <td>
+      <td className='py-4 px-6 border border-slate-700'>
         <input
           className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           type='text'
@@ -12,7 +12,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
+      <td className='py-4 px-6 border border-slate-700'>
         <input
           className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           type='text'
@@ -22,7 +22,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
+      <td className='py-4 px-6 border border-slate-700'>
         <input
           className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           type='text'
@@ -32,7 +32,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
+      <td className='py-4 px-6 border border-slate-700'>
         <input
           className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           type='text'
@@ -42,7 +42,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
+      <td className='py-4 px-6 border border-slate-700'>
         <input
           className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
           type='text'
@@ -52,16 +52,18 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td>
-        <button className='w-16 h-7 rounded-md border-0 bg-maroon text-white' type='submit'>
-          Save
-        </button>
-        <button
-          className='w-16 h-7 rounded-md border-0 bg-maroon text-white'
-          onClick={handleCancelClick}
-        >
-          Cancel
-        </button>
+      <td className='py-4 px-6 border border-slate-700'>
+        <div className='flex'>
+          <button className='w-14 h-8 rounded-md mr-1 border-0 bg-maroon text-white' type='submit'>
+            Save
+          </button>
+          <button
+            className='w-14 h-8 rounded-md border-0 bg-maroon text-white'
+            onClick={handleCancelClick}
+          >
+            Cancel
+          </button>
+        </div>
       </td>
     </>
   )
