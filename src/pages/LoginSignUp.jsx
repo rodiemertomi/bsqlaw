@@ -68,7 +68,7 @@ function LoginSignUp() {
           <div
             className={`font-Lora flex justify-center items-center font-semibold border-black border-[2px] w-[345px] rounded-t-2xl h-14 bg-[#632121] text-white`}
           >
-            BSQ Law
+            BSQ LAW
           </div>
         </div>
         {/* LOGIN */}
@@ -77,7 +77,6 @@ function LoginSignUp() {
             <p className='font-Lora text-xs text-center text-[#8C760A]'>
               Login with the email provided by the firm
             </p>
-            <div className='text-red-300'>{error && <AlertBox>{error}</AlertBox>}</div>
             <label htmlFor='email' className=' font-Lora font-semibold mt-2'>
               EMAIL:
             </label>
@@ -102,10 +101,10 @@ function LoginSignUp() {
               className='bg-white self-center h-11 border-black outline-none border-b-[1px] 
                 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
+            {error && <AlertBox>{error}</AlertBox>}
             <button
-              disabled={loading}
               type='submit'
-              className='font-Lora font-bold mt-5 py-4 px-8 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white text-white md:text-sm md:py-3 md:px-4 '
+              className='font-Lora font-bold mt-2 py-4 px-8 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white text-white md:text-sm md:py-3 md:px-4 '
             >
               LOG IN
             </button>
