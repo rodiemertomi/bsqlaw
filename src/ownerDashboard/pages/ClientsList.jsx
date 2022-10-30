@@ -167,25 +167,35 @@ export default function ClientsList() {
 
 function ReadClients({ handleAppointClick, client, i }) {
   return (
-    <div
-      key={client.id}
-      className='bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'
-    >
-      <img
-        alt='user'
-        className='w-20 md:w-40 rounded-full'
-        src={
-          client.photoURL === '' || !client.photoURL
-            ? require('../../assets/user.png')
-            : `${client.photoURL}`
-        }
-      />
-      <h1 className='text-white'>{`${client.firstname} ${client.lastname}`}</h1>
-      <h1 className='text-white'>{`${client.username}`}</h1>
-      {client.lawyer ? <h1 className='text-white'>Appointed Lawyer: {client.lawyer}</h1> : ''}
-      <button className='text-white' onClick={e => handleAppointClick(e, client)}>
-        Appoint Lawyer
-      </button>
+    <div className='bg-[#632121] w-[230px] h-[230px] lg:w-[260px] lg:h-[260px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-48 md:h-48 text-white gap-1'>
+      <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center'>
+        <img
+          alt='user'
+          className='w-[130px] lg:w-[140px] md:w-40 rounded-full'
+          src={
+            client.photoURL === '' || !client.photoURL
+              ? require('../../assets/user.png')
+              : `${client.photoURL}`
+          }
+        />
+        <h1 className='text-yellow'>{`${client.firstname} ${client.lastname}`}</h1>
+        <h1 className='text-white'>{`${client.username}`}</h1>
+        {client.lawyer ? (
+          <h1 className='text-white font-semibold'>
+            Appointed Lawyer: <span className='text-white'>{client.lawyer}</span>
+          </h1>
+        ) : (
+          ''
+        )}
+      </div>
+      <div className='flex flex-col items-center justify-start p-2 text-xs gap-1'>
+        <button
+          className='w-[55%] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+          onClick={e => handleAppointClick(e, client)}
+        >
+          Appoint Lawyer
+        </button>
+      </div>
     </div>
   )
 }
@@ -201,32 +211,48 @@ function EditClient({
   return (
     <div
       key={client.id}
-      className='bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'
+      className='bg-[#632121] w-[230px] h-[230px] lg:w-[260px] lg:h-[260px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-48 md:h-48 text-white gap-1'
     >
-      <img
-        alt='user'
-        className='w-20 md:w-40 rounded-full'
-        src={
-          client.photoURL === '' || !client.photoURL
-            ? require('../../assets/user.png')
-            : `${client.photoURL}`
-        }
-      />
-      <h1 className='text-white'>{`${client.firstname} ${client.lastname}`}</h1>
-      <select name='appoint-lawyer' onChange={handleEdit}>
-        <option value=''>Select Lawyer</option>
-        {lawyersList?.map(lawyer => (
-          <>
-            <option
-              key={lawyer.id}
-              value={lawyer?.initials}
-            >{`${lawyer?.firstname} ${lawyer?.lastname}`}</option>
-          </>
-        ))}
-      </select>
-      <div className='flex gap-4'>
-        <button onClick={handleCancelClick}>Cancel</button>
-        <button onClick={e => handleEditFormSubmit(e, client)}>Save</button>
+      <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center gap-3'>
+        <img
+          alt='user'
+          className='w-[130px] lg:w-[140px] md:w-40 rounded-full'
+          src={
+            client.photoURL === '' || !client.photoURL
+              ? require('../../assets/user.png')
+              : `${client.photoURL}`
+          }
+        />
+        <h1 className='text-yellow'>{`${client.firstname} ${client.lastname}`}</h1>
+        <select
+          className='w-[55%] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white active:shadow-lg transition'
+          name='appoint-lawyer'
+          onChange={handleEdit}
+        >
+          <option value=''>Select Lawyer</option>
+          {lawyersList?.map(lawyer => (
+            <>
+              <option
+                key={lawyer.id}
+                value={lawyer?.initials}
+              >{`${lawyer?.firstname} ${lawyer?.lastname}`}</option>
+            </>
+          ))}
+        </select>
+        <div className='flex gap-1'>
+          <button
+            className='w-[55px] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+            onClick={handleCancelClick}
+          >
+            Cancel
+          </button>
+          <button
+            className='w-[55px] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+            onClick={e => handleEditFormSubmit(e, client)}
+          >
+            Save
+          </button>
+        </div>
       </div>
     </div>
   )
