@@ -186,32 +186,34 @@ export default function CaseFolders() {
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
               <form key={folder.id} onSubmit={handleEditFormSubmit}>
-                <details className='p-1 md:ml-5'>
-                  <summary
-                    onClick={() => handleGetFiles(folder.id)}
-                    className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'
-                  >
-                    {folder.foldername}
-                  </summary>
-                  {fileList?.map(file => (
-                    <Fragment key={file.id}>
-                      {file.folder === folder.foldername ? (
-                        readState ? (
-                          <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
+                <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
+                  <details className='p-5'>
+                    <summary
+                      onClick={() => handleGetFiles(folder.id)}
+                      className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'
+                    >
+                      {folder.foldername}
+                    </summary>
+                    {fileList?.map(file => (
+                      <Fragment key={file.id}>
+                        {file.folder === folder.foldername ? (
+                          readState ? (
+                            <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
+                          ) : (
+                            <EditRow
+                              editFormData={editFormData}
+                              file={file}
+                              handleCancel={handleCancel}
+                              handleEdit={handleEdit}
+                            />
+                          )
                         ) : (
-                          <EditRow
-                            editFormData={editFormData}
-                            file={file}
-                            handleCancel={handleCancel}
-                            handleEdit={handleEdit}
-                          />
-                        )
-                      ) : (
-                        ''
-                      )}
-                    </Fragment>
-                  ))}
-                </details>
+                          ''
+                        )}
+                      </Fragment>
+                    ))}
+                  </details>
+                </div>
               </form>
             ))}
           </div>
@@ -226,23 +228,19 @@ export default function CaseFolders() {
               Add File
             </button>
             {showModal && (
-              <div className='w-screen h-screen backdrop-blur-sm absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#BABABA] absolute h-[65%] w-[90%] gap-5 shadow-lg rounded-md md:h-[55%] md:w-[70%] lg:h-[95%] lg:w-[40%] '>
-                  <div className='flex flex-col items-center gap-2'>
-                    <h1 className='font-bold text-2xl'>ADD FILE</h1>
-                    <hr className='w-64' />
-                  </div>
-                  <div className='flex justify-center gap-2'>
+              <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
+                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[85%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[75%] md:w-[70%] lg:h-[95%] lg:w-[35%] p-10'>
+                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-2 gap-[2px]'>
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                         shadow appearance-none border rounded w-[50%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={folderNameRef}
                       placeholder='Enter folder name'
                     />
                     <select
-                      className='bg-white self-center border-black outline-none border-b-[1px] 
-                      shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                         shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => setSelectedLawyer(e.target.value)}
                     >
                       <option value=''>Select Lawyer</option>
@@ -253,16 +251,16 @@ export default function CaseFolders() {
                       ))}
                     </select>
                     <button
-                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      className=' inline-block px-6 py-2.5 mt-1 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white w-full hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       onClick={addFolder}
                     >
                       Add Folder
                     </button>
                   </div>
-                  <div className='flex flex-col items-center justify-evenly gap-2'>
+                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly gap-[2px]'>
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] 
-                        shadow border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                   shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       name='folders'
                       id='folders'
                       value={folderOption}
@@ -276,57 +274,59 @@ export default function CaseFolders() {
                       ))}
                     </select>
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                      shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={caseNoRef}
                       placeholder='Case Number'
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                     shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={caseTitleRef}
                       placeholder='Case Title'
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                    shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={pleadingRef}
                       placeholder='Pleading / Order'
                     />
-                    <label htmlFor='pleading-date'>Pleading Date</label>
+                    <label className='text-maroon text-sm' htmlFor='pleading-date'>
+                      Pleading Date
+                    </label>
                     <input
                       name='pleading-date'
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                        shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='date'
                       placeholder='Pleading Date'
                       onChange={e => setPleadingDate(e.target.value)}
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       placeholder='Enter Court'
                       ref={courtRef}
                     />
                     <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       placeholder='Enter Branch (1-300)'
                       ref={branchRef}
                     />
                     <input
-                      className='bg-[#BABABA] lg:h-[40px]
-                       rounded w-[70%] py-2 px-3 text-gray-700 '
+                      className='bg-[#e1dfdf] flex items-center justify-center h-[42px]
+                       rounded w-full py-2 px-3 text-gray-700 '
                       type='file'
                       onChange={e => setFileUpload(e.target.files[0])}
                     />
                     <button
-                      className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      className=' inline-block mt-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon w-full hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       disabled={loading}
                       onClick={uploadFile}
                     >
@@ -335,7 +335,7 @@ export default function CaseFolders() {
                   </div>
 
                   <p
-                    className='text-maroon font-bold cursor-pointer hover:text-white'
+                    className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold'
                     onClick={() => setShowModal(false)}
                   >
                     Close
@@ -353,78 +353,67 @@ export default function CaseFolders() {
 function ReadOnlyRow({ file, handleEditClick }) {
   return (
     <>
-      <table
-        key={file.id}
-        className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'
-      >
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case No.
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case Title
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order Date
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Handling Associate
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Court
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Branch
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-6 border border-slate-700'>
-              {file.casenumber}
-            </th>
-            <td className='py-4 px-6 font-bold border border-slate-700'>
-              <a href={file.url}>{file.casetitle}</a>
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.pleading}</td>
-            <td className='py-4 px-6 border border-slate-700'>
-              {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.author}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.court}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.branch}</td>
-          </tr>
-        </tbody>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
-              Date Created
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Shareable
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Folder
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className='text-center'>
-            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {file.date_created.toDate().toISOString().substr(0, 10)}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
-              {file.shareable ? 'Shared' : 'Unshared'}
-            </td>
-            <td className={`text-center w-1/5 border border-slate-700`}>{file.folder}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className='flex justify-end'>
+      <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
+            <tr>
+              <th scope='col' className='py-3 px-6 '>
+                Case No.
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Case Title
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order Date
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Handling Associate
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Court
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Branch
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Date Created
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Shareable
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Folder
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
+              <th scope='row' className='py-4 px-6 font-bold'>
+                {file.casenumber}
+              </th>
+              <td className='py-4 px-6 font-bold'>
+                <a href={file.url}>{file.casetitle}</a>
+              </td>
+              <td className='py-4 px-6'>{file.pleading}</td>
+              <td className='py-4 px-6'>
+                {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>{file.author}</td>
+              <td className='py-4 px-6'>{file.court}</td>
+              <td className='py-4 px-6'>{file.branch}</td>
+              <td className='py-4 px-6'>
+                {file.date_created.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>{file.shareable ? 'Shared' : 'Unshared'}</td>
+              <td className='py-4 px-6'>{file.folder}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className='flex justify-end mt-5'>
         <button
           onClick={e => handleEditClick(e, file)}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
@@ -439,90 +428,81 @@ function ReadOnlyRow({ file, handleEditClick }) {
 function EditRow({ handleCancel, handleEdit, file }) {
   return (
     <>
-      <table
-        key={file.id}
-        className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'
-      >
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case No.
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case Title
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order Date
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Handling Associate
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Court
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Branch
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
-              {file.casenumber}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
-              <a href={file.url}>{file.casetitle}</a>
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.pleading}</td>
-            <td className='py-4 px-6 border border-slate-700'>
-              {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.author}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.court}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.branch}</td>
-          </tr>
-        </tbody>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
-              Date Created
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Shareable
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Folder
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {file.date_created.toDate().toISOString().substr(0, 10)}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
-              <select onChange={handleEdit}>
-                {file.shareable ? (
-                  <>
-                    <option value={true}>Shared</option>
-                    <option value={false}>Unshared</option>
-                  </>
-                ) : (
-                  <>
-                    <option value={false}>Unshared</option>
-                    <option value={true}>Shared</option>
-                  </>
-                )}
-              </select>
-            </td>
-            <td className='py-4 px-4 border border-slate-700'>{file.folder}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className='flex justify-end gap-1'>
+      <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
+            <tr>
+              <th scope='col' className='py-3 px-6 '>
+                Case No.
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Case Title
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order Date
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Handling Associate
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Court
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Branch
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Date Created
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Shareable
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Folder
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
+              <th scope='row' className='py-4 px-6 font-bold'>
+                {file.casenumber}
+              </th>
+              <td className='py-4 px-6 font-bold'>
+                <a href={file.url}>{file.casetitle}</a>
+              </td>
+              <td className='py-4 px-6'>{file.pleading}</td>
+              <td className='py-4 px-6'>
+                {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>{file.author}</td>
+              <td className='py-4 px-6'>{file.court}</td>
+              <td className='py-4 px-6'>{file.branch}</td>
+              <td className='py-4 px-6'>
+                {file.date_created.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>
+                <select onChange={handleEdit}>
+                  {file.shareable ? (
+                    <>
+                      <option value={true}>Shared</option>
+                      <option value={false}>Unshared</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value={false}>Unshared</option>
+                      <option value={true}>Shared</option>
+                    </>
+                  )}
+                </select>
+              </td>
+              <td className='py-4 px-6'>{file.folder}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className='flex justify-end gap-1 mt-5'>
         <button
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
           type='submit'
