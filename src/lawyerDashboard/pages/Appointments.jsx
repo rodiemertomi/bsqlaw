@@ -121,7 +121,7 @@ function Appointments() {
                         src={require('../../assets/user.png')}
                         alt='user icon'
                       />
-                      <span className='font-bold uppercase'>
+                      <span className='font-bold uppercase text-xs'>
                         {appointment.clientFirstName} {appointment.clientLastName}
                       </span>
                     </div>
