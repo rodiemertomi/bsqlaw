@@ -40,7 +40,7 @@ function AppointmentManagement() {
       <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>Appointments</h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20  lg:mr-3'>
-          <div className='w-[100%] h-[95%] pl-5 pt-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-start lg:w-[100%] overflow-auto scrollbar-hide'>
+          <div className='w-[100%] pl-5 pt-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-start lg:w-[100%] overflow-auto scrollbar-hide'>
             {appointments?.map(appointment => (
               <div
                 key={appointment.id}
@@ -52,7 +52,7 @@ function AppointmentManagement() {
                   </span>
                 </div>
                 <div className='overflow-x-auto relative shadow-lg rounded-lg '>
-                  <table className='w-full text-sm text-center text-gray-500 border border-gray'>
+                  <table className='w-full text-sm text-center text-gray-500 border border-gray '>
                     <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
                       <tr>
                         <th scope='col' className='py-3 px-6 '>
