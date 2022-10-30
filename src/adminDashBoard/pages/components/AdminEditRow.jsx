@@ -60,7 +60,7 @@ export default function AdminEditRow({
           />
         </td>
         <td className='py-4 px-6 border border-slate-700'>
-          <div className='flex'>
+          <div className='flex items-center justify-center'>
             <button
               className='w-14 h-8 rounded-md border-0 mr-1 bg-maroon text-white'
               type='submit'

@@ -33,7 +33,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
         />
       </td>
       <td className='py-4 px-6 border border-slate-700'>
-        <div className='flex'>
+        <div className='flex items-center justify-center'>
           <button className='w-14 h-8 rounded-md border-0 bg-maroon mr-1 text-white' type='submit'>
             Save
           </button>
