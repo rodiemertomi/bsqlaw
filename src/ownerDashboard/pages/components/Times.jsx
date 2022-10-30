@@ -64,7 +64,7 @@ function Times({ closeShowAppointment, getData }) {
   }
 
   return (
-    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#BABABA] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%]'>
+    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#e1dfdf] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%] drop-shadow-lg'>
       <h1 className='font-bold text-2xl'>Set Appointment</h1>
       <form onSubmit={saveEvent} className='mt-5'>
         <div className='mt-5 flex flex-col justify-center items-center gap-5'>
@@ -157,7 +157,7 @@ function Times({ closeShowAppointment, getData }) {
             className='bg-maroon w-[40%] text-white font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out text-center'
           />
           <p
-            className='self-center text-maroon font-bold cursor-pointer hover:text-white mt-8'
+            className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold mt-8'
             onClick={() => closeShowAppointment(false)}
           >
             Close
