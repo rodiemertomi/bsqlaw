@@ -38,11 +38,11 @@ export default function LawyersList() {
 
 function ReadLawyers({ lawyer }) {
   return (
-    <div className='bg-[#632121] w-[230px] h-[260px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-48 md:h-48 text-white gap-[1px]'>
+    <div className='bg-[#632121] w-[230px] h-[260px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-[230px] md:h-[260px] text-white gap-[1px]'>
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center'>
         <img
           alt='user'
-          className='w-[130px] lg:w-[140px] md:w-40 rounded-full'
+          className='w-[130px] lg:w-[140px] md:w-[140px] rounded-full'
           src={
             lawyer.photoURL === '' || !lawyer.photoURL
               ? require('../../assets/user.png')

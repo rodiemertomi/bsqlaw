@@ -167,7 +167,7 @@ export default function ClientsList() {
 
 function ReadClients({ handleAppointClick, client, i }) {
   return (
-    <div className='bg-[#632121] w-[230px] h-[230px] lg:w-[260px] lg:h-[260px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-48 md:h-48 text-white gap-1'>
+    <div className='bg-[#632121] w-[230px] h-[230px] lg:w-[260px] lg:h-[260px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-[220px] md:h-[260px] text-white gap-1'>
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center'>
         <img
           alt='user'
