@@ -320,7 +320,7 @@ export default function CaseFolders() {
                       ref={pleadingRef}
                       placeholder='Pleading / Order'
                     />
-                    <label className='font-bold' htmlFor='pleading-date'>
+                    <label className='text-maroon text-sm' htmlFor='pleading-date'>
                       Pleading Date
                     </label>
                     <input
@@ -416,7 +416,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
             </tr>
           </thead>
           <tbody>
-            <tr className=''>
+            <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
               <th scope='row' className='py-4 px-6 font-bold'>
                 {file.casenumber}
               </th>
@@ -454,87 +454,81 @@ function ReadOnlyRow({ file, handleEditClick }) {
 function EditRow({ handleCancel, handleEdit, file }) {
   return (
     <>
-      <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case No.
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case Title
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order Date
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Handling Associate
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Court
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Branch
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-6 font-bold border border-slate-700'>
-              {file.casenumber}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
-              <a href={file.url}>{file.casetitle}</a>
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.pleading}</td>
-            <td className='py-4 px-6 border border-slate-700'>
-              {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.author}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.court}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.branch}</td>
-          </tr>
-        </tbody>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
-              Date Created
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Shareable
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Folder
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {file.date_created.toDate().toISOString().substr(0, 10)}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
-              <select onChange={handleEdit}>
-                {file.shareable ? (
-                  <>
-                    <option value={true}>Shared</option>
-                    <option value={false}>Unshared</option>
-                  </>
-                ) : (
-                  <>
-                    <option value={false}>Unshared</option>
-                    <option value={true}>Shared</option>
-                  </>
-                )}
-              </select>
-            </td>
-            <td className='py-4 px-4 border border-slate-700'>{file.folder}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div className='flex justify-end gap-1'>
+      <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
+            <tr>
+              <th scope='col' className='py-3 px-6 '>
+                Case No.
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Case Title
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order Date
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Handling Associate
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Court
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Branch
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Date Created
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Shareable
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Folder
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
+              <th scope='row' className='py-4 px-6 font-bold'>
+                {file.casenumber}
+              </th>
+              <td className='py-4 px-6 font-bold'>
+                <a href={file.url}>{file.casetitle}</a>
+              </td>
+              <td className='py-4 px-6'>{file.pleading}</td>
+              <td className='py-4 px-6'>
+                {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>{file.author}</td>
+              <td className='py-4 px-6'>{file.court}</td>
+              <td className='py-4 px-6'>{file.branch}</td>
+              <td className='py-4 px-6'>
+                {file.date_created.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>
+                <select onChange={handleEdit}>
+                  {file.shareable ? (
+                    <>
+                      <option value={true}>Shared</option>
+                      <option value={false}>Unshared</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value={false}>Unshared</option>
+                      <option value={true}>Shared</option>
+                    </>
+                  )}
+                </select>
+              </td>
+              <td className='py-4 px-6'>{file.folder}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className='flex justify-end gap-1 mt-5'>
         <button
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
           type='submit'
