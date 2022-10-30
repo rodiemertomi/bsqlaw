@@ -86,8 +86,8 @@ function LoginSignUp() {
               type='email'
               name='email'
               placeholder='Email'
-              className='bg-white self-center h-11 border-black outline-none border-b-[1px]
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              className='bg-white self-center h-11 border-black outline-none border-b-[1px] 
+              shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             />
             <label htmlFor='password' className='font-Lora mt-3 font-semibold'>
               PASSWORD:
