@@ -197,7 +197,7 @@ export default function ClientsManagement() {
             </form>
           </div>
         </div>
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:h-[92%] md:h-[86%]'>
+        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:h-[98%] md:h-[86%]'>
           <div className='flex flex-col justify-center'>
             {/* CLIENT DETAILS */}
             <div>

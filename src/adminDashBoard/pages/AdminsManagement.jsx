@@ -190,7 +190,7 @@ export default function AdminsManagement() {
               action=''
             >
               <input
-                className='w-3/4 pl-2 lg:w-[20%]  rounded-md border-2 border-gray'
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
                 type='email'
                 name='email'
                 value={addFormData.email}
@@ -198,7 +198,7 @@ export default function AdminsManagement() {
                 onChange={handleAddFormChange}
               />
               <input
-                className='w-3/4 pl-2 lg:w-[20%] rounded-md border-2 border-gray'
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
                 type='text'
                 name='username'
                 value={addFormData.username}
@@ -206,7 +206,7 @@ export default function AdminsManagement() {
                 onChange={handleAddFormChange}
               />
               <input
-                className='w-3/4 pl-2 lg:w-[20%] rounded-md border-2 border-gray'
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
                 type='password'
                 name='password'
                 value={addFormData.password}
@@ -214,7 +214,7 @@ export default function AdminsManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`w-28 h-7 rounded-md border-0 bg-maroon text-white ${
+                className={`w-28 h-8 self-center rounded-md border-0 bg-maroon text-white ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'
