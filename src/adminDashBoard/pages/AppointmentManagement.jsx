@@ -1,21 +1,47 @@
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
+import {
+  arrayRemove,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import 'react-calendar/dist/Calendar.css'
-import UseUserReducer from '../../UserReducer'
 import { db } from '../../firebase'
 import Times from './components/Times'
 
 function AppointmentManagement() {
   const [showAppointment, setShowAppoitnment] = useState(false)
   const [appointments, setAppointments] = useState([])
-  const { initials } = UseUserReducer()
   const [clients, setClients] = useState()
-  const colRef = collection(db, 'appointments')
-  const q = query(colRef, where('setter', '==', `${initials}`), orderBy('eventDateStart', 'asc'))
+  const appointmentsRef = collection(db, 'appointments')
+  const q = query(appointmentsRef, orderBy('dateTimeStart', 'asc'), orderBy('dateTimeEnd', 'asc'))
 
   const formatDate = date => {
     let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
     return dateArray.join('/')
+  }
+
+  const handleCancelAppt = async (apptId, clientId) => {
+    if (window.confirm('Sure to cancel appointment?') === true) {
+      const apptRef = doc(db, `appointments/${apptId}`)
+      await getDoc(apptRef).then(async snap => {
+        const clientRef = doc(db, `users/${clientId}`)
+        const data = {
+          appointments: arrayRemove(snap.data()),
+        }
+        await setDoc(clientRef, data, { merge: true })
+        await deleteDoc(apptRef).then(() => alert('Canceled Appointment'))
+        getAppointments()
+      })
+    } else {
+      return
+    }
   }
 
   const getClients = async () => {
@@ -26,13 +52,13 @@ function AppointmentManagement() {
     })
   }
 
-  const getData = async () => {
+  const getAppointments = async () => {
     const snap = await getDocs(q)
     setAppointments(snap.docs.map(doc => ({ ...doc.data() })))
   }
   useEffect(() => {
     getClients()
-    getData()
+    getAppointments()
   }, [])
 
   return (
@@ -65,30 +91,44 @@ function AppointmentManagement() {
                           Event Time End
                         </th>
                         <th scope='col' className='py-3 px-6'>
-                          Event Date Start
+                          Event Date
                         </th>
                         <th scope='col' className='py-3 px-6'>
-                          Event Date End
+                          Set By
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
                         <td className='py-4 px-6 lg:w-[22%]'>{appointment.eventDesc}</td>
-                        <td class='py-4 px-6'>{appointment.eventTimeStart}</td>
-                        <td class='py-4 px-6'>{appointment.eventTimeEnd}</td>
-                        <td class='py-4 px-6'>{formatDate(appointment.eventDateStart.toDate())}</td>
-                        <td class='py-4 px-6'> {formatDate(appointment.eventDateEnd.toDate())}</td>
+                        <td className='py-4 px-6'>{appointment.timeStart}</td>
+                        <td className='py-4 px-6'>{appointment.timeEnd}</td>
+                        <td className='py-4 px-6'>
+                          {formatDate(appointment.dateTimeStart.toDate())}
+                        </td>
+                        <td className='py-4 px-6'>{appointment.setter}</td>
                       </tr>
                     </tbody>
                   </table>
-                  <div className='p-2 flex items-center gap-2 text-sm'>
-                    <img
-                      className='h-8 w-8'
-                      src={require('../../assets/user.png')}
-                      alt='user icon'
-                    />
-                    <span className='font-bold uppercase'>{appointment.client}</span>
+                  <div className='p-2 flex items-center gap-[80%] text-sm'>
+                    <div className='flex gap-2 items-center'>
+                      <img
+                        className='h-8 w-8'
+                        src={require('../../assets/user.png')}
+                        alt='user icon'
+                      />
+                      <span className='font-bold uppercase'>
+                        {appointment.clientFirstName} {appointment.clientLastName}
+                      </span>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => handleCancelAppt(appointment.id, appointment.clientId)}
+                        className='inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

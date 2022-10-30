@@ -13,7 +13,6 @@ function Times({ closeShowAppointment, clients }) {
     setEventTimeEnd,
     setEventName,
     setEventDesc,
-    setEventDateEnd,
     setEventDateStart,
     setClientId,
   } = UseAppointmentStore()
@@ -24,7 +23,6 @@ function Times({ closeShowAppointment, clients }) {
     eventTimeEnd,
     eventName,
     eventDateStart,
-    eventDateEnd,
     eventDesc,
     clientId,
   } = UseAppointmentStore()
@@ -50,7 +48,56 @@ function Times({ closeShowAppointment, clients }) {
 
   const saveEvent = async e => {
     e.preventDefault()
+    if (clientId === '') {
+      alert('Please select a client')
+      setEventName('')
+      setEventDesc('')
+      setClientFirstName()
+      setClientLastName()
+      setClientId('')
+      setEventTimeStart('')
+      setEventTimeEnd('')
+      setEventDateStart('')
+      return
+    }
     const clientRef = doc(db, `users/${clientId}`)
+
+    const today = new Date()
+
+    const dateStart = new Date(eventDateStart)
+    const timeStartArr = eventTimeStart.split(':')
+    dateStart.setHours(timeStartArr[0])
+    dateStart.setMinutes(timeStartArr[1])
+
+    const dateEnd = new Date(eventDateStart)
+    const timeEndArr = eventTimeEnd.split(':')
+    dateEnd.setHours(timeEndArr[0])
+    dateEnd.setMinutes(timeEndArr[1])
+
+    if (today.getTime() > dateStart.getTime()) {
+      alert('Date set has already passed')
+      setEventName('')
+      setEventDesc('')
+      setClientFirstName()
+      setClientLastName()
+      setClientId('')
+      setEventTimeStart('')
+      setEventTimeEnd('')
+      setEventDateStart('')
+      return
+    }
+    if (eventTimeStart > eventTimeEnd) {
+      alert('Time end is less than Time Start')
+      setEventName('')
+      setEventDesc('')
+      setClientFirstName()
+      setClientLastName()
+      setClientId('')
+      setEventTimeStart('')
+      setEventTimeEnd('')
+      setEventDateStart('')
+      return
+    }
 
     const data = {
       id: nanoid(10),
@@ -60,10 +107,10 @@ function Times({ closeShowAppointment, clients }) {
       clientLastName: clientLastName,
       eventName: eventName,
       eventDesc: eventDesc,
-      eventTimeStart: eventTimeStart,
-      eventTimeEnd: eventTimeEnd,
-      eventDateStart: new Date(eventDateStart),
-      eventDateEnd: new Date(eventDateEnd),
+      timeStart: eventTimeStart,
+      timeEnd: eventTimeEnd,
+      dateTimeStart: dateStart,
+      dateTimeEnd: dateEnd,
     }
     await addDoc(appointmentsRef, data).then(alert('Appointment is set!'))
     const appointments = {
@@ -79,7 +126,6 @@ function Times({ closeShowAppointment, clients }) {
       setEventTimeStart('')
       setEventTimeEnd('')
       setEventDateStart('')
-      setEventDateEnd('')
     })
   }
 
@@ -95,6 +141,7 @@ function Times({ closeShowAppointment, clients }) {
       }
     })
   }, [clientId])
+
   return (
     <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#e1dfdf] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%] drop-shadow-lg'>
       <h1 className='font-bold text-2xl'>Set Appointment</h1>
@@ -173,18 +220,7 @@ function Times({ closeShowAppointment, clients }) {
             className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}
             onBlur={e => (e.currentTarget.type = 'text')}
-            placeholder='Date Duration:'
-          />
-          <input
-            type='text'
-            id='appt'
-            name='appt'
-            onChange={event => setEventDateEnd(event.target.value)}
-            value={eventDateEnd}
-            className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
-            onFocus={e => (e.currentTarget.type = 'date')}
-            onBlur={e => (e.currentTarget.type = 'text')}
-            placeholder='To:'
+            placeholder='Event Date:'
           />
         </div>
         <div className='flex flex-col items-center mt-5 '>

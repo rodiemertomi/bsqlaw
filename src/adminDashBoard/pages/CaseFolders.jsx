@@ -19,7 +19,6 @@ export default function CaseFolders() {
   const [foldersList, setFoldersList] = useState([])
   const [pleadingDate, setPleadingDate] = useState()
   const [folderOption, setFolderOption] = useState('')
-  const [fileList, setFileList] = useState([])
   const [readState, setReadState] = useState(true)
   const [share, setShare] = useState()
   const [editShareId, setEditShareId] = useState()
@@ -41,15 +40,6 @@ export default function CaseFolders() {
   const userColRef = collection(db, 'users')
   const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
   const foldersRef = collection(db, 'folders')
-
-  const handleGetFiles = async folderid => {
-    setFileList([])
-    const folderRef = doc(db, `folders/${folderid}`)
-
-    const snap = await getDoc(folderRef)
-
-    setFileList(snap.data().files)
-  }
 
   const getLawyerClients = async () => {
     const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
@@ -131,6 +121,7 @@ export default function CaseFolders() {
         })
       })
     })
+    getFolders()
     setLoading(false)
   }
 
@@ -196,36 +187,39 @@ export default function CaseFolders() {
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
-              <form onSubmit={handleEditFormSubmit}>
-                <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
-                  <details className='p-5'>
-                    <summary
-                      onClick={() => handleGetFiles(folder.id)}
-                      className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '
-                    >
-                      {folder.foldername}
-                    </summary>
-                    {fileList?.map(file => (
-                      <Fragment key={file.id}>
-                        {file.folder === folder.foldername ? (
-                          readState ? (
-                            <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
-                          ) : (
-                            <EditRow
-                              editFormData={editFormData}
-                              file={file}
-                              handleCancel={handleCancel}
-                              handleEdit={handleEdit}
-                            />
-                          )
-                        ) : (
-                          ''
-                        )}
-                      </Fragment>
-                    ))}
-                  </details>
-                </div>
-              </form>
+              <>
+                {folder.id === 'DONOTDELETE' ? (
+                  ''
+                ) : (
+                  <form onSubmit={handleEditFormSubmit}>
+                    <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
+                      <details className='p-5'>
+                        <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '>
+                          {folder.foldername}
+                        </summary>
+                        {folder.files?.map(file => (
+                          <Fragment key={file.id}>
+                            {file.folder === folder.foldername ? (
+                              readState ? (
+                                <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
+                              ) : (
+                                <EditRow
+                                  editFormData={editFormData}
+                                  file={file}
+                                  handleCancel={handleCancel}
+                                  handleEdit={handleEdit}
+                                />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </Fragment>
+                        ))}
+                      </details>
+                    </div>
+                  </form>
+                )}
+              </>
             ))}
           </div>
           <div className='h-[50px] flex flex-col justify-center item-center self-end mb-2 mt-1 mr-6'>

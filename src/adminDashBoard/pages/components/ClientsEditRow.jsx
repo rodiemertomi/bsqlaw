@@ -12,17 +12,25 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'></td>
       <td className='py-4 px-6 border border-slate-700'>
         <input
           type='text'
-          placeholder='Role'
-          name='role'
-          value={editFormData.role}
+          placeholder='Firstname'
+          name='firstname'
+          value={editFormData.firstname}
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'></td>
+      <td className='py-4 px-6 border border-slate-700'>
+        <input
+          type='text'
+          placeholder='Lastname'
+          name='lastname'
+          value={editFormData.lastname}
+          onChange={handleEditFormChange}
+        />
+      </td>
+      <td className='py-4 px-6 border border-slate-700'>{editFormData.lawyer}</td>
       <td className='py-4 px-6 border border-slate-700'>
         <input
           type='text'

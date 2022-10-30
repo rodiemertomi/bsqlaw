@@ -18,6 +18,7 @@ export default function ClientsManagement() {
   const clientRef = query(colRef, where('role', '==', 'client'))
   const [loading, setLoading] = useState(false)
   const [clients, setClients] = useState([])
+  const [searchKeyword, setSearchKeyword] = useState('')
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -34,8 +35,10 @@ export default function ClientsManagement() {
 
   const [editFormData, setEditFormData] = useState({
     username: '',
+    firstname: '',
+    lastname: '',
     email: '',
-    role: '',
+    assignedlawyer: '',
   })
 
   const [editClientId, setEditClientId] = useState(null)
@@ -98,6 +101,7 @@ export default function ClientsManagement() {
     } catch (err) {
       alert(err.message)
     }
+    getClients()
     setLoading(false)
   }
 
@@ -107,8 +111,10 @@ export default function ClientsManagement() {
 
     const editedUser = {
       username: editFormData.username,
+      firstname: editFormData.firstname,
+      lastname: editFormData.lastname,
       email: editFormData.email,
-      role: editFormData.role,
+      lawyer: editFormData.lawyer,
     }
 
     setDoc(docRef, editedUser, { merge: true }).then(() => {
@@ -116,6 +122,7 @@ export default function ClientsManagement() {
     })
 
     setEditClientId(null)
+    getClients()
   }
 
   const handleEditClick = (e, client) => {
@@ -124,8 +131,10 @@ export default function ClientsManagement() {
 
     const formValues = {
       username: client.username,
+      firstname: client.firstname,
+      lastname: client.lastname,
       email: client.email,
-      role: client.role,
+      lawyer: client.lawyer,
     }
 
     setEditFormData(formValues)
@@ -141,12 +150,27 @@ export default function ClientsManagement() {
     setLoading(false)
   }
 
-  useEffect(() => {
-    const getClients = async () => {
-      const data = await getDocs(clientRef)
-      setClients(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  const search = datas => {
+    try {
+      return datas.filter(
+        data =>
+          data.username.toLowerCase().includes(searchKeyword) ||
+          data.email.toLowerCase().includes(searchKeyword) ||
+          data.firstname.toLowerCase().includes(searchKeyword) ||
+          data.lastname.toLowerCase().includes(searchKeyword) ||
+          data.lawyer.toLowerCase().includes(searchKeyword)
+      )
+    } catch (err) {
+      alert(err.message)
     }
+  }
 
+  const getClients = async () => {
+    const data = await getDocs(clientRef)
+    setClients(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
+
+  useEffect(() => {
     getClients()
   }, [])
 
@@ -195,6 +219,16 @@ export default function ClientsManagement() {
                 Create New
               </button>
             </form>
+            <div>
+              SEARCH CLIENT
+              <input
+                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[40.5%]'
+                type='text'
+                placeholder='Enter Username, Firstname, Lastname, Appointed Lawyer or Email...'
+                value={searchKeyword}
+                onChange={e => setSearchKeyword(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:h-[98%] md:h-[86%]'>
@@ -227,7 +261,7 @@ export default function ClientsManagement() {
                       </tr>
                     </thead>
                     <tbody>
-                      {clients?.map(client => (
+                      {search(clients)?.map(client => (
                         <Fragment key={client.id}>
                           {editClientId === client.id ? (
                             <tr>

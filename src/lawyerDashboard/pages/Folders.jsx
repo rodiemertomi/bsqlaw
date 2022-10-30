@@ -1,16 +1,7 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { storage, db } from '../../firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-  arrayUnion,
-  getDoc,
-} from 'firebase/firestore'
+import { collection, query, where, getDocs, doc, setDoc, arrayUnion } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 
 export default function Folders() {
@@ -19,7 +10,6 @@ export default function Folders() {
   const [foldersList, setFoldersList] = useState([])
   const [pleadingDate, setPleadingDate] = useState()
   const [folderOption, setFolderOption] = useState('')
-  const [fileList, setFileList] = useState([])
   const [readState, setReadState] = useState(true)
   const [share, setShare] = useState()
   const [editShareId, setEditShareId] = useState()
@@ -34,15 +24,6 @@ export default function Folders() {
   const { username, initials, firstName, lastName } = UseUserReducer()
 
   const foldersRef = collection(db, 'folders')
-
-  const handleGetFiles = async folderid => {
-    setFileList([])
-    const folderRef = doc(db, `folders/${folderid}`)
-
-    const snap = await getDoc(folderRef)
-
-    setFileList(snap.data().files)
-  }
 
   const uploadFile = async () => {
     setLoading(true)
@@ -158,13 +139,10 @@ export default function Folders() {
                   <form onSubmit={handleEditFormSubmit}>
                     <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
                       <details className='p-5'>
-                        <summary
-                          className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '
-                          onClick={() => handleGetFiles(folder.id)}
-                        >
+                        <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '>
                           {folder.foldername}
                         </summary>
-                        {fileList?.map(file => (
+                        {folder.files?.map(file => (
                           <Fragment key={file.id}>
                             {file.folder === folder.foldername ? (
                               readState ? (

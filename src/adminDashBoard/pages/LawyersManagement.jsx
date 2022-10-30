@@ -220,6 +220,7 @@ export default function LawyersManagement() {
               </button>
             </form>
             <div>
+              SEARCH LAWYER
               <input
                 className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[40.5%]'
                 type='text'

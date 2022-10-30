@@ -1,12 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { db } from '../../firebase'
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 
 export default function Folders() {
   const { id, firstName, lastName } = UseUserReducer()
   const [folders, setFolders] = useState()
-  const [fileList, setFileList] = useState()
 
   const getFolders = async () => {
     const folderRef = collection(db, 'folders')
@@ -14,14 +13,6 @@ export default function Folders() {
     await getDocs(folderQuery).then(snap => {
       setFolders(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
-  }
-  const handleGetFiles = async folderid => {
-    setFileList([])
-    const folderRef = doc(db, `folders/${folderid}`)
-
-    const snap = await getDoc(folderRef)
-
-    setFileList(snap.data().files)
   }
 
   useEffect(() => {
@@ -38,13 +29,10 @@ export default function Folders() {
             {folders?.map(folder => (
               <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
                 <details className='p-5'>
-                  <summary
-                    onClick={() => handleGetFiles(folder.id)}
-                    className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'
-                  >
+                  <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'>
                     {folder.foldername}
                   </summary>
-                  {fileList?.map(file => (
+                  {folder.files?.map(file => (
                     <Fragment key={file.id}>
                       {file.folder === folder.foldername ? <ReadOnlyRow file={file} /> : ''}
                     </Fragment>
