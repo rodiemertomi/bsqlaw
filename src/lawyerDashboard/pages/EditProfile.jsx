@@ -77,7 +77,7 @@ function EditProfile({ closeModal }) {
             />
             <img
               alt='user'
-              className='w-[170px] h-[170px] object-cover z-0 rounded-full'
+              className='w-[200px] h-[200px] object-cover z-0 rounded-full'
               src={
                 photoURLState === '' || !photoURLState
                   ? require('../../assets/user.png')
