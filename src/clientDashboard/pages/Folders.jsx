@@ -28,32 +28,30 @@ export default function Folders() {
     getFolders()
   }, [])
   return (
-    <div className='h-screen w-screen overflow-auto lg:overflow-hidden scrollbar-hide md:w-screen md:h-screen lg:w-screen lg:ml-48'>
-      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold'>
+    <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
+      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
         {firstName} {lastName}'s Case Files
       </h1>
-      <div className='h-full flex flex-col gap-5 items-center  md:w-full md:h-full lg:w-full lg:h-full lg:flex lg:flex-row'>
-        <div className='w-[95%] gap-5 mt-6 lg:w-[95%] lg:h-[100%] lg:ml-2'>
-          <div className=' rounded-md  flex flex-col shadow-lg  bg-[#D9D9D9] lg:h-[85%]'>
-            <div className='m-5 lg:m-5 text-justify'>
-              <div className='flex flex-col gap-10 lg:ml-10 '>
-                {folders?.map(folder => (
-                  <details className='p-1 md:ml-5'>
-                    <summary
-                      onClick={() => handleGetFiles(folder.id)}
-                      className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'
-                    >
-                      {folder.foldername}
-                    </summary>
-                    {fileList?.map(file => (
-                      <Fragment key={file.id}>
-                        {file.folder === folder.foldername ? <ReadOnlyRow file={file} /> : ''}
-                      </Fragment>
-                    ))}
-                  </details>
-                ))}
+      <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
+        <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
+          <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
+            {folders?.map(folder => (
+              <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
+                <details className='p-5'>
+                  <summary
+                    onClick={() => handleGetFiles(folder.id)}
+                    className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'
+                  >
+                    {folder.foldername}
+                  </summary>
+                  {fileList?.map(file => (
+                    <Fragment key={file.id}>
+                      {file.folder === folder.foldername ? <ReadOnlyRow file={file} /> : ''}
+                    </Fragment>
+                  ))}
+                </details>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -64,74 +62,66 @@ export default function Folders() {
 function ReadOnlyRow({ file }) {
   return (
     <>
-      <table className='w-full text-xs text-center lg:text-sm lg:ml-2 border-collapse border border-slate-500 mt-2 mb-2'>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case No.
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Case Title
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Pleading / Order Date
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Handling Associate
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Court
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm    border border-slate-600'>
-              Branch
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className=''>
-            <th scope='row' className='py-4 px-6 border border-slate-700'>
-              {file.casenumber}
-            </th>
-            <td className='py-4 px-6 font-bold border border-slate-700'>
-              <a href={file.url}>{file.casetitle}</a>
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.pleading}</td>
-            <td className='py-4 px-6 border border-slate-700'>
-              {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
-            </td>
-            <td className='py-4 px-6 border border-slate-700'>{file.author}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.court}</td>
-            <td className='py-4 px-6 border border-slate-700'>{file.branch}</td>
-          </tr>
-        </tbody>
-        <thead className='text-xs text-gray-700 '>
-          <tr>
-            <th scope='col' className='py-3 px-6 lg:text-sm  border border-slate-600'>
-              Date Created
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Shareable
-            </th>
-            <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
-              Folder
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className='text-center'>
-            <th scope='row' className='py-4 px-2 font-normal border-slate-700 text-center'>
-              {file.date_created.toDate().toISOString().substr(0, 10)}
-            </th>
-            <td className='py-4 px-6 border border-slate-700'>
-              {file.shareable ? 'Shared' : 'Unshared'}
-            </td>
-            <td className={`text-center w-1/5 border border-slate-700`}>{file.folder}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray'>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
+            <tr>
+              <th scope='col' className='py-3 px-6 '>
+                Case No.
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Case Title
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Pleading / Order Date
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Handling Associate
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Court
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Branch
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Date Created
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Shareable
+              </th>
+              <th scope='col' className='py-3 px-6 '>
+                Folder
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
+              <th scope='row' className='py-4 px-6 font-bold'>
+                {file.casenumber}
+              </th>
+              <td className='py-4 px-6 font-bold'>
+                <a href={file.url}>{file.casetitle}</a>
+              </td>
+              <td className='py-4 px-6'>{file.pleading}</td>
+              <td className='py-4 px-6'>
+                {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>{file.author}</td>
+              <td className='py-4 px-6'>{file.court}</td>
+              <td className='py-4 px-6'>{file.branch}</td>
+              <td className='py-4 px-6'>
+                {file.date_created.toDate().toISOString().substr(0, 10)}
+              </td>
+              <td className='py-4 px-6'>{file.shareable ? 'Shared' : 'Unshared'}</td>
+              <td className='py-4 px-6'>{file.folder}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }
