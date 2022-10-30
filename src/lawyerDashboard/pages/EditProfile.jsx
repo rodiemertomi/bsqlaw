@@ -116,8 +116,8 @@ function EditProfile({ closeModal }) {
               />
               <input
                 required
-                value={contactNoState}
-                onChange={e => setContactNumberState(e.target.value)}
+                value={initialsState}
+                onChange={e => setInitialsState(e.target.value)}
                 type='text'
                 name='initials'
                 placeholder='Initials'
@@ -127,8 +127,8 @@ function EditProfile({ closeModal }) {
             <div className='flex flex-col items-center w-[100%] gap-3 '>
               <input
                 required
-                value={initialsState}
-                onChange={e => setInitialsState(e.target.value)}
+                value={contactNoState}
+                onChange={e => setContactNumberState(e.target.value)}
                 type='tel'
                 name='phone'
                 placeholder='Contact Number'

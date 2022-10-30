@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { collection, addDoc, doc, setDoc, arrayUnion } from 'firebase/firestore'
 import { db } from '../../../firebase'
 import UseAppointmentStore from '../../reducers/AppointmentReducer'
@@ -32,12 +32,26 @@ function Times({ closeShowAppointment, clients }) {
   const appointmentsRef = collection(db, 'appointments')
   const { initials, id } = UseUserReducer()
   const lawyerRef = doc(db, `users/${id}`)
-  const clientRef = doc(db, `users/${clientId}`)
 
-  const saveEvent = async (e, clients) => {
+  const handleSelectClient = (e, clients) => {
     e.preventDefault()
-    setClientFirstName(clients.firstname)
-    setClientLastName(clients.firstname)
+    setClientId(e.target.value)
+    clients.forEach(client => {
+      if (client.id === clientId) {
+        setClientFirstName(client.firstname)
+      }
+    })
+    clients.forEach(client => {
+      if (client.id === clientId) {
+        setClientLastName(client.lastname)
+      }
+    })
+  }
+
+  const saveEvent = async e => {
+    e.preventDefault()
+    const clientRef = doc(db, `users/${clientId}`)
+
     const data = {
       id: nanoid(10),
       setter: initials,
@@ -56,31 +70,44 @@ function Times({ closeShowAppointment, clients }) {
       appointments: arrayUnion(data),
     }
     await setDoc(lawyerRef, appointments, { merge: true })
-    await setDoc(clientRef, appointments, { merge: true })
-    setEventName('')
-    setEventDesc('')
-    setClientId('')
-    setEventTimeStart('')
-    setEventTimeEnd('')
-    setEventDateStart('')
-    setEventDateEnd('')
+    await setDoc(clientRef, appointments, { merge: true }).then(() => {
+      setEventName('')
+      setEventDesc('')
+      setClientFirstName()
+      setClientLastName()
+      setClientId('')
+      setEventTimeStart('')
+      setEventTimeEnd('')
+      setEventDateStart('')
+      setEventDateEnd('')
+    })
   }
 
+  useEffect(() => {
+    clients.forEach(client => {
+      if (client.id === clientId) {
+        setClientFirstName(client.firstname)
+      }
+    })
+    clients.forEach(client => {
+      if (client.id === clientId) {
+        setClientLastName(client.lastname)
+      }
+    })
+  }, [clientId])
   return (
-    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#BABABA] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%]'>
+    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#e1dfdf] rounded-r h-[63%] w-[90%] lg:w-[40%] lg:h-[92%] drop-shadow-lg'>
       <h1 className='font-bold text-2xl'>Set Appointment</h1>
-      <form onSubmit={e => saveEvent(clients)} className='mt-5'>
+      <form onSubmit={e => saveEvent(e, clients)} className='mt-5'>
         <div className='mt-5 flex flex-col justify-center items-center gap-5'>
           <select
             name='clientName'
             id='clientName'
             value={clientId}
-            onChange={e => setClientId(e.target.value)}
+            onChange={e => handleSelectClient(e, clients)}
             className='h-10 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
           >
-            <option default value=''>
-              Client Name
-            </option>
+            <option value=''>Client Name</option>
             {clients?.map(client => (
               <option key={client.id} value={client.id}>
                 {client.firstname} {client.lastname}
@@ -167,7 +194,7 @@ function Times({ closeShowAppointment, clients }) {
             className='bg-maroon w-[40%] text-white font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out text-center'
           />
           <p
-            className='self-center text-maroon font-bold cursor-pointer hover:text-white mt-8'
+            className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold mt-8'
             onClick={() => closeShowAppointment(false)}
           >
             Close
