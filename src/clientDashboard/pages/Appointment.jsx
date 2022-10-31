@@ -5,8 +5,6 @@ import UseUserReducer from '../../UserReducer'
 export default function Appointment() {
   const { appointments } = UseUserReducer()
 
-  console.log(appointments)
-
   const formatDate = date => {
     let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
     return dateArray.join('/')
