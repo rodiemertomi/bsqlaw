@@ -1,29 +1,76 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { storage, db } from '../../firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { collection, query, where, getDocs, doc, setDoc, arrayUnion } from 'firebase/firestore'
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  setDoc,
+  arrayUnion,
+  getDoc,
+  arrayRemove,
+} from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
+import { nanoid } from 'nanoid'
 
-export default function Folders() {
+export default function CaseFolders() {
   const [loading, setLoading] = useState(false)
   const [fileUpload, setFileUpload] = useState(null)
   const [foldersList, setFoldersList] = useState([])
   const [pleadingDate, setPleadingDate] = useState()
   const [folderOption, setFolderOption] = useState('')
-  const [readState, setReadState] = useState(true)
-  const [share, setShare] = useState()
-  const [editShareId, setEditShareId] = useState()
+  const [editFileId, setEditFileId] = useState(null)
+  const [firstEditFormData, setFirstEditFormData] = useState({})
   const [editFormData, setEditFormData] = useState({})
+  const [selectedLawyer, setSelectedLawyer] = useState()
+  const [lawyerClients, setLawyerClients] = useState()
+  const [selectedLawyerClient, setSelectedLawyerClient] = useState()
+  const [lawyers, setLawyers] = useState()
+  const [editFolderId, setEditFolderId] = useState()
 
   const caseTitleRef = useRef()
   const pleadingRef = useRef()
   const caseNoRef = useRef()
+  const folderNameRef = useRef()
   const courtRef = useRef()
   const branchRef = useRef()
 
-  const { username, initials, firstName, lastName } = UseUserReducer()
+  const { username, initials } = UseUserReducer()
 
+  const userColRef = collection(db, 'users')
+  const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
   const foldersRef = collection(db, 'folders')
+
+  const getLawyerClients = async () => {
+    const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
+    await getDocs(lawyer).then(snap => {
+      let datas = snap.docs.map(doc => doc.data())
+      datas.forEach(data => {
+        setLawyerClients(data.clients)
+      })
+    })
+  }
+
+  const addFolder = async () => {
+    const data = {
+      folders: arrayUnion(`${folderNameRef.current.value}`),
+    }
+    const folderData = {
+      foldername: folderNameRef.current.value,
+      lawyer: selectedLawyer,
+      clientid: selectedLawyerClient,
+    }
+    const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
+
+    await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData)
+    await setDoc(lawyer, data, { merge: true }).then(() => {
+      alert(`Updated successfully`)
+    })
+    folderNameRef.current.value = ''
+    await getFolders()
+  }
 
   const uploadFile = async () => {
     setLoading(true)
@@ -39,6 +86,9 @@ export default function Folders() {
     }
 
     const selectedFolderRef = doc(db, `folders/${folderOption}`)
+    const snap = await getDoc(selectedFolderRef)
+    const lawyerInitials = snap.data().lawyer
+
     const extension = fileUpload.name.split('.').pop()
     const fileUrl = `caseFiles/${username}/${folderOption}/${caseTitleRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
@@ -52,13 +102,14 @@ export default function Folders() {
         }
         const data = {
           active: true,
+          id: nanoid(),
           casenumber: caseNoRef.current.value,
           casetitle: caseTitleRef.current.value,
           pleading: pleadingRef.current.value,
           pleadingdate: new Date(pleadingDate),
           date_created: new Date(),
           uploadby: initials,
-          lawyer: initials,
+          lawyer: lawyerInitials,
           folder: folderOption,
           shareable: false,
           url: url,
@@ -73,69 +124,128 @@ export default function Folders() {
         })
       })
     })
+    getFolders()
     setLoading(false)
   }
 
-  const handleEditClick = (e, data) => {
+  const handleEditClick = (e, data, folderid) => {
     e.preventDefault()
-    setEditShareId(data.id)
+    setEditFileId(data.id)
+    setEditFolderId(folderid)
 
     const formValues = {
+      active: data.active,
+      branch: data.branch,
+      casenumber: data.casenumber,
+      casetitle: data.casetitle,
+      court: data.court,
+      date_created: data.date_created,
+      folder: data.folder,
+      id: data.id,
+      lawyer: data.lawyer,
+      pleading: data.pleading,
+      pleadingdate: data.pleadingdate,
       shareable: data.shareable,
+      uploadby: data.uploadby,
+      url: data.url,
     }
+    setFirstEditFormData(formValues)
     setEditFormData(formValues)
-    setReadState(false)
   }
 
-  const handleEdit = e => {
-    const selectedOption = e.target.value
-    setShare(selectedOption)
+  const handleEditFormChange = e => {
+    e.preventDefault()
+    const fieldName = e.target.getAttribute('name')
+    const fieldValue = e.target.value
+
+    const newFormData = { ...editFormData }
+    newFormData[fieldName] = fieldValue
+
+    setEditFormData(newFormData)
   }
 
   const handleCancel = () => {
-    setEditShareId(null)
-    setReadState(true)
+    setEditFileId(null)
+    setEditFolderId(null)
   }
 
-  const handleEditFormSubmit = e => {
+  const handleEditFormSubmit = async e => {
     e.preventDefault()
-    const docRef = doc(db, `files`, editShareId)
+    // const docRef = doc(db, `files`, editShareId)
+    const docRef = doc(db, `folders/${editFolderId}`)
 
     const editedFile = {
-      shareable: share,
+      active: editFormData.active,
+      branch: editFormData.branch,
+      casenumber: editFormData.casenumber,
+      casetitle: editFormData.casetitle,
+      court: editFormData.court,
+      date_created: editFormData.date_created,
+      folder: editFormData.folder,
+      id: editFormData.id,
+      lawyer: editFormData.lawyer,
+      pleading: editFormData.pleading,
+      pleadingdate: editFormData.pleadingdate,
+      shareable: editFormData.shareable,
+      uploadby: editFormData.uploadby,
+      url: editFormData.url,
     }
 
-    setDoc(docRef, editedFile, { merge: true }).then(() => {
-      alert('Document updated Successfully')
-    })
-    setReadState(true)
-    setEditShareId(null)
+    const deleteFile = {
+      active: firstEditFormData.active,
+      branch: firstEditFormData.branch,
+      casenumber: firstEditFormData.casenumber,
+      casetitle: firstEditFormData.casetitle,
+      court: firstEditFormData.court,
+      date_created: firstEditFormData.date_created,
+      folder: firstEditFormData.folder,
+      id: firstEditFormData.id,
+      lawyer: firstEditFormData.lawyer,
+      pleading: firstEditFormData.pleading,
+      pleadingdate: firstEditFormData.pleadingdate,
+      shareable: firstEditFormData.shareable,
+      uploadby: firstEditFormData.uploadby,
+      url: firstEditFormData.url,
+    }
+
+    const deleteData = { files: arrayRemove(deleteFile) }
+    const addData = { files: arrayUnion(editedFile) }
+
+    await setDoc(docRef, deleteData, { merge: true })
+    await setDoc(docRef, addData, { merge: true })
+    setEditFileId(null)
+    setEditFolderId(null)
+    getFolders()
   }
 
   const getFolders = async () => {
-    const folderQuery = query(foldersRef, where('lawyer', '==', `${initials}`))
-    await getDocs(folderQuery).then(snap => {
-      setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-    })
+    const snap = await getDocs(foldersRef)
+    setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
 
+  const getLawyers = async () => {
+    const snap = await getDocs(lawyerRef)
+    setLawyers(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
   useEffect(() => {
     getFolders()
-  }, [])
+    getLawyers()
+    getLawyerClients()
+  }, [selectedLawyer])
 
   const [showModal, setShowModal] = useState(false)
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
-      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
-        {firstName} {lastName}'s Case Files
-      </h1>
+      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>BSQ Case Files</h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
               <>
-                {folder?.lawyer === `${initials}` ? (
+                {folder.id === 'DONOTDELETE' ? (
+                  ''
+                ) : (
                   <form onSubmit={handleEditFormSubmit}>
                     <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
                       <details className='p-5 lg:w-full'>
@@ -145,14 +255,19 @@ export default function Folders() {
                         {folder.files?.map(file => (
                           <Fragment key={file.id}>
                             {file.folder === folder.foldername ? (
-                              readState ? (
-                                <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
-                              ) : (
+                              editFileId === file.id ? (
                                 <EditRow
                                   editFormData={editFormData}
                                   file={file}
                                   handleCancel={handleCancel}
-                                  handleEdit={handleEdit}
+                                  handleEditFormChange={handleEditFormChange}
+                                  lawyers={lawyers}
+                                />
+                              ) : (
+                                <ReadOnlyRow
+                                  file={file}
+                                  handleEditClick={handleEditClick}
+                                  folderid={folder.id}
                                 />
                               )
                             ) : (
@@ -163,8 +278,6 @@ export default function Folders() {
                       </details>
                     </div>
                   </form>
-                ) : (
-                  ''
                 )}
               </>
             ))}
@@ -181,11 +294,53 @@ export default function Folders() {
             </button>
             {showModal && (
               <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[70%] md:w-[70%] lg:h-[90%] lg:w-[35%] p-10'>
-                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-2 gap-3'>
+                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[85%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[75%] md:w-[70%] lg:h-[95%] lg:w-[35%] p-10'>
+                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-2 gap-[2px]'>
+                    <input
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                    shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='text'
+                      ref={folderNameRef}
+                      placeholder='Enter folder name'
+                    />
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                    shadow border rounded w-full pl-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => {
+                        setSelectedLawyer(e.target.value)
+                        getLawyerClients()
+                      }}
+                    >
+                      <option value=''>-Select Lawyer-</option>
+                      {lawyers.map(lawyer => (
+                        <option value={lawyer.initials}>
+                          {lawyer.firstname} {lawyer.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => setSelectedLawyerClient(e.target.value)}
+                    >
+                      <option value=''>-Select Client-</option>
+                      {lawyerClients?.map(client => (
+                        <option value={client.id}>
+                          {client.firstname} {client.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      className=' inline-block px-6 py-2.5 mt-1 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white w-full hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      onClick={addFolder}
+                    >
+                      Add Folder
+                    </button>
+                  </div>
+                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly gap-[2px]'>
+                    <select
+                      className='bg-white self-center border-black outline-none border-b-[1px] 
+                        shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       name='folders'
                       id='folders'
                       value={folderOption}
@@ -200,21 +355,21 @@ export default function Folders() {
                     </select>
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                     shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={caseNoRef}
                       placeholder='Case Number'
                     />
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                     shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={caseTitleRef}
                       placeholder='Case Title'
                     />
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                   shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={pleadingRef}
                       placeholder='Pleading / Order'
@@ -225,7 +380,7 @@ export default function Folders() {
                     <input
                       name='pleading-date'
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='date'
                       placeholder='Pleading Date'
                       onChange={e => setPleadingDate(e.target.value)}
@@ -239,14 +394,14 @@ export default function Folders() {
                     />
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                       shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                        shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       placeholder='Enter Branch (1-300)'
                       ref={branchRef}
                     />
                     <input
                       className='bg-[#e1dfdf] flex items-center justify-center h-[42px]
-                     rounded w-full py-2 px-3 text-gray-700 '
+                       rounded w-full py-2 px-3 text-gray-700 '
                       type='file'
                       onChange={e => setFileUpload(e.target.files[0])}
                     />
@@ -275,7 +430,7 @@ export default function Folders() {
   )
 }
 
-function ReadOnlyRow({ file, handleEditClick }) {
+function ReadOnlyRow({ file, handleEditClick, folderid }) {
   return (
     <>
       <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
@@ -300,16 +455,16 @@ function ReadOnlyRow({ file, handleEditClick }) {
               <th scope='col' className='py-3 px-6 '>
                 Court
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Branch
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Date Created
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Shareable
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Folder
               </th>
             </tr>
@@ -326,7 +481,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
               <td className='py-4 px-6'>
                 {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
               </td>
-              <td className='py-4 px-6'>{file.author}</td>
+              <td className='py-4 px-6'>{file.lawyer}</td>
               <td className='py-4 px-6'>{file.court}</td>
               <td className='py-4 px-6'>{file.branch}</td>
               <td className='py-4 px-6'>
@@ -340,7 +495,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
       </div>
       <div className='flex justify-end mt-5'>
         <button
-          onClick={e => handleEditClick(e, file)}
+          onClick={e => handleEditClick(e, file, folderid)}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
         >
           Edit
@@ -350,7 +505,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
   )
 }
 
-function EditRow({ handleCancel, handleEdit, file }) {
+function EditRow({ handleCancel, file, editFormData, handleEditFormChange, lawyers }) {
   return (
     <>
       <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
@@ -375,16 +530,16 @@ function EditRow({ handleCancel, handleEdit, file }) {
               <th scope='col' className='py-3 px-6 '>
                 Court
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Branch
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Date Created
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Shareable
               </th>
-              <th scope='col' className='py-3 px-6 '>
+              <th scope='col' className='py-3 px-6'>
                 Folder
               </th>
             </tr>
@@ -392,23 +547,78 @@ function EditRow({ handleCancel, handleEdit, file }) {
           <tbody>
             <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
               <th scope='row' className='py-4 px-6 font-bold'>
-                {file.casenumber}
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Case Number'
+                  name='casenumber'
+                  value={editFormData.casenumber}
+                  onChange={handleEditFormChange}
+                />
               </th>
               <td className='py-4 px-6 font-bold'>
-                <a href={file.url}>{file.casetitle}</a>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Case Title'
+                  name='casetitle'
+                  value={editFormData.casetitle}
+                  onChange={handleEditFormChange}
+                />
               </td>
-              <td className='py-4 px-6'>{file.pleading}</td>
               <td className='py-4 px-6'>
-                {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Pleading / Order'
+                  name='pleading'
+                  value={editFormData.pleading}
+                  onChange={handleEditFormChange}
+                />
               </td>
-              <td className='py-4 px-6'>{file.author}</td>
-              <td className='py-4 px-6'>{file.court}</td>
-              <td className='py-4 px-6'>{file.branch}</td>
+              <td className='py-4 px-6'>
+                <input
+                  type='date'
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  name='pleadingdate'
+                  value={editFormData.pleadingdate}
+                  onChange={handleEditFormChange}
+                />
+              </td>
+              <td className='py-4 px-6'>
+                <select name='lawyer' onChange={handleEditFormChange}>
+                  {lawyers.map(lawyer => (
+                    <option value={lawyer.initials}>
+                      {lawyer.firstname} {lawyer.lastname}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td className='py-4 px-6'>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Court'
+                  name='court'
+                  value={editFormData.court}
+                  onChange={handleEditFormChange}
+                />
+              </td>
+              <td className='py-4 px-6'>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Branch'
+                  name='branch'
+                  value={editFormData.branch}
+                  onChange={handleEditFormChange}
+                />
+              </td>
               <td className='py-4 px-6'>
                 {file.date_created.toDate().toISOString().substr(0, 10)}
               </td>
               <td className='py-4 px-6'>
-                <select onChange={handleEdit}>
+                <select name='shareable' onChange={handleEditFormChange}>
                   {file.shareable ? (
                     <>
                       <option value={true}>Shared</option>
@@ -422,7 +632,16 @@ function EditRow({ handleCancel, handleEdit, file }) {
                   )}
                 </select>
               </td>
-              <td className='py-4 px-6'>{file.folder}</td>
+              <td className='py-4 px-6'>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Folder'
+                  name='folder'
+                  value={editFormData.folder}
+                  onChange={handleEditFormChange}
+                />
+              </td>
             </tr>
           </tbody>
         </table>
