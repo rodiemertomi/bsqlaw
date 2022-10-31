@@ -35,7 +35,7 @@ export default function ClientsList() {
               <div className='shadow-lg bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'>
                 <img
                   alt='user'
-                  className='w-[140px] h-[140px]'
+                  className='w-[140px] h-[140px] rounded-full'
                   src={
                     client.photoURL === '' || !client.photoURL
                       ? require('../../assets/user.png')
