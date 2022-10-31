@@ -83,7 +83,7 @@ const DashBoard = () => {
         return <LawyerDashboard />
       case 'admin':
         return <AdminDashBoard />
-      case 'owner':
+      case 'partner':
         return <OwnerDashBoard />
       default:
         return <ClientDashBoard />
