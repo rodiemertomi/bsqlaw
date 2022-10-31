@@ -1,5 +1,5 @@
 import Appointment from '../pages/Appointments'
-import Folders from '../pages/Folders'
+import CaseFolders from '../pages/CaseFolders'
 import ClientsList from '../pages/ClientsList'
 import MainDashboard from '../pages/MainDashboard'
 import LawyerProfile from '../pages/LawyerProfile'
@@ -24,7 +24,7 @@ const LawyerReducer = (state, action) => {
     case ACTIONS.VIEW_APPOINTMENTS:
       return { page: <Appointment /> }
     case ACTIONS.VIEW_FOLDERS:
-      return { page: <Folders /> }
+      return { page: <CaseFolders /> }
     case ACTIONS.VIEW_PROFILE:
       return { page: <LawyerProfile /> }
     case ACTIONS.VIEW_TIMESHEETS:
