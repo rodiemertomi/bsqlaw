@@ -42,20 +42,22 @@ export default function Appointment() {
                           Event Time End
                         </th>
                         <th scope='col' className='py-3 px-6'>
-                          Event Date Start
+                          Event Date
                         </th>
                         <th scope='col' className='py-3 px-6'>
-                          Event Date End
+                          Set By
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
                         <td className='py-4 px-6 lg:w-[22%]'>{appointment.eventDesc}</td>
-                        <td class='py-4 px-6'>{appointment.eventTimeStart}</td>
-                        <td class='py-4 px-6'>{appointment.eventTimeEnd}</td>
-                        <td class='py-4 px-6'>{formatDate(appointment.eventDateStart.toDate())}</td>
-                        <td class='py-4 px-6'> {formatDate(appointment.eventDateEnd.toDate())}</td>
+                        <td class='py-4 px-6'>{appointment.timeStart}</td>
+                        <td class='py-4 px-6'>{appointment.timeEnd}</td>
+                        <td className='py-4 px-6'>
+                          {formatDate(appointment.dateTimeStart.toDate())}
+                        </td>
+                        <td className='py-4 px-6'>{appointment.setter}</td>
                       </tr>
                     </tbody>
                   </table>
