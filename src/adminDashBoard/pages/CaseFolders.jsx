@@ -10,8 +10,10 @@ import {
   setDoc,
   arrayUnion,
   getDoc,
+  arrayRemove,
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
+import { nanoid } from 'nanoid'
 
 export default function CaseFolders() {
   const [loading, setLoading] = useState(false)
@@ -19,14 +21,14 @@ export default function CaseFolders() {
   const [foldersList, setFoldersList] = useState([])
   const [pleadingDate, setPleadingDate] = useState()
   const [folderOption, setFolderOption] = useState('')
-  const [readState, setReadState] = useState(true)
-  const [share, setShare] = useState()
-  const [editShareId, setEditShareId] = useState()
+  const [editFileId, setEditFileId] = useState(null)
+  const [firstEditFormData, setFirstEditFormData] = useState({})
   const [editFormData, setEditFormData] = useState({})
   const [selectedLawyer, setSelectedLawyer] = useState()
   const [lawyerClients, setLawyerClients] = useState()
   const [selectedLawyerClient, setSelectedLawyerClient] = useState()
   const [lawyers, setLawyers] = useState()
+  const [editFolderId, setEditFolderId] = useState()
 
   const caseTitleRef = useRef()
   const pleadingRef = useRef()
@@ -35,7 +37,7 @@ export default function CaseFolders() {
   const courtRef = useRef()
   const branchRef = useRef()
 
-  const { username, initials, firstName, lastName } = UseUserReducer()
+  const { username, initials } = UseUserReducer()
 
   const userColRef = collection(db, 'users')
   const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
@@ -100,6 +102,7 @@ export default function CaseFolders() {
         }
         const data = {
           active: true,
+          id: nanoid(),
           casenumber: caseNoRef.current.value,
           casetitle: caseTitleRef.current.value,
           pleading: pleadingRef.current.value,
@@ -125,40 +128,94 @@ export default function CaseFolders() {
     setLoading(false)
   }
 
-  const handleEditClick = (e, data) => {
+  const handleEditClick = (e, data, folderid) => {
     e.preventDefault()
-    setEditShareId(data.id)
+    setEditFileId(data.id)
+    setEditFolderId(folderid)
 
     const formValues = {
+      active: data.active,
+      branch: data.branch,
+      casenumber: data.casenumber,
+      casetitle: data.casetitle,
+      court: data.court,
+      date_created: data.date_created,
+      folder: data.folder,
+      id: data.id,
+      lawyer: data.lawyer,
+      pleading: data.pleading,
+      pleadingdate: data.pleadingdate,
       shareable: data.shareable,
+      uploadby: data.uploadby,
+      url: data.url,
     }
+    setFirstEditFormData(formValues)
     setEditFormData(formValues)
-    setReadState(false)
   }
 
-  const handleEdit = e => {
-    const selectedOption = e.target.value
-    setShare(selectedOption)
+  const handleEditFormChange = e => {
+    e.preventDefault()
+    const fieldName = e.target.getAttribute('name')
+    const fieldValue = e.target.value
+
+    const newFormData = { ...editFormData }
+    newFormData[fieldName] = fieldValue
+
+    setEditFormData(newFormData)
   }
 
   const handleCancel = () => {
-    setEditShareId(null)
-    setReadState(true)
+    setEditFileId(null)
+    setEditFolderId(null)
   }
 
-  const handleEditFormSubmit = e => {
+  const handleEditFormSubmit = async e => {
     e.preventDefault()
-    const docRef = doc(db, `files`, editShareId)
+    // const docRef = doc(db, `files`, editShareId)
+    const docRef = doc(db, `folders/${editFolderId}`)
 
     const editedFile = {
-      shareable: share,
+      active: editFormData.active,
+      branch: editFormData.branch,
+      casenumber: editFormData.casenumber,
+      casetitle: editFormData.casetitle,
+      court: editFormData.court,
+      date_created: editFormData.date_created,
+      folder: editFormData.folder,
+      id: editFormData.id,
+      lawyer: editFormData.lawyer,
+      pleading: editFormData.pleading,
+      pleadingdate: editFormData.pleadingdate,
+      shareable: editFormData.shareable,
+      uploadby: editFormData.uploadby,
+      url: editFormData.url,
     }
 
-    setDoc(docRef, editedFile, { merge: true }).then(() => {
-      alert('Document updated Successfully')
-    })
-    setReadState(true)
-    setEditShareId(null)
+    const deleteFile = {
+      active: firstEditFormData.active,
+      branch: firstEditFormData.branch,
+      casenumber: firstEditFormData.casenumber,
+      casetitle: firstEditFormData.casetitle,
+      court: firstEditFormData.court,
+      date_created: firstEditFormData.date_created,
+      folder: firstEditFormData.folder,
+      id: firstEditFormData.id,
+      lawyer: firstEditFormData.lawyer,
+      pleading: firstEditFormData.pleading,
+      pleadingdate: firstEditFormData.pleadingdate,
+      shareable: firstEditFormData.shareable,
+      uploadby: firstEditFormData.uploadby,
+      url: firstEditFormData.url,
+    }
+
+    const deleteData = { files: arrayRemove(deleteFile) }
+    const addData = { files: arrayUnion(editedFile) }
+
+    await setDoc(docRef, deleteData, { merge: true })
+    await setDoc(docRef, addData, { merge: true })
+    setEditFileId(null)
+    setEditFolderId(null)
+    getFolders()
   }
 
   const getFolders = async () => {
@@ -180,9 +237,7 @@ export default function CaseFolders() {
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
-      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
-        {firstName} {lastName}'s Case Files
-      </h1>
+      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>BSQ Case Files</h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
@@ -200,14 +255,19 @@ export default function CaseFolders() {
                         {folder.files?.map(file => (
                           <Fragment key={file.id}>
                             {file.folder === folder.foldername ? (
-                              readState ? (
-                                <ReadOnlyRow file={file} handleEditClick={handleEditClick} />
-                              ) : (
+                              editFileId === file.id ? (
                                 <EditRow
                                   editFormData={editFormData}
                                   file={file}
                                   handleCancel={handleCancel}
-                                  handleEdit={handleEdit}
+                                  handleEditFormChange={handleEditFormChange}
+                                  lawyers={lawyers}
+                                />
+                              ) : (
+                                <ReadOnlyRow
+                                  file={file}
+                                  handleEditClick={handleEditClick}
+                                  folderid={folder.id}
                                 />
                               )
                             ) : (
@@ -370,7 +430,7 @@ export default function CaseFolders() {
   )
 }
 
-function ReadOnlyRow({ file, handleEditClick }) {
+function ReadOnlyRow({ file, handleEditClick, folderid }) {
   return (
     <>
       <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
@@ -421,7 +481,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
               <td className='py-4 px-6'>
                 {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
               </td>
-              <td className='py-4 px-6'>{file.author}</td>
+              <td className='py-4 px-6'>{file.lawyer}</td>
               <td className='py-4 px-6'>{file.court}</td>
               <td className='py-4 px-6'>{file.branch}</td>
               <td className='py-4 px-6'>
@@ -435,7 +495,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
       </div>
       <div className='flex justify-end mt-5'>
         <button
-          onClick={e => handleEditClick(e, file)}
+          onClick={e => handleEditClick(e, file, folderid)}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
         >
           Edit
@@ -445,7 +505,7 @@ function ReadOnlyRow({ file, handleEditClick }) {
   )
 }
 
-function EditRow({ handleCancel, handleEdit, file }) {
+function EditRow({ handleCancel, file, editFormData, handleEditFormChange, lawyers }) {
   return (
     <>
       <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
@@ -487,23 +547,78 @@ function EditRow({ handleCancel, handleEdit, file }) {
           <tbody>
             <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
               <th scope='row' className='py-4 px-6 font-bold'>
-                {file.casenumber}
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Case Number'
+                  name='casenumber'
+                  value={editFormData.casenumber}
+                  onChange={handleEditFormChange}
+                />
               </th>
               <td className='py-4 px-6 font-bold'>
-                <a href={file.url}>{file.casetitle}</a>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Case Title'
+                  name='casetitle'
+                  value={editFormData.casetitle}
+                  onChange={handleEditFormChange}
+                />
               </td>
-              <td className='py-4 px-6'>{file.pleading}</td>
               <td className='py-4 px-6'>
-                {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Pleading / Order'
+                  name='pleading'
+                  value={editFormData.pleading}
+                  onChange={handleEditFormChange}
+                />
               </td>
-              <td className='py-4 px-6'>{file.author}</td>
-              <td className='py-4 px-6'>{file.court}</td>
-              <td className='py-4 px-6'>{file.branch}</td>
+              <td className='py-4 px-6'>
+                <input
+                  type='date'
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  name='pleadingdate'
+                  value={editFormData.pleadingdate}
+                  onChange={handleEditFormChange}
+                />
+              </td>
+              <td className='py-4 px-6'>
+                <select name='lawyer' onChange={handleEditFormChange}>
+                  {lawyers.map(lawyer => (
+                    <option value={lawyer.initials}>
+                      {lawyer.firstname} {lawyer.lastname}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td className='py-4 px-6'>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Court'
+                  name='court'
+                  value={editFormData.court}
+                  onChange={handleEditFormChange}
+                />
+              </td>
+              <td className='py-4 px-6'>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Branch'
+                  name='branch'
+                  value={editFormData.branch}
+                  onChange={handleEditFormChange}
+                />
+              </td>
               <td className='py-4 px-6'>
                 {file.date_created.toDate().toISOString().substr(0, 10)}
               </td>
               <td className='py-4 px-6'>
-                <select onChange={handleEdit}>
+                <select name='shareable' onChange={handleEditFormChange}>
                   {file.shareable ? (
                     <>
                       <option value={true}>Shared</option>
@@ -517,7 +632,16 @@ function EditRow({ handleCancel, handleEdit, file }) {
                   )}
                 </select>
               </td>
-              <td className='py-4 px-6'>{file.folder}</td>
+              <td className='py-4 px-6'>
+                <input
+                  className='w-3/4 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Folder'
+                  name='folder'
+                  value={editFormData.folder}
+                  onChange={handleEditFormChange}
+                />
+              </td>
             </tr>
           </tbody>
         </table>
