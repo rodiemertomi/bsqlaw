@@ -52,8 +52,8 @@ export default function Appointment() {
                     <tbody>
                       <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
                         <td className='py-4 px-6 lg:w-[22%]'>{appointment.eventDesc}</td>
-                        <td class='py-4 px-6'>{appointment.timeStart}</td>
-                        <td class='py-4 px-6'>{appointment.timeEnd}</td>
+                        <td className='py-4 px-6'>{appointment.timeStart}</td>
+                        <td className='py-4 px-6'>{appointment.timeEnd}</td>
                         <td className='py-4 px-6'>
                           {formatDate(appointment.dateTimeStart.toDate())}
                         </td>
