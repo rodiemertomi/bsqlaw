@@ -3,7 +3,7 @@ import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 
 export default function AdminProfile() {
-  const { firstName, lastName, email, photoURL, initials, birthday, gender, contactNo, clients } =
+  const { firstName, lastName, email, photoURL, initials, gender, contactNo, clients } =
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
@@ -36,13 +36,9 @@ export default function AdminProfile() {
           <h1>
             <span className='font-bold'>Clients:</span>{' '}
           </h1>
-          {clients?.map(client => `${client.firstname} ${client.lastname}\n`)}
+          {clients?.map(client => `${client.firstname} ${client.lastname}, `)}
           <h1>
             <span className='font-bold'>Gender:</span> {gender}
-          </h1>
-          <h1>
-            <span className='font-bold'>Birthday:</span>{' '}
-            {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}
           </h1>
           <h1>
             <span className='font-bold'>Contact Number:</span> {contactNo}

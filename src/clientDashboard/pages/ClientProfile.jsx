@@ -3,8 +3,7 @@ import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 
 export default function AdminProfile() {
-  const { firstName, lastName, username, email, photoURL, birthday, gender, contactNo } =
-    UseUserReducer()
+  const { firstName, lastName, email, photoURL, gender, contactNo } = UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
   const formatDate = date => {
@@ -35,10 +34,6 @@ export default function AdminProfile() {
           <h1>
             <span className='font-bold'>Gender: </span>
             {gender}
-          </h1>
-          <h1>
-            <span className='font-bold'>Birthday: </span>
-            {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}
           </h1>
           <h1>
             <span className='font-bold'>Contact Number: </span>

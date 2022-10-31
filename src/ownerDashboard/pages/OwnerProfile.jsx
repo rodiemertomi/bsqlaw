@@ -3,7 +3,7 @@ import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 
 export default function OwnerProfile() {
-  const { clients, firstName, lastName, email, photoURL, initials, birthday, gender, contactNo } =
+  const { clients, firstName, lastName, email, photoURL, initials, gender, contactNo } =
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
@@ -39,10 +39,6 @@ export default function OwnerProfile() {
           {clients?.map(client => `${client.firstname} ${client.lastname}\n`)}
           <h1>
             <span className='font-bold'>Gender:</span> {gender}
-          </h1>
-          <h1>
-            <span className='font-bold'>Birthday:</span>{' '}
-            {!birthday || birthday === '' ? '' : formatDate(birthday?.toDate())}
           </h1>
           <h1>
             <span className='font-bold'>Contact Number:</span> {contactNo}

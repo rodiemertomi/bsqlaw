@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 
 function EditProfile({ closeModal }) {
-  const { username, id, photoURL, birthday, firstName, lastName, contactNo, gender, initials } =
+  const { username, id, photoURL, firstName, lastName, contactNo, gender, initials } =
     UseUserReducer()
 
   const [loading, setLoading] = useState(false)
@@ -15,7 +15,6 @@ function EditProfile({ closeModal }) {
   const [contactNoState, setContactNumberState] = useState(contactNo)
   const [initialsState, setInitialsState] = useState(initials)
   const [genderState, setGenderState] = useState(gender)
-  const [birthdayState, setBirthdayState] = useState(birthday?.toDate())
   const [photoURLState, setPhotoURLState] = useState(photoURL)
 
   const handleImageChange = async () => {
@@ -40,7 +39,6 @@ function EditProfile({ closeModal }) {
         contactNo: contactNoState,
         gender: genderState,
         initials: initialsState,
-        birthday: new Date(birthdayState),
       }
     } else
       data = {
@@ -49,7 +47,6 @@ function EditProfile({ closeModal }) {
         contactNo: contactNoState,
         gender: genderState,
         initials: initialsState,
-        birthday: new Date(birthdayState),
         photoURL: photoURLState,
       }
     setDoc(docRef, data, { merge: true }).then(
@@ -181,21 +178,6 @@ function EditProfile({ closeModal }) {
                       </>
                     )}
                   </select>
-                </div>
-                <div className='flex flex-col w-1/2 pr-20'>
-                  <label htmlFor='' className='font-semibold'>
-                    Birthday
-                  </label>
-                  <input
-                    className=' h-9  shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
-                    type='date'
-                    onChange={e => {
-                      setBirthdayState(e.target.value)
-                    }}
-                    placeholder='Birthdate'
-                    id='date'
-                    value={birthdayState?.toISOString().substr(0, 10)}
-                  />
                 </div>
               </div>
               <div className='w-[100%] flex justify-end mr-24 gap-1 md:mr-[190px] lg:mr-[100px]'>
