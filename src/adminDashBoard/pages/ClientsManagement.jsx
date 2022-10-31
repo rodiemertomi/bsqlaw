@@ -154,11 +154,11 @@ export default function ClientsManagement() {
     try {
       return datas.filter(
         data =>
-          data.username.toLowerCase().includes(searchKeyword) ||
-          data.email.toLowerCase().includes(searchKeyword) ||
-          data.firstname.toLowerCase().includes(searchKeyword) ||
-          data.lastname.toLowerCase().includes(searchKeyword) ||
-          data.lawyer.toLowerCase().includes(searchKeyword)
+          data.username.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.email.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.firstname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.lastname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.lawyer.toLowerCase().includes(searchKeyword.toLowerCase())
       )
     } catch (err) {
       alert(err.message)

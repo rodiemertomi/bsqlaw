@@ -144,11 +144,11 @@ export default function LawyersManagement() {
     try {
       return datas.filter(
         data =>
-          data.username.toLowerCase().includes(searchKeyword) ||
-          data.email.toLowerCase().includes(searchKeyword) ||
-          data.firstname.toLowerCase().includes(searchKeyword) ||
-          data.lastname.toLowerCase().includes(searchKeyword) ||
-          data.initials.toLowerCase().includes(searchKeyword)
+          data.username.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.email.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.firstname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.lastname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.initials.toLowerCase().includes(searchKeyword.toLowerCase())
       )
     } catch (err) {
       alert(err.message)
