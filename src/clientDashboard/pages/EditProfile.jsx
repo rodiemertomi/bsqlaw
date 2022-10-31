@@ -82,7 +82,7 @@ function EditProfile({ closeModal }) {
               }
             />
             <div
-              className='w-[170px] h-[170px] rounded-full hover:bg-[#000000] opacity-0 hover:opacity-80 cursor-pointer text-transparent hover:object-center hover:text-white
+              className='w-[200px] h-[200px] rounded-full hover:bg-[#000000] opacity-0 hover:opacity-80 cursor-pointer text-transparent hover:object-center hover:text-white
               transition-all absolute flex justify-center items-center'
             >
               <label htmlFor='file' className='cursor-pointer absolute z-[1000]'>

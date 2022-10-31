@@ -220,9 +220,9 @@ export default function LawyersManagement() {
               </button>
             </form>
             <div>
-              SEARCH LAWYER
+              <span className='font-bold text-xl'>Search Lawyer</span>
               <input
-                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[40.5%]'
+                className='ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
                 type='text'
                 placeholder='Enter Username, Firstname, Lastname, Initials or Email...'
                 value={searchKeyword}
