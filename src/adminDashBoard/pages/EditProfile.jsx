@@ -133,7 +133,7 @@ function EditProfile({ closeModal }) {
                 placeholder='Contact Number'
                 className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
-              <div className='flex justify-center items-center w-[110%] gap-2 '>
+              <div className='flex justify-center items-center w-[116.5%] gap-2 '>
                 <div className='flex flex-col w-1/2 pl-20'>
                   <label htmlFor='gender' className='font-semibold'>
                     Gender
