@@ -42,7 +42,7 @@ function ReadLawyers({ lawyer }) {
       <div className=' text-xs w-full flex flex-col justify-center items-center'>
         <img
           alt='user'
-          className='w-[130px] lg:w-[140px] md:w-[140px] rounded-full'
+          className='w-[140px] h-[140px] rounded-full'
           src={
             lawyer.photoURL === '' || !lawyer.photoURL
               ? require('../../assets/user.png')
