@@ -89,7 +89,10 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
           />
           <p className=' text-[13px] pt-0 mb-3 font-Lora'>Appointment</p>
         </div>
-        <div className='text-center fixed bottom-4 z-10 cursor-pointer' onClick={handleSignOut}>
+        <div
+          className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'
+          onClick={handleSignOut}
+        >
           {
             <img
               alt='signout'
@@ -97,7 +100,7 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
               src={require('../assets/logout.png')}
             />
           }
-          LogOut
+          <p className='text-center text-sm pt-0 mt-1 font-Lora'>Logout</p>
         </div>
       </div>
     </div>
