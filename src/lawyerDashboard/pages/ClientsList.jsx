@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { doc, getDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../firebase'
 import UseUserReducer from '../../UserReducer'
 
 export default function ClientsList() {
-  const { id, firstName, lastName } = UseUserReducer()
+  const { firstName, lastName, initials } = UseUserReducer()
 
   const [clients, setClients] = useState()
 
-  const getLawyer = async () => {
-    const lawyerRef = doc(db, `users/${id}`)
-    await getDoc(lawyerRef).then(snap => {
-      setClients(snap.data().clients)
+  const getClients = async () => {
+    const colRef = collection(db, 'users')
+    const clientsQ = query(
+      colRef,
+      where('role', '==', 'client'),
+      where('lawyer', '==', `${initials}`)
+    )
+    await getDocs(clientsQ).then(snap => {
+      setClients(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
   }
 
   useEffect(() => {
-    getLawyer()
+    getClients()
   }, [])
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
