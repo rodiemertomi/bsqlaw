@@ -110,21 +110,21 @@ function AppointmentManagement() {
                       </tr>
                     </tbody>
                   </table>
-                  <div className='p-2 flex items-center gap-[80%] text-sm'>
-                    <div className='flex gap-2 items-center'>
+                  <div className='p-2 flex items-center gap-[79%] text-sm'>
+                    <div className='flex gap-2 items-center w-[150px]'>
                       <img
                         className='h-8 w-8'
                         src={require('../../assets/user.png')}
                         alt='user icon'
                       />
-                      <span className='font-bold uppercase text-xs'>
+                      <span className='font-bold uppercase text-xs w-[150px]'>
                         {appointment.clientFirstName} {appointment.clientLastName}
                       </span>
                     </div>
                     <div>
                       <button
                         onClick={() => handleCancelAppt(appointment.id, appointment.clientId)}
-                        className='inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                        className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       >
                         Cancel
                       </button>
