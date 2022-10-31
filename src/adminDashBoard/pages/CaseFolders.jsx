@@ -193,7 +193,7 @@ export default function CaseFolders() {
                 ) : (
                   <form onSubmit={handleEditFormSubmit}>
                     <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
-                      <details className='p-5'>
+                      <details className='p-5 lg:w-full'>
                         <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '>
                           {folder.foldername}
                         </summary>
@@ -377,34 +377,34 @@ function ReadOnlyRow({ file, handleEditClick }) {
         <table className='w-full text-sm text-center text-gray-500 border border-gray'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
             <tr>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Case No.
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Case Title
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Pleading / Order
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Pleading / Order Date
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Handling Associate
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Court
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Branch
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Date Created
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Shareable
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Folder
               </th>
             </tr>
@@ -452,34 +452,34 @@ function EditRow({ handleCancel, handleEdit, file }) {
         <table className='w-full text-sm text-center text-gray-500 border border-gray'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
             <tr>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Case No.
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Case Title
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Pleading / Order
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Pleading / Order Date
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Handling Associate
               </th>
-              <th scope='col' className='py-3 px-11 '>
+              <th scope='col' className='py-3 px-6 '>
                 Court
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Branch
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Date Created
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Shareable
               </th>
-              <th scope='col' className='py-3 px-11'>
+              <th scope='col' className='py-3 px-6'>
                 Folder
               </th>
             </tr>
