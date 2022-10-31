@@ -237,7 +237,7 @@ export default function CaseFolders() {
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
-      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>BSQ Case Files</h1>
+      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>BSQ Case Folders</h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
@@ -474,10 +474,10 @@ function ReadOnlyRow({ file, handleEditClick, folderid }) {
               <th scope='row' className='py-4 px-6 font-bold'>
                 {file.casenumber}
               </th>
+              <td className='py-4 px-6'>{file.casetitle}</td>
               <td className='py-4 px-6 font-bold'>
-                <a href={file.url}>{file.casetitle}</a>
+                <a href={file.url}>{file.pleading}</a>
               </td>
-              <td className='py-4 px-6'>{file.pleading}</td>
               <td className='py-4 px-6'>
                 {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
               </td>

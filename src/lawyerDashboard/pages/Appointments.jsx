@@ -56,7 +56,7 @@ function Appointments() {
 
   const getAppointments = async () => {
     const snap = await getDocs(q)
-    setAppointments(snap.docs.map(doc => ({ ...doc.data() })))
+    setAppointments(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
   useEffect(() => {
     getClients()

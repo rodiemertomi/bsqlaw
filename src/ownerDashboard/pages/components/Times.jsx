@@ -100,7 +100,7 @@ function Times({ closeShowAppointment, clients }) {
     }
 
     const data = {
-      id: nanoid(10),
+      uid: nanoid(10),
       setter: initials,
       clientId: clientId,
       clientFirstName: clientFirstName,

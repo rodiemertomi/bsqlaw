@@ -95,15 +95,15 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
           />
           <p className='text-sm pt-0 mb-3 text-center'>Appointment</p>
         </div>
-        <div className='text-center fixed bottom-4 z-10'>
+        <div className='text-center fixed bottom-4 z-10 cursor-pointer' onClick={handleSignOut}>
           {
             <img
               alt='signout'
-              onClick={handleSignOut}
               className='w-8 h-8 invert cursor-pointer'
               src={require('../assets/logout.png')}
             />
           }
+          LogOut
         </div>
       </div>
     </div>

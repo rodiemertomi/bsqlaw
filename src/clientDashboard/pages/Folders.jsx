@@ -91,10 +91,10 @@ function ReadOnlyRow({ file }) {
               <th scope='row' className='py-4 px-6 font-bold'>
                 {file.casenumber}
               </th>
+              <td className='py-4 px-6'>{file.casetitle}</td>
               <td className='py-4 px-6 font-bold'>
-                <a href={file.url}>{file.casetitle}</a>
+                <a href={file.url}>{file.pleading}</a>
               </td>
-              <td className='py-4 px-6'>{file.pleading}</td>
               <td className='py-4 px-6'>
                 {file.pleadingdate?.toDate().toISOString().substr(0, 10)}
               </td>

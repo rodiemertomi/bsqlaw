@@ -27,6 +27,12 @@ function AdminControl({ setHideNavBar, dispatch }) {
     }
   }
 
+  const handleManageParters = () => {
+    dispatch({ type: ACTIONS.MANAGE_PARTNERS })
+    hideAdminControl()
+    setHideNavBar(true)
+  }
+
   const handleManageAdmin = () => {
     dispatch({ type: ACTIONS.MANAGE_ADMIN })
     hideAdminControl()
@@ -56,6 +62,14 @@ function AdminControl({ setHideNavBar, dispatch }) {
         <h1 className='ml-5 mt-5 text-xl'>Admin Control</h1>
 
         <div className='flex flex-col gap-5 mt-5 mb-10 ml-10'>
+          <details>
+            <summary className='font-semibold cursor-pointer'>Manage Partners</summary>
+            <div className='mt-5'>
+              <ul className='flex flex-col gap-4 cursor-pointer'>
+                <li onClick={handleManageParters}>Manage Partners</li>
+              </ul>
+            </div>
+          </details>
           <details>
             <summary className='font-semibold cursor-pointer'>Manage Admins</summary>
             <div className='mt-5'>

@@ -1,6 +1,7 @@
 import AdminsManagement from '../pages/AdminsManagement'
 import LawyersManagement from '../pages/LawyersManagement'
 import ClientsManagement from '../pages/ClientsManagement'
+import PartnersManagement from '../pages/PartnersManagement'
 import AppointmentManagement from '../pages/AppointmentManagement'
 import AdminProfile from '../pages/AdminProfile'
 import MainDashboard from '../pages/MainDashboard'
@@ -12,6 +13,7 @@ export const ACTIONS = {
   MANAGE_ADMIN: 'manage-admin',
   MANAGE_LAWYER: 'manage-lawyer',
   MANAGE_CLIENT: 'manage-client',
+  MANAGE_PARTNERS: 'manage-partners',
   MANAGE_APPOINTMENT: 'manage-appointment',
   VIEW_PROFILE: 'view-profile',
   VIEW_DASHBOARD: 'view-dashboard',
@@ -37,6 +39,8 @@ const AdminReducer = (state, action) => {
       return { page: <CaseFolders /> }
     case ACTIONS.VIEW_TIMESHEETS:
       return { page: <Timesheets /> }
+    case ACTIONS.MANAGE_PARTNERS:
+      return { page: <PartnersManagement /> }
     default:
       return state
   }
