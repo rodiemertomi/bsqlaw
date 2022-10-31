@@ -138,10 +138,10 @@ export default function ClientsList() {
   return (
     <div>
       <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
-        <div className='h-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0'>
-          <div className='w-[100%] h-[1000%] bg-[#D9D9D9] rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
-            <h1 className='self-start text-[30px] mt-5 ml-5 font-bold lg:ml-10'>Clients</h1>
-            <div className='w-[100%] flex gap-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+        <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>Client</h1>
+        <div className='h-full flex flex-col mt-2 gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-3 lg:pt-0'>
+          <div className='w-[100%] h-[1000%] bg-[#D9D9D9] rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 p-5 '>
+            <div className='w-[100%] flex gap-x-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
               {clientsList?.map((client, i) => (
                 <Fragment key={client.id}>
                   {clientEditId === client.id ? (
@@ -167,18 +167,18 @@ export default function ClientsList() {
 
 function ReadClients({ handleAppointClick, client, i }) {
   return (
-    <div className='bg-[#632121] w-[230px] h-[230px] lg:w-[260px] lg:h-[260px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-[220px] md:h-[260px] text-white gap-1'>
+    <div className='bg-[#632121] w-[240px] h-[270px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-[220px] md:h-[270px] text-white gap-1'>
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center'>
         <img
           alt='user'
-          className='w-[130px] lg:w-[140px] md:w-40 rounded-full'
+          className='mt-4 w-[120px] h-[120px] lg:w-[125px] lg:h-[125px] md:w-[125px] md:h-[125px] rounded-full'
           src={
             client.photoURL === '' || !client.photoURL
               ? require('../../assets/user.png')
               : `${client.photoURL}`
           }
         />
-        <h1 className='text-yellow'>{`${client.firstname} ${client.lastname}`}</h1>
+        <h1 className='text-yellow mt-1 font-bold text-lg '>{`${client.firstname} ${client.lastname}`}</h1>
         <h1 className='text-white'>{`${client.username}`}</h1>
         {client.lawyer ? (
           <h1 className='text-white font-semibold'>
@@ -216,7 +216,7 @@ function EditClient({
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center gap-3'>
         <img
           alt='user'
-          className='w-[130px] lg:w-[140px] md:w-40 rounded-full'
+          className='mt-4 w-[120px] h-[120px] lg:w-[125px] lg:h-[125px] md:w-[125px] md:h-[125px] rounded-full'
           src={
             client.photoURL === '' || !client.photoURL
               ? require('../../assets/user.png')

@@ -25,19 +25,19 @@ export default function ClientsList() {
       </h1>
       <div className='h-full flex flex-col mt-2 gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 pt-5 mr-3'>
-          <div className='w-[100%] flex gap-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+          <div className='w-[100%] flex gap-x-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
             {clients?.map(client => (
               <div className='shadow-lg bg-[#632121] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'>
                 <img
                   alt='user'
-                  className='w-20 md:w-40'
+                  className='w-[140px] h-[140px]'
                   src={
                     client.photoURL === '' || !client.photoURL
                       ? require('../../assets/user.png')
                       : `${client.photoURL}`
                   }
                 />
-                <h1 className='text-white'>
+                <h1 className='text-yellow mt-1 font-bold text-lg'>
                   {client.firstname} {client.lastname}
                 </h1>
               </div>

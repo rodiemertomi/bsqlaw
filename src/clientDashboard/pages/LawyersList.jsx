@@ -22,7 +22,7 @@ export default function LawyersList() {
         <h1 className='self-start text-[30px] mt-5 ml-5 font-bold lg:ml-28'>Lawyer</h1>
         <div className='h-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0'>
           <div className='w-[100%] h-[1000%] bg-[#D9D9D9] rounded-md flex flex-col mr-3 gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
-            <div className='w-[100%] flex gap-x-5 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+            <div className='w-[100%] flex gap-x-10 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
               {lawyers?.map(lawyer => (
                 <Fragment key={lawyer.id}>
                   <ReadLawyers lawyer={lawyer} />

@@ -22,7 +22,7 @@ export default function LawyersList() {
         <h1 className='self-start text-[30px] mt-5 ml-5 font-bold lg:ml-28'>Lawyer</h1>
         <div className='h-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0'>
           <div className='w-[100%] h-[1000%] bg-[#D9D9D9] rounded-md flex flex-col mr-3 gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
-            <div className='w-[100%] flex gap-x-5 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+            <div className='w-[100%] flex gap-x-10 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
               {lawyers?.map(lawyer => (
                 <Fragment key={lawyer.id}>
                   <ReadLawyers lawyer={lawyer} />
@@ -38,7 +38,7 @@ export default function LawyersList() {
 
 function ReadLawyers({ lawyer }) {
   return (
-    <div className='bg-[#632121] w-[230px] h-[260px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-[230px] md:h-[260px] text-white gap-[1px]'>
+    <div className='bg-[#632121] w-[230px] h-[260px] lg:w-[260px] lg:h-[280px] shadow-lg rounded-2xl flex flex-col mb-5 md:w-[230px] md:h-[260px] text-white gap-[1px]'>
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center'>
         <img
           alt='user'
@@ -49,7 +49,7 @@ function ReadLawyers({ lawyer }) {
               : `${lawyer.photoURL}`
           }
         />
-        <h1 className='text-yellow'>{`${lawyer.firstname} ${lawyer.lastname}`}</h1>
+        <h1 className='text-yellow font-bold text-lg '>{`${lawyer.firstname} ${lawyer.lastname}`}</h1>
         <h1>{`${lawyer.username}`}</h1>
         <h1>{`${lawyer.initials}`}</h1>
       </div>
