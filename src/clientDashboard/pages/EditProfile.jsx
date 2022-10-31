@@ -49,7 +49,9 @@ function EditProfile({ closeModal }) {
         birthday: new Date(birthdayState),
         photoURL: photoURLState,
       }
-    setDoc(docRef, data, { merge: true }).then(alert('Updated profile successfully'))
+    setDoc(docRef, data, { merge: true }).then(
+      alert('Updated profile successfully. Please refresh page.')
+    )
     closeModal(false)
     setLoading(false)
   }
@@ -115,10 +117,10 @@ function EditProfile({ closeModal }) {
                 required
                 value={contactNoState}
                 onChange={e => setContactNumberState(e.target.value)}
-                type='text'
-                name='initials'
-                placeholder='Initials'
-                className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='tel'
+                name='phone'
+                placeholder='Contact Number'
+                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-[70%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
             <div className='flex flex-col items-center w-[100%] gap-4 '>

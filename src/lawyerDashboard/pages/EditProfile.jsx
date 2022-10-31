@@ -52,7 +52,9 @@ function EditProfile({ closeModal }) {
         birthday: new Date(birthdayState),
         photoURL: photoURLState,
       }
-    setDoc(docRef, data, { merge: true }).then(alert('Updated profile successfully'))
+    setDoc(docRef, data, { merge: true }).then(
+      alert('Updated profile successfully. Please refresh page.')
+    )
     closeModal(false)
     setLoading(false)
   }
