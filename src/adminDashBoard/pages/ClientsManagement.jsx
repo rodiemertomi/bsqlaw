@@ -36,10 +36,14 @@ export default function ClientsManagement() {
 
   const [editFormData, setEditFormData] = useState({
     username: '',
-    firstname: '',
-    lastname: '',
     email: '',
-    assignedlawyer: '',
+    role: 'client',
+    contactNo: '',
+    firstname: '',
+    gender: '',
+    lastname: '',
+    lawyer: '',
+    password: '',
     contactperson: '',
     mailingaddress: '',
   })
@@ -119,7 +123,6 @@ export default function ClientsManagement() {
       firstname: editFormData.firstname,
       lastname: editFormData.lastname,
       email: editFormData.email,
-      lawyer: editFormData.lawyer,
       mailingaddress: editFormData.mailingaddress,
       contactperson: editFormData.contactperson,
     }

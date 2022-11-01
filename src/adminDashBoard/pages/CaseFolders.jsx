@@ -11,6 +11,7 @@ import {
   arrayUnion,
   getDoc,
   arrayRemove,
+  deleteDoc,
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 import { nanoid } from 'nanoid'
@@ -175,7 +176,6 @@ export default function CaseFolders() {
 
   const handleEditFormSubmit = async e => {
     e.preventDefault()
-    // const docRef = doc(db, `files`, editShareId)
     const docRef = doc(db, `folders/${editFolderId}`)
 
     const editedFile = {
@@ -222,6 +222,52 @@ export default function CaseFolders() {
     getFolders()
   }
 
+  const handleDeleteFolder = async (e, folderid) => {
+    e.preventDefault()
+    if (
+      window.confirm('Are you sure you want to delete this folder and all its contents?') === true
+    ) {
+      const ref = doc(db, `folders/${folderid}`)
+      await deleteDoc(ref).then(() => {
+        alert('Deleted Folder.')
+        getFolders()
+      })
+    } else {
+      return
+    }
+  }
+
+  const handleDeleteFile = async (e, file, folderid) => {
+    e.preventDefault()
+    const docRef = doc(db, `folders/${folderid}`)
+    if (window.confirm('Are you sure you want to delete this file?') === true) {
+      const deleteFile = {
+        active: file.active,
+        branch: file.branch,
+        casenumber: file.casenumber,
+        casetitle: file.casetitle,
+        court: file.court,
+        date_created: file.date_created,
+        folder: file.folder,
+        id: file.id,
+        lawyer: file.lawyer,
+        pleading: file.pleading,
+        pleadingdate: file.pleadingdate,
+        shareable: file.shareable,
+        uploadby: file.uploadby,
+        url: file.url,
+      }
+      const deleteData = { files: arrayRemove(deleteFile) }
+      await setDoc(docRef, deleteData, { merge: true }).then(() => {
+        alert('Deleted file.')
+        getFolders()
+      })
+    } else {
+      return
+    }
+    return
+  }
+
   const getFolders = async () => {
     const snap = await getDocs(foldersRef)
     setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
@@ -262,7 +308,15 @@ export default function CaseFolders() {
                     <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
                       <details className='p-5 w-full'>
                         <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
-                          <div>{folder.foldername}</div> <div>{folder.handlingpartner}</div>
+                          <div>{folder.foldername}</div> <div>{folder.handlingpartner}</div>{' '}
+                          <div>
+                            <button
+                              className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                              onClick={e => handleDeleteFolder(e, folder.id)}
+                            >
+                              Delete Folder
+                            </button>
+                          </div>
                         </summary>
                         {folder.files?.map(file => (
                           <Fragment key={file.id}>
@@ -280,6 +334,7 @@ export default function CaseFolders() {
                                   file={file}
                                   handleEditClick={handleEditClick}
                                   folderid={folder.id}
+                                  handleDeleteFile={handleDeleteFile}
                                 />
                               )
                             ) : (
@@ -456,7 +511,7 @@ export default function CaseFolders() {
   )
 }
 
-function ReadOnlyRow({ file, handleEditClick, folderid }) {
+function ReadOnlyRow({ file, handleEditClick, folderid, handleDeleteFile }) {
   return (
     <>
       <div className='overflow-x-auto relative shadow-lg rounded-lg mt-5'>
@@ -519,12 +574,18 @@ function ReadOnlyRow({ file, handleEditClick, folderid }) {
           </tbody>
         </table>
       </div>
-      <div className='flex justify-end mt-5'>
+      <div className='flex justify-end mt-5 gap-4'>
         <button
           onClick={e => handleEditClick(e, file, folderid)}
           className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
         >
           Edit
+        </button>
+        <button
+          onClick={e => handleDeleteFile(e, file, folderid)}
+          className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+        >
+          Delete File
         </button>
       </div>
     </>
