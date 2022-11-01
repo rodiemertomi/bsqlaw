@@ -54,7 +54,6 @@ export default function PartnersManagement() {
       email: addFormData.email,
       role: addFormData.role,
       password: addFormData.password,
-      birthday: addFormData.birthday,
       contactno: addFormData.contactno,
       gender: addFormData.gender,
       firstname: addFormData.firstname,
@@ -77,6 +76,7 @@ export default function PartnersManagement() {
     } catch (err) {
       alert(err.message)
     }
+    getPartners()
     setLoading(false)
   }
 
