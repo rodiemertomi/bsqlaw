@@ -163,6 +163,7 @@ export default function PartnersManagement() {
       await deleteDoc(doc(db, 'users', clientId))
     }
     setLoading(false)
+    getPartners()
     return
   }
 
