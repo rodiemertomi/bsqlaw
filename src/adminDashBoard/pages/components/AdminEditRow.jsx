@@ -1,11 +1,6 @@
 import React from 'react'
 
-export default function AdminEditRow({
-  admin,
-  editFormData,
-  handleCancelClick,
-  handleEditFormChange,
-}) {
+export default function AdminEditRow({ editFormData, handleCancelClick, handleEditFormChange }) {
   return (
     <>
       <tr>
