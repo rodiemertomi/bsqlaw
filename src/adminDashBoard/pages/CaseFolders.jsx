@@ -29,6 +29,8 @@ export default function CaseFolders() {
   const [selectedLawyerClient, setSelectedLawyerClient] = useState()
   const [lawyers, setLawyers] = useState()
   const [editFolderId, setEditFolderId] = useState()
+  const [partnersList, setPartnersList] = useState()
+  const [selectedPartner, setSelectedPartner] = useState()
 
   const caseTitleRef = useRef()
   const pleadingRef = useRef()
@@ -41,6 +43,7 @@ export default function CaseFolders() {
 
   const userColRef = collection(db, 'users')
   const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
+  const partnersRef = query(userColRef, where('role', '==', 'partner'))
   const foldersRef = collection(db, 'folders')
 
   const getLawyerClients = async () => {
@@ -61,6 +64,7 @@ export default function CaseFolders() {
       foldername: folderNameRef.current.value,
       lawyer: selectedLawyer,
       clientid: selectedLawyerClient,
+      handlingpartner: selectedPartner,
     }
     const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
 
@@ -227,9 +231,17 @@ export default function CaseFolders() {
     const snap = await getDocs(lawyerRef)
     setLawyers(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
+
+  const getPartners = async () => {
+    await getDocs(partnersRef).then(snap => {
+      setPartnersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
   useEffect(() => {
     getFolders()
     getLawyers()
+    getPartners()
     getLawyerClients()
   }, [selectedLawyer])
 
@@ -249,8 +261,8 @@ export default function CaseFolders() {
                   <form onSubmit={handleEditFormSubmit}>
                     <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
                       <details className='p-5 w-full'>
-                        <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '>
-                          {folder.foldername}
+                        <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
+                          <div>{folder.foldername}</div> <div>{folder.handlingpartner}</div>
                         </summary>
                         {folder.files?.map(file => (
                           <Fragment key={file.id}>
@@ -303,6 +315,20 @@ export default function CaseFolders() {
                       ref={folderNameRef}
                       placeholder='Enter folder name'
                     />
+                    <select
+                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
+                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => {
+                        setSelectedPartner(e.target.value)
+                      }}
+                    >
+                      <option value=''>-Select Handling Partner-</option>
+                      {partnersList.map(partner => (
+                        <option value={partner.initials}>
+                          {partner.firstname} {partner.lastname}
+                        </option>
+                      ))}
+                    </select>
                     <select
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                       shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
