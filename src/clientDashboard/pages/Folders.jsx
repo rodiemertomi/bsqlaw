@@ -28,7 +28,7 @@ export default function Folders() {
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {folders?.map(folder => (
               <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
-                <details className='p-5 lg:w-full'>
+                <details className='p-5 w-full'>
                   <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'>
                     {folder.foldername}
                   </summary>
