@@ -194,8 +194,7 @@ function ReadClients({ handleAppointClick, client, i }) {
               : `${client.photoURL}`
           }
         />
-        <h1 className='text-yellow mt-1 font-bold text-lg '>{`${client.firstname} ${client.lastname}`}</h1>
-        <h1 className='text-white'>{`${client.username}`}</h1>
+        <h1 className='text-yellow mt-1 font-bold text-lg '>{`${client.username}`}</h1>
         {client.lawyer ? (
           <h1 className='text-white font-semibold'>
             Appointed Lawyer: <span className='text-white'>{client.lawyer}</span>
