@@ -24,12 +24,14 @@ export default function ClientsManagement() {
     username: '',
     email: '',
     role: 'client',
-    contactno: '',
+    contactNo: '',
     firstname: '',
     gender: '',
     lastname: '',
     lawyer: '',
     password: '',
+    contactperson: '',
+    mailingaddress: '',
   })
 
   const [editFormData, setEditFormData] = useState({
@@ -38,6 +40,8 @@ export default function ClientsManagement() {
     lastname: '',
     email: '',
     assignedlawyer: '',
+    contactperson: '',
+    mailingaddress: '',
   })
 
   const [editClientId, setEditClientId] = useState(null)
@@ -76,10 +80,12 @@ export default function ClientsManagement() {
       email: addFormData.email,
       role: addFormData.role,
       password: addFormData.password,
-      contactno: addFormData.contactno,
+      contactNo: addFormData.contactNo,
       gender: addFormData.gender,
       firstname: addFormData.firstname,
       lastname: addFormData.lastname,
+      mailingaddress: addFormData.mailingaddress,
+      contactperson: addFormData.contactperson,
     }
 
     try {
@@ -89,11 +95,13 @@ export default function ClientsManagement() {
         email: '',
         role: 'client',
         password: '',
-        contactno: '',
+        contactNo: '',
         firstname: '',
         gender: '',
         lastname: '',
         lawyer: '',
+        mailingaddress: '',
+        contactperson: '',
       })
     } catch (err) {
       alert(err.message)
@@ -102,7 +110,7 @@ export default function ClientsManagement() {
     setLoading(false)
   }
 
-  const handleEditFormSubmit = e => {
+  const handleEditFormSubmit = async e => {
     e.preventDefault()
     const docRef = doc(db, 'users', editClientId)
 
@@ -112,9 +120,11 @@ export default function ClientsManagement() {
       lastname: editFormData.lastname,
       email: editFormData.email,
       lawyer: editFormData.lawyer,
+      mailingaddress: editFormData.mailingaddress,
+      contactperson: editFormData.contactperson,
     }
 
-    setDoc(docRef, editedUser, { merge: true }).then(() => {
+    await setDoc(docRef, editedUser, { merge: true }).then(() => {
       alert('Document updated Successfully')
     })
 
@@ -132,6 +142,8 @@ export default function ClientsManagement() {
       lastname: client.lastname,
       email: client.email,
       lawyer: client.lawyer,
+      mailingaddress: client.mailingaddress,
+      contactperson: client.contactperson,
     }
 
     setEditFormData(formValues)
@@ -254,6 +266,12 @@ export default function ClientsManagement() {
                         </th>
                         <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
                           Email Address
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Mailing Address
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Contact Person
                         </th>
                         <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
                           Action

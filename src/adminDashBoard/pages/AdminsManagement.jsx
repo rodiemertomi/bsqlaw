@@ -24,7 +24,7 @@ export default function AdminsManagement() {
     username: '',
     email: '',
     role: 'admin',
-    contactno: '',
+    contactNo: '',
     firstname: '',
     gender: '',
     lastname: '',
@@ -54,7 +54,7 @@ export default function AdminsManagement() {
       email: addFormData.email,
       role: addFormData.role,
       password: addFormData.password,
-      contactno: addFormData.contactno,
+      contactNo: addFormData.contactNo,
       gender: addFormData.gender,
       firstname: addFormData.firstname,
       lastname: addFormData.lastname,
@@ -67,7 +67,7 @@ export default function AdminsManagement() {
         email: '',
         role: 'admin',
         password: '',
-        contactno: '',
+        contactNo: '',
         firstname: '',
         gender: '',
         lastname: '',
@@ -165,16 +165,16 @@ export default function AdminsManagement() {
     return
   }
 
-  useEffect(() => {
-    const getAdmins = async () => {
-      try {
-        const data = await getDocs(adminRef)
-        setAdmins(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-      } catch (err) {
-        alert(err.message)
-      }
+  const getAdmins = async () => {
+    try {
+      const data = await getDocs(adminRef)
+      setAdmins(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    } catch (err) {
+      alert(err.message)
     }
+  }
 
+  useEffect(() => {
     getAdmins()
   }, [])
 
