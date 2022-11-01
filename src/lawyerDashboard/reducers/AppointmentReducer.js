@@ -11,7 +11,17 @@ const UseAppointmentStore = create(set => ({
   clientId: '',
   clientFirstName: '',
   clientLastName: '',
+  location: '',
+  remarks: '',
 
+  setRemarks: newRemark =>
+    set(() => ({
+      remarks: newRemark,
+    })),
+  setLocation: newLocation =>
+    set(() => ({
+      location: newLocation,
+    })),
   setClientFirstName: newClientFirstName =>
     set(() => ({
       clientFirstName: newClientFirstName,

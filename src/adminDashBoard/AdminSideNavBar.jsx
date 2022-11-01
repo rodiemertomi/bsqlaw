@@ -20,10 +20,14 @@ function AdminSideNavBar({
   const { photoURL } = UseUserReducer()
 
   const handleSignOut = async () => {
-    try {
-      await logOut()
-    } catch (error) {
-      alert(error)
+    if (window.confirm('Sure to log out?') === true) {
+      try {
+        await logOut()
+      } catch (error) {
+        alert(error)
+      }
+    } else {
+      return
     }
   }
 

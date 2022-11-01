@@ -15,6 +15,7 @@ function Times({ closeShowAppointment, clients }) {
     setEventDesc,
     setEventDateStart,
     setClientId,
+    setLocation,
   } = UseAppointmentStore()
   const {
     clientFirstName,
@@ -25,6 +26,7 @@ function Times({ closeShowAppointment, clients }) {
     eventDateStart,
     eventDesc,
     clientId,
+    location,
   } = UseAppointmentStore()
 
   const appointmentsRef = collection(db, 'appointments')
@@ -58,6 +60,7 @@ function Times({ closeShowAppointment, clients }) {
       setEventTimeStart('')
       setEventTimeEnd('')
       setEventDateStart('')
+      setLocation('')
       return
     }
     const clientRef = doc(db, `users/${clientId}`)
@@ -84,6 +87,7 @@ function Times({ closeShowAppointment, clients }) {
       setEventTimeStart('')
       setEventTimeEnd('')
       setEventDateStart('')
+      setLocation('')
       return
     }
     if (eventTimeStart > eventTimeEnd) {
@@ -96,6 +100,7 @@ function Times({ closeShowAppointment, clients }) {
       setEventTimeStart('')
       setEventTimeEnd('')
       setEventDateStart('')
+      setLocation('')
       return
     }
 
@@ -111,6 +116,8 @@ function Times({ closeShowAppointment, clients }) {
       timeEnd: eventTimeEnd,
       dateTimeStart: dateStart,
       dateTimeEnd: dateEnd,
+      location: location,
+      remarks: '',
     }
     await addDoc(appointmentsRef, data).then(alert('Appointment is set!'))
     const appointments = {
@@ -181,6 +188,15 @@ function Times({ closeShowAppointment, clients }) {
             value={eventDesc}
             placeholder='Event Description'
             onChange={event => setEventDesc(event.target.value)}
+          ></textarea>
+          <textarea
+            rows='4'
+            cols='30'
+            name='eventDesc'
+            className=' h-14 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            value={location}
+            placeholder='Appointment Location'
+            onChange={event => setLocation(event.target.value)}
           ></textarea>
         </div>
         {/* Time Picker */}

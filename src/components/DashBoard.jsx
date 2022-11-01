@@ -35,8 +35,8 @@ const DashBoard = () => {
   const { role } = UseUserReducer()
 
   const handeOnIdle = () => {
-    logOut()
     alert('User has been logged out')
+    logOut()
   }
 
   const handleOnActive = () => {

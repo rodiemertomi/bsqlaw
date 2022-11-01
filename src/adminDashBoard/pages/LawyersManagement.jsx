@@ -158,8 +158,11 @@ export default function LawyersManagement() {
 
   const handleDeleteClick = async clientId => {
     setLoading(true)
-    await deleteDoc(doc(db, 'users', clientId))
+    if (window.confirm('Are you sure you want to delete this user?') === true) {
+      await deleteDoc(doc(db, 'users', clientId))
+    }
     setLoading(false)
+    return
   }
 
   useEffect(() => {

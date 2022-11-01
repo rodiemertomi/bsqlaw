@@ -23,7 +23,7 @@ export default function AdminsManagement() {
   const [addFormData, setAddFormData] = useState({
     username: '',
     email: '',
-    role: 'lawyer',
+    role: 'admin',
     contactno: '',
     firstname: '',
     gender: '',
@@ -158,8 +158,11 @@ export default function AdminsManagement() {
 
   const handleDeleteClick = async clientId => {
     setLoading(true)
-    await deleteDoc(doc(db, 'users', clientId))
+    if (window.confirm('Are you sure you want to delete this user?') === true) {
+      await deleteDoc(doc(db, 'users', clientId))
+    }
     setLoading(false)
+    return
   }
 
   useEffect(() => {
