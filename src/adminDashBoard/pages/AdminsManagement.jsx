@@ -61,17 +61,19 @@ export default function AdminsManagement() {
     }
 
     try {
-      await addDoc(colRef, newClient)
-      setAddFormData({
-        username: '',
-        email: '',
-        role: 'admin',
-        password: '',
-        contactNo: '',
-        firstname: '',
-        gender: '',
-        lastname: '',
-        lawyer: '',
+      await addDoc(colRef, newClient).then(() => {
+        setAddFormData({
+          username: '',
+          email: '',
+          role: 'admin',
+          password: '',
+          contactNo: '',
+          firstname: '',
+          gender: '',
+          lastname: '',
+          lawyer: '',
+        })
+        getAdmins()
       })
     } catch (err) {
       alert(err.message)
@@ -132,6 +134,7 @@ export default function AdminsManagement() {
 
     setDoc(docRef, editedAdmin, { merge: true }).then(() => {
       alert('Document updated Successfully')
+      getAdmins()
     })
 
     setEditAdminId(null)
@@ -159,7 +162,10 @@ export default function AdminsManagement() {
   const handleDeleteClick = async clientId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
-      await deleteDoc(doc(db, 'users', clientId))
+      await deleteDoc(doc(db, 'users', clientId)).then(() => {
+        alert('User deleted')
+        getAdmins()
+      })
     }
     setLoading(false)
     return

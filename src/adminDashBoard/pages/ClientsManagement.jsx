@@ -90,6 +90,7 @@ export default function ClientsManagement() {
       lastname: addFormData.lastname,
       mailingaddress: addFormData.mailingaddress,
       contactperson: addFormData.contactperson,
+      lawyer: addFormData.lawyer,
     }
 
     try {

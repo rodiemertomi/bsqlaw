@@ -72,9 +72,9 @@ export default function CaseFolders() {
     await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData)
     await setDoc(lawyer, data, { merge: true }).then(() => {
       alert(`Updated successfully`)
+      getFolders()
     })
     folderNameRef.current.value = ''
-    await getFolders()
   }
 
   const uploadFile = async () => {
@@ -126,10 +126,10 @@ export default function CaseFolders() {
         }
         await setDoc(selectedFolderRef, fileInput, { merge: true }).then(() => {
           alert('Successfully added file in firestore')
+          getFolders()
         })
       })
     })
-    getFolders()
     setLoading(false)
   }
 
@@ -216,10 +216,12 @@ export default function CaseFolders() {
     const addData = { files: arrayUnion(editedFile) }
 
     await setDoc(docRef, deleteData, { merge: true })
-    await setDoc(docRef, addData, { merge: true })
-    setEditFileId(null)
-    setEditFolderId(null)
-    getFolders()
+    await setDoc(docRef, addData, { merge: true }).then(() => {
+      alert('Update Successful')
+      setEditFileId(null)
+      setEditFolderId(null)
+      getFolders()
+    })
   }
 
   const handleDeleteFolder = async (e, folderid) => {
@@ -406,9 +408,7 @@ export default function CaseFolders() {
                     >
                       <option value=''>-Select Client-</option>
                       {lawyerClients?.map(client => (
-                        <option value={client.id}>
-                          {client.firstname} {client.lastname}
-                        </option>
+                        <option value={client.id}>{client.username}</option>
                       ))}
                     </select>
                     <button
