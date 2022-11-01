@@ -8,7 +8,9 @@ export default function ClientsReadOnlyRow({ client, handleEditClick, handleDele
       <td className='py-4 px-6 border border-slate-700'>{client.lastname}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.lawyer}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.email}</td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-6 border border-slate-700'>{client.mailingaddress}</td>
+      <td className='py-4 px-6 border border-slate-700'>{client.contactperson}</td>
+      <td className='py-4 px-6 border border-slate-700 flex'>
         <button
           onClick={e => handleEditClick(e, client)}
           className='w-14 h-8 rounded-md border-0 bg-maroon text-white mr-1'
