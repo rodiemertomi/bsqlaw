@@ -248,7 +248,7 @@ export default function CaseFolders() {
                 ) : (
                   <form onSubmit={handleEditFormSubmit}>
                     <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
-                      <details className='p-5 lg:w-full'>
+                      <details className='p-5 w-full'>
                         <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold '>
                           {folder.foldername}
                         </summary>
@@ -294,8 +294,8 @@ export default function CaseFolders() {
             </button>
             {showModal && (
               <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[85%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[75%] md:w-[70%] lg:h-[95%] lg:w-[35%] p-10'>
-                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-2 gap-[2px]'>
+                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[92.5%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[70%] md:w-[70%] lg:h-[95%] lg:w-[35%] p-10'>
+                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-[2px]'>
                     <input
                       className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
                     shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
