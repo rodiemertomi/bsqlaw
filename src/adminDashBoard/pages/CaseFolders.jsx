@@ -475,7 +475,7 @@ export default function CaseFolders() {
               </div>
             )}
           </div>
-          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
+          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
             {foldersList?.map(folder => (
               <>
                 {folder.id === 'DONOTDELETE' ? (
