@@ -210,7 +210,7 @@ export default function LawyersManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`w-28 h-7 rounded-md border-0 bg-maroon text-white ${
+                className={`w-28 h-8 lg:self-center rounded-md border-0 bg-maroon text-white ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'
