@@ -99,12 +99,6 @@ export default function CaseFolders() {
     const fileRef = ref(storage, fileUrl)
     await uploadBytes(fileRef, fileUpload).then(snapshot => {
       getDownloadURL(snapshot.ref).then(async url => {
-        const dateNow = new Date()
-        const setPleadingDate = new Date(pleadingDate)
-        if (dateNow.getTime() > setPleadingDate.getTime()) {
-          alert('Date set has already passed.')
-          return
-        }
         const data = {
           active: true,
           id: nanoid(),
