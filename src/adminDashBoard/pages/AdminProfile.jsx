@@ -15,7 +15,7 @@ export default function AdminProfile() {
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-[#D9D9D9] flex flex-col items-center justify-center lg:w-[90%] lg:h-[95%] lg:ml-24'>
-        <div className='flex flex-col justify-center items-center gap-1 bg-white p-5 rounded-lg shadow-lg lg:w-[40%]'>
+        <div className='flex flex-col justify-center items-center gap-1 bg-white p-5 rounded-lg shadow-lg lg:w-[40%] h-[70%] lg:h-[80%]'>
           <img
             alt='user'
             className='w-[200px] h-[200px] rounded-full mb-2'

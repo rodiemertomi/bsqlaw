@@ -145,7 +145,22 @@ function AppointmentManagement() {
       <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>BSQ Appointments</h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20  lg:mr-3'>
-          <div className='w-[100%] pl-5 pt-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-center lg:w-[100%] overflow-auto scrollbar-hide'>
+          <div className='h-[50px] flex flex-col justify-center item-center self-end mr-5 mt-2'>
+            <button
+              className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+              onClick={() => {
+                setShowAppoitnment(true)
+              }}
+            >
+              Add Appointments
+            </button>
+            {showAppointment && (
+              <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center z-20'>
+                <Times closeShowAppointment={setShowAppoitnment} clients={clients} />
+              </div>
+            )}
+          </div>
+          <div className='w-[100%] pl-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-center lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
             {appointments?.map(appointment => (
               <Fragment key={appointment.id}>
                 {today.getTime() > appointment.dateTimeStart.toDate().getTime() ? (
@@ -174,21 +189,6 @@ function AppointmentManagement() {
               </Fragment>
             ))}
           </div>
-          <div className='h-[50px] flex flex-col justify-center item-center self-end mr-5 mb-1'>
-            <button
-              className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-              onClick={() => {
-                setShowAppoitnment(true)
-              }}
-            >
-              Add Appointments
-            </button>
-          </div>
-          {showAppointment && (
-            <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-              <Times closeShowAppointment={setShowAppoitnment} clients={clients} />
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -247,14 +247,14 @@ function ReadOnlyRow({ appointment, handleEditClick, handleCancelAppt, formatDat
             </tr>
           </tbody>
         </table>
-        <div className='p-2 flex items-center gap-[75%] text-sm'>
-          <div className='flex gap-2 items-center w-[150px]'>
+        <div className='p-2 flex items-center gap-[53%] text-sm'>
+          <div className='flex gap-2 items-center w-[360px]'>
             <img className='h-8 w-8' src={require('../../assets/user.png')} alt='user icon' />
-            <span className='font-bold uppercase text-xs w-[150px]'>
+            <span className='font-bold uppercase text-xs w-[650px]'>
               {appointment.clientFirstName} {appointment.clientLastName}
             </span>
           </div>
-          <div className='flex gap-4'>
+          <div className='flex gap-2'>
             <button
               onClick={e => handleEditClick(e, appointment)}
               className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
@@ -329,7 +329,7 @@ function EditOnlyRow({
             <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
               <td className='py-4 px-6 lg:w-[22%]'>
                 <input
-                  className='w-1/7 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  className='w-[55%] shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type='text'
                   placeholder='Appt desc'
                   name='eventDesc'
@@ -339,7 +339,7 @@ function EditOnlyRow({
               </td>
               <td className='py-4 px-6'>
                 <input
-                  className='w-1/7 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  className='w-[80%] shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type='time'
                   placeholder='Appt time start'
                   name='timeStart'
@@ -360,7 +360,7 @@ function EditOnlyRow({
               <td className='py-4 px-6'>{formatDate(appointment.dateTimeStart.toDate())}</td>
               <td className='py-4 px-6'>
                 <input
-                  className='w-1/7 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  className='w-[80%] shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type='text'
                   placeholder='Location'
                   name='location'
@@ -370,7 +370,7 @@ function EditOnlyRow({
               </td>
               <td className='py-4 px-6'>
                 <input
-                  className='w-1/7 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  className='w-[70%] shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type='text'
                   placeholder='Set by'
                   name='setter'
@@ -380,7 +380,7 @@ function EditOnlyRow({
               </td>
               <td className='py-4 px-6'>
                 <input
-                  className='w-1/7 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  className='w-[80%] shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type='text'
                   placeholder='Remarks'
                   name='remarks'
@@ -391,14 +391,14 @@ function EditOnlyRow({
             </tr>
           </tbody>
         </table>
-        <div className='p-2 flex items-center gap-[75%] text-sm'>
-          <div className='flex gap-2 items-center w-[150px]'>
+        <div className='p-2 flex items-center gap-[53%] text-sm'>
+          <div className='flex gap-2 items-center w-[360px]'>
             <img className='h-8 w-8' src={require('../../assets/user.png')} alt='user icon' />
-            <span className='font-bold uppercase text-xs w-[150px]'>
+            <span className='font-bold uppercase text-xs w-[650px]'>
               {appointment.clientFirstName} {appointment.clientLastName}
             </span>
           </div>
-          <div className='flex gap-4'>
+          <div className='flex gap-2'>
             <button
               type='submit'
               className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'

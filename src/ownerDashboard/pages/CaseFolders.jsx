@@ -286,13 +286,188 @@ export default function CaseFolders() {
   }, [selectedLawyer])
 
   const [showModal, setShowModal] = useState(false)
+  const [showUpdateFolder, setShowUpdateFolder] = useState(false)
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>BSQ Case Folders</h1>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-[#D9D9D9] rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
-          <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
+          <div className='h-[50px] flex flex-row justify-center gap-2 item-center self-end mb-2 mt-1 mr-6'>
+            <button
+              type='button'
+              onClick={() => {
+                setShowModal(true)
+              }}
+              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+            >
+              Add Folder
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                setShowUpdateFolder(true)
+              }}
+              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+            >
+              Update Folder
+            </button>
+            {showModal && (
+              <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
+                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[55%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[70%] lg:w-[35%] p-10'>
+                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-5'>
+                    <h1 className='font-bold text-3xl'>ADD FOLDER</h1>
+                    <input
+                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                    shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      type='text'
+                      ref={folderNameRef}
+                      placeholder='Enter folder name'
+                    />
+                    <select
+                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => {
+                        setSelectedPartner(e.target.value)
+                      }}
+                    >
+                      <option value=''>-Select Handling Partner-</option>
+                      {partnersList.map(partner => (
+                        <option value={partner.initials}>
+                          {partner.firstname} {partner.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => {
+                        setSelectedLawyer(e.target.value)
+                        getLawyerClients()
+                      }}
+                    >
+                      <option value=''>-Select Lawyer-</option>
+                      {lawyers.map(lawyer => (
+                        <option value={lawyer.initials}>
+                          {lawyer.firstname} {lawyer.lastname}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                      onChange={e => setSelectedLawyerClient(e.target.value)}
+                    >
+                      <option value=''>-Select Client-</option>
+                      {lawyerClients?.map(client => (
+                        <option value={client.id}>{client.username}</option>
+                      ))}
+                    </select>
+                    <button
+                      className=' inline-block px-6 py-2.5 mt-1 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white w-full hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      onClick={addFolder}
+                    >
+                      Add Folder
+                    </button>
+                  </div>
+                  <p
+                    className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold'
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </p>
+                </div>
+              </div>
+            )}
+            {showUpdateFolder && (
+              <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
+                <div className='flex w-[90%] h-[70%] pt-2 pb-2 md:w-[50%] bg-[#D9D9D9] rounded-md lg:h-[85%] lg:w-[30%] flex-col items-center justify-evenly gap-1'>
+                  <h1 className='font-bold text-2xl'>UPDATE FOLDER</h1>
+                  <select
+                    className='mt-2 bg-white h-10 self-center border-black outline-none border-b-[1px] 
+                        shadow border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    name='folders'
+                    id='folders'
+                    value={folderOption}
+                    onChange={e => setFolderOption(e.target.value)}
+                  >
+                    <option default value=''>
+                      -Select Folder-
+                    </option>
+                    {foldersList?.map(folder => (
+                      <option value={`${folder.foldername}`}>{folder.foldername}</option>
+                    ))}
+                  </select>
+                  <input
+                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='text'
+                    ref={caseNoRef}
+                    placeholder='Case Number'
+                  />
+                  <input
+                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='text'
+                    ref={caseTitleRef}
+                    placeholder='Case Title'
+                  />
+                  <input
+                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='text'
+                    ref={pleadingRef}
+                    placeholder='Pleading / Order'
+                  />
+                  <label className='text-maroon text-sm' htmlFor='pleading-date'>
+                    Pleading Date
+                  </label>
+                  <input
+                    name='pleading-date'
+                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                          shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='date'
+                    placeholder='Pleading Date'
+                    onChange={e => setPleadingDate(e.target.value)}
+                  />
+                  <input
+                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                        shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='text'
+                    placeholder='Enter Court'
+                    ref={courtRef}
+                  />
+                  <input
+                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                        shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='text'
+                    placeholder='Enter Branch (1-300)'
+                    ref={branchRef}
+                  />
+                  <input
+                    className='bg-[#e1dfdf] flex items-center justify-center h-10
+                       rounded w-[65%] py-2 px-3 text-gray-700 '
+                    type='file'
+                    onChange={e => setFileUpload(e.target.files[0])}
+                  />
+                  <button
+                    className=' inline-block mt-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon w-[65%] hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                    disabled={loading}
+                    onClick={uploadFile}
+                  >
+                    Upload
+                  </button>
+                  <p
+                    className='mt-2 text-maroon text-sm cursor-pointer hover:text-black hover:font-bold'
+                    onClick={() => setShowUpdateFolder(false)}
+                  >
+                    Close
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className='w-[100%] h-[100%] pl-5 pb-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
             {foldersList?.map(folder => (
               <>
                 {folder.id === 'DONOTDELETE' ? (
@@ -342,162 +517,6 @@ export default function CaseFolders() {
                 )}
               </>
             ))}
-          </div>
-          <div className='h-[50px] flex flex-col justify-center item-center self-end mb-2 mt-1 mr-6'>
-            <button
-              type='button'
-              onClick={() => {
-                setShowModal(true)
-              }}
-              className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-            >
-              Add File
-            </button>
-            {showModal && (
-              <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[92.5%] w-[90%] gap-[10px] drop-shadow-lg rounded-md md:h-[70%] md:w-[70%] lg:h-[95%] lg:w-[35%] p-10'>
-                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-[2px]'>
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                    shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      ref={folderNameRef}
-                      placeholder='Enter folder name'
-                    />
-                    <select
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      onChange={e => {
-                        setSelectedPartner(e.target.value)
-                      }}
-                    >
-                      <option value=''>-Select Handling Partner-</option>
-                      {partnersList.map(partner => (
-                        <option value={partner.initials}>
-                          {partner.firstname} {partner.lastname}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      onChange={e => {
-                        setSelectedLawyer(e.target.value)
-                        getLawyerClients()
-                      }}
-                    >
-                      <option value=''>-Select Lawyer-</option>
-                      {lawyers.map(lawyer => (
-                        <option value={lawyer.initials}>
-                          {lawyer.firstname} {lawyer.lastname}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                      shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      onChange={e => setSelectedLawyerClient(e.target.value)}
-                    >
-                      <option value=''>-Select Client-</option>
-                      {lawyerClients?.map(client => (
-                        <option value={client.id}>
-                          {client.firstname} {client.lastname}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      className=' inline-block px-6 py-2.5 mt-1 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white w-full hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-                      onClick={addFolder}
-                    >
-                      Add Folder
-                    </button>
-                  </div>
-                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly gap-[2px]'>
-                    <select
-                      className='bg-white self-center border-black outline-none border-b-[1px] 
-                        shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      name='folders'
-                      id='folders'
-                      value={folderOption}
-                      onChange={e => setFolderOption(e.target.value)}
-                    >
-                      <option default value=''>
-                        -Select Folder-
-                      </option>
-                      {foldersList?.map(folder => (
-                        <option value={`${folder.foldername}`}>{folder.foldername}</option>
-                      ))}
-                    </select>
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      ref={caseNoRef}
-                      placeholder='Case Number'
-                    />
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      ref={caseTitleRef}
-                      placeholder='Case Title'
-                    />
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      ref={pleadingRef}
-                      placeholder='Pleading / Order'
-                    />
-                    <label className='text-maroon text-sm' htmlFor='pleading-date'>
-                      Pleading Date
-                    </label>
-                    <input
-                      name='pleading-date'
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                          shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='date'
-                      placeholder='Pleading Date'
-                      onChange={e => setPleadingDate(e.target.value)}
-                    />
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      placeholder='Enter Court'
-                      ref={courtRef}
-                    />
-                    <input
-                      className='bg-white self-center border-black outline-none border-b-[1px] lg:h-[35px]
-                        shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      type='text'
-                      placeholder='Enter Branch (1-300)'
-                      ref={branchRef}
-                    />
-                    <input
-                      className='bg-[#e1dfdf] flex items-center justify-center h-[42px]
-                       rounded w-full py-2 px-3 text-gray-700 '
-                      type='file'
-                      onChange={e => setFileUpload(e.target.files[0])}
-                    />
-                    <button
-                      className=' inline-block mt-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon w-full hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-                      disabled={loading}
-                      onClick={uploadFile}
-                    >
-                      Upload
-                    </button>
-                  </div>
-
-                  <p
-                    className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold'
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>

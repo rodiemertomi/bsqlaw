@@ -93,7 +93,7 @@ function EditProfile({ closeModal }) {
             </div>
           </div>
 
-          <div className='w-[90%] flex flex-col gap-3'>
+          <div className='w-[100%] flex flex-col gap-3'>
             <div className='flex flex-col items-center w-[100%] gap-3 mt-3'>
               <input
                 required
@@ -175,7 +175,7 @@ function EditProfile({ closeModal }) {
                 )}
               </select>
 
-              <div className='w-[100%] flex justify-end mr-24 gap-1 md:mr-[190px] lg:mr-[100px]'>
+              <div className='w-[100%] flex justify-center gap-2'>
                 <button
                   onClick={() => closeModal(false)}
                   className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
