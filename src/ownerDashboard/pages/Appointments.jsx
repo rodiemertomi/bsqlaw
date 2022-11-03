@@ -38,8 +38,10 @@ function AppointmentManagement() {
           appointments: arrayRemove(snap.data()),
         }
         await setDoc(clientRef, data, { merge: true })
-        await deleteDoc(apptRef).then(() => alert('Canceled Appointment'))
-        getAppointments()
+        await deleteDoc(apptRef).then(() => {
+          alert('Canceled Appointment')
+          getAppointments()
+        })
       })
     } else {
       return
@@ -110,10 +112,10 @@ function AppointmentManagement() {
 
     await setDoc(docRef, editedAppointment, { merge: true }).then(() => {
       alert('Appointment updated.')
+      getAppointments()
     })
 
     setEditApptId(null)
-    getAppointments()
   }
 
   const handleCancelClick = () => {

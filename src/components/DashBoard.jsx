@@ -47,6 +47,7 @@ const DashBoard = () => {
     timeout,
     onIdle: handeOnIdle,
     onActive: handleOnActive,
+    events: ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'keydown'],
   })
 
   useEffect(() => {

@@ -28,10 +28,11 @@ export default function ClientsManagement() {
     firstname: '',
     gender: '',
     lastname: '',
-    lawyer: '',
+    lawyer: [],
     password: '',
     contactperson: '',
     mailingaddress: '',
+    company: '',
   })
 
   const [editFormData, setEditFormData] = useState({
@@ -42,10 +43,11 @@ export default function ClientsManagement() {
     firstname: '',
     gender: '',
     lastname: '',
-    lawyer: '',
+    lawyer: [],
     password: '',
     contactperson: '',
     mailingaddress: '',
+    company: '',
   })
 
   const [editClientId, setEditClientId] = useState(null)
@@ -91,27 +93,30 @@ export default function ClientsManagement() {
       mailingaddress: addFormData.mailingaddress,
       contactperson: addFormData.contactperson,
       lawyer: addFormData.lawyer,
+      company: addFormData.company,
     }
 
     try {
-      await addDoc(colRef, newClient)
-      setAddFormData({
-        username: '',
-        email: '',
-        role: 'client',
-        password: '',
-        contactNo: '',
-        firstname: '',
-        gender: '',
-        lastname: '',
-        lawyer: '',
-        mailingaddress: '',
-        contactperson: '',
+      await addDoc(colRef, newClient).then(() => {
+        setAddFormData({
+          username: '',
+          email: '',
+          role: 'client',
+          password: '',
+          contactNo: '',
+          firstname: '',
+          gender: '',
+          lastname: '',
+          lawyer: [],
+          mailingaddress: '',
+          contactperson: '',
+          company: '',
+        })
+        getClients()
       })
     } catch (err) {
       alert(err.message)
     }
-    getClients()
     setLoading(false)
   }
 
@@ -126,14 +131,15 @@ export default function ClientsManagement() {
       email: editFormData.email,
       mailingaddress: editFormData.mailingaddress,
       contactperson: editFormData.contactperson,
+      company: editFormData.company,
     }
 
     await setDoc(docRef, editedUser, { merge: true }).then(() => {
       alert('Document updated Successfully')
+      getClients()
     })
 
     setEditClientId(null)
-    getClients()
   }
 
   const handleEditClick = (e, client) => {
@@ -148,6 +154,7 @@ export default function ClientsManagement() {
       lawyer: client.lawyer,
       mailingaddress: client.mailingaddress,
       contactperson: client.contactperson,
+      company: client.company,
     }
 
     setEditFormData(formValues)
@@ -174,7 +181,8 @@ export default function ClientsManagement() {
           data.email.toLowerCase().includes(searchKeyword.toLowerCase()) ||
           data.firstname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
           data.lastname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          data.lawyer.toLowerCase().includes(searchKeyword.toLowerCase())
+          data.lawyer.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.company.toLowerCase().includes(searchKeyword.toLowerCase())
       )
     } catch (err) {
       alert(err.message)
@@ -264,6 +272,9 @@ export default function ClientsManagement() {
                         </th>
                         <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
                           Last Name
+                        </th>
+                        <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
+                          Company Name
                         </th>
                         <th scope='col' className='py-3 px-6 lg:text-sm   border border-slate-600'>
                           Assigned Lawyer
