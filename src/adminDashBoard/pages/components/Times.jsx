@@ -174,7 +174,7 @@ function Times({ closeShowAppointment, clients }) {
             type='text'
             id='eventName'
             name='eventName'
-            placeholder='Event Name'
+            placeholder='Appointment Title'
             className='h-10 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onChange={event => setEventName(event.target.value)}
             value={eventName}

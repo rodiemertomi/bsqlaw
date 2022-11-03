@@ -67,8 +67,6 @@ export default function ClientsList() {
         getClients()
         getLawyers()
       })
-
-      //aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     } else {
       const lq2 = query(colRef, where('initials', '==', `${originalLawyer}`))
       const data = await getDocs(lq1)
@@ -257,15 +255,15 @@ function EditClient({
         <div className='flex gap-1'>
           <button
             className='w-[55px] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
-            onClick={handleCancelClick}
-          >
-            Cancel
-          </button>
-          <button
-            className='w-[55px] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
             onClick={e => handleEditFormSubmit(e, client)}
           >
             Save
+          </button>
+          <button
+            className='w-[55px] h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+            onClick={handleCancelClick}
+          >
+            Cancel
           </button>
         </div>
       </div>
