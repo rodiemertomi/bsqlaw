@@ -75,8 +75,8 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
               <img
                 alt='folder'
                 onClick={viewFolders}
-                className='w-10 h-10'
-                src={require('../assets/folder.png')}
+                className='w-10 h-10 invert'
+                src={require('../assets/caseFolder.png')}
               />
             }
           />
@@ -86,7 +86,7 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
               <img
                 alt='appointment'
                 onClick={viewAppointments}
-                className='w-8 h-8 invert'
+                className='w-10 h-10 invert'
                 src={require('../assets/appointment.png')}
               />
             }
@@ -100,7 +100,7 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
           {
             <img
               alt='signout'
-              className='w-8 h-8 invert cursor-pointer'
+              className='w-8 h-8 cursor-pointer'
               src={require('../assets/logout.png')}
             />
           }

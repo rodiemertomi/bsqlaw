@@ -92,7 +92,7 @@ function AdminSideNavBar({
               <img
                 alt='dashboard icon'
                 onClick={hideAdminControl}
-                className='w-8 h-8 invert-0'
+                className='w-10 h-10 invert'
                 src={require('../assets/adminControl.png')}
               />
             }
@@ -103,7 +103,7 @@ function AdminSideNavBar({
               <img
                 alt='case folder icon'
                 onClick={viewCasefolders}
-                className='w-10 h-10'
+                className='w-10 h-10 invert'
                 src={require('../assets/caseFolder.png')}
               />
             }
@@ -114,7 +114,7 @@ function AdminSideNavBar({
               <img
                 alt='appointment'
                 onClick={viewAppointments}
-                className='w-8 h-8 invert'
+                className='w-10 h-10 invert'
                 src={require('../assets/appointment.png')}
               />
             }
@@ -128,11 +128,11 @@ function AdminSideNavBar({
           {
             <img
               alt='signout'
-              className='w-8 h-8 invert cursor-pointer'
+              className='w-8 h-8 cursor-pointer'
               src={require('../assets/logout.png')}
             />
           }
-          <p className='text-center text-sm pt-0 mt-1 font-Lora'>Logout</p>
+          <p className='text-center text-sm pt-0 font-Lora'>Logout</p>
         </div>
       </div>
     </div>
