@@ -49,17 +49,19 @@ function ReadLawyers({ lawyer }) {
               : `${lawyer.photoURL}`
           }
         />
-        <h1 className='text-yellow font-bold text-lg '>{`${lawyer.firstname} ${lawyer.lastname}`}</h1>
+        <h1 className='text-yellow font-bold text-lg'>{`${lawyer.firstname} ${lawyer.lastname}`}</h1>
         <h1>{`${lawyer.username}`}</h1>
         <h1>{`${lawyer.initials}`}</h1>
       </div>
-      <div className='flex flex-col items-center justify-start p-2 text-xs '>
-        <h1>Clients:</h1>
-        {lawyer.clients?.map((client, i) => (
-          <h1 key={i}>
-            {client.firstname} {client.lastname}
-          </h1>
-        ))}
+      <div className='w-full bg-black shadow-lg h-[20%] flex flex-col items-center justify-start p-2 text-xs '>
+        <h1 className='font-bold text-yellow'>List of Clients</h1>
+        <div className=' overflow-auto scrollbar-hide flex flex-col items-center justify-center h-full w-full'>
+          {lawyer.clients?.map((client, i) => (
+            <h1 key={i}>
+              {client.firstname} {client.lastname}
+            </h1>
+          ))}
+        </div>
       </div>
     </div>
   )
