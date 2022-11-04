@@ -155,7 +155,7 @@ export default function ClientsList() {
         <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>Client</h1>
         <div className='h-full flex flex-col mt-2 gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-3 lg:pt-0'>
           <div className='w-[100%] h-[1000%] bg-[#D9D9D9] rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 p-5 '>
-            <div className='w-[100%] flex gap-x-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+            <div className='w-[100%] flex gap-x-7 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
               {clientsList?.map((client, i) => (
                 <Fragment key={client.id}>
                   {clientEditId === client.id ? (
