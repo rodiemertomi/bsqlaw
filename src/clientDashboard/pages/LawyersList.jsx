@@ -38,7 +38,7 @@ export default function LawyersList() {
 
 function ReadLawyers({ lawyer }) {
   return (
-    <div className='bg-[#632121] w-[230px] h-[260px] lg:w-[260px] lg:h-[280px] shadow-lg rounded-2xl flex flex-col items-center justify-center mb-5 md:w-[230px] md:h-[260px] text-white gap-[1px]'>
+    <div className='bg-[#632121] w-[230px] h-[260px] lg:w-[260px] lg:h-[285px] shadow-lg rounded-2xl flex flex-col items-center justify-center mb-5 md:w-[230px] md:h-[260px] text-white gap-[5px]'>
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center'>
         <img
           alt='user'
@@ -53,13 +53,15 @@ function ReadLawyers({ lawyer }) {
         <h1>{`${lawyer.username}`}</h1>
         <h1>{`${lawyer.initials}`}</h1>
       </div>
-      <div className='flex flex-col items-center justify-start p-2 text-xs '>
-        <h1>Clients:</h1>
-        {lawyer.clients?.map((client, i) => (
-          <h1 key={i}>
-            {client.firstname} {client.lastname}
-          </h1>
-        ))}
+      <div className='w-full bg-black shadow-lg h-[20%] flex flex-col items-center justify-start p-2 text-xs '>
+        <h1 className='font-bold text-yellow'>List of Clients</h1>
+        <div className=' overflow-auto scrollbar-hide flex flex-col items-center justify-center h-full w-full'>
+          {lawyer.clients?.map((client, i) => (
+            <h1 key={i}>
+              {client.firstname} {client.lastname}
+            </h1>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -71,34 +71,34 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
               <img
                 alt='client icon'
                 onClick={viewClients}
-                className='w-8 h-8'
-                src={require('../assets/client.jpg')}
+                className='w-10 h-10 invert'
+                src={require('../assets/client.png')}
               />
             }
           />
-          <p className='text-center text-sm pt-0 mb-3'>Client</p>
+          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Client</p>
           <SideBarIcon
             icon={
               <img
                 alt='casefolder icon'
                 onClick={viewFolders}
-                className='w-10 h-10'
+                className='w-10 h-10 invert'
                 src={require('../assets/caseFolder.png')}
               />
             }
           />
-          <p className='text-sm pt-0 mb-3 text-center'>Case Folder</p>
+          <p className='text-sm pt-0 mb-3 text-center font-Lora'>Case Folder</p>
           <SideBarIcon
             icon={
               <img
                 alt='casefolder icon'
                 onClick={viewAppointments}
-                className='w-8 h-8 invert'
+                className='w-10 h-10 invert'
                 src={require('../assets/appointment.png')}
               />
             }
           />
-          <p className='text-sm pt-0 mb-3 text-center'>Appointment</p>
+          <p className='text-sm pt-0 mb-3 text-center font-Lora'>Appointment</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'
@@ -107,7 +107,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
           {
             <img
               alt='signout'
-              className='w-8 h-8 invert cursor-pointer'
+              className='w-8 h-8 cursor-pointer'
               src={require('../assets/logout.png')}
             />
           }
