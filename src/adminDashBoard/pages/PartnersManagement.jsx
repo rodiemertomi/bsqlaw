@@ -216,7 +216,7 @@ export default function PartnersManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`w-28 h-8 self-center rounded-md border-0 bg-maroon text-white ${
+                className={`font-semibold w-[60%] md:w-[30%] lg:w-[10%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'
@@ -228,7 +228,7 @@ export default function PartnersManagement() {
             <div>
               <span className='font-bold text-xl'>Search Partner</span>
               <input
-                className='ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
+                className=' lg:ml-2 md:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
                 type='text'
                 placeholder='Enter Username, Firstname, Lastname, Initials or Email...'
                 value={searchKeyword}
@@ -237,7 +237,7 @@ export default function PartnersManagement() {
             </div>
           </div>
         </div>
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:h-[92%] md:h-[86%]'>
+        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-maroon rounded-md lg:h-[92%] md:h-[86%]'>
           <div className=' flex flex-col justify-center'>
             {/* ADMIN DETAILS */}
             <div>

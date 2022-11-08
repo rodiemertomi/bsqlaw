@@ -210,7 +210,7 @@ export default function LawyersManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`w-28 h-8 lg:self-center rounded-md border-0 bg-maroon text-white ${
+                className={`font-semibold w-[60%] md:w-[30%] lg:w-[10%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'
@@ -232,7 +232,7 @@ export default function LawyersManagement() {
           </div>
         </div>
 
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-[#D9D9D9] rounded-md lg:h-[88%] md:h-[86%]'>
+        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-maroon rounded-md lg:h-[88%] md:h-[86%]'>
           <div className=' flex flex-col justify-center'>
             {/* LAWYER DETAILS */}
             <div>
