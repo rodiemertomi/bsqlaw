@@ -132,31 +132,31 @@ function EditProfile({ closeModal }) {
                     <option defaultValue value=''>
                       Select Gender
                     </option>
-                    <option value='male'>Male</option>
-                    <option value='female'>Female</option>
-                    <option value='others'>Others</option>
+                    <option value='Male'>Male</option>
+                    <option value='Female'>Female</option>
+                    <option value='Others'>Others</option>
                   </>
-                ) : gender !== '' && gender === 'male' ? (
+                ) : gender !== '' && gender === 'Male' ? (
                   <>
-                    <option defaultValue value='male'>
+                    <option defaultValue value='Male'>
                       Male
                     </option>
-                    <option value='female'>Female</option>
-                    <option value='others'>Others</option>
+                    <option value='Female'>Female</option>
+                    <option value='Others'>Others</option>
                   </>
-                ) : gender !== '' && gender === 'female' ? (
+                ) : gender !== '' && gender === 'Female' ? (
                   <>
-                    <option value='male'>Male</option>
-                    <option defaultValue value='female'>
+                    <option value='Male'>Male</option>
+                    <option defaultValue value='Female'>
                       Female
                     </option>
-                    <option value='others'>Others</option>
+                    <option value='Others'>Others</option>
                   </>
                 ) : (
                   <>
-                    <option value='male'>Male</option>
-                    <option value='female'>Female</option>
-                    <option defaultValue value='others'>
+                    <option value='Male'>Male</option>
+                    <option value='Female'>Female</option>
+                    <option defaultValue value='Others'>
                       Others
                     </option>
                   </>

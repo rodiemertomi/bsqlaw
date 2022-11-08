@@ -62,7 +62,7 @@ function LoginSignUp() {
       }`}
     >
       <div
-        className={`shadow-2xl flex flex-col jus items-center w-[350px] border-black border-[3px] rounded-3xl h-[600px] lg:h-[450px] lg:mt-14`}
+        className={`shadow-2xl flex flex-col jus items-center w-[350px] border-black border-[3px] rounded-3xl h-[600px] lg:h-[430px] lg:mt-14`}
       >
         <div className='flex'>
           <div
@@ -77,8 +77,8 @@ function LoginSignUp() {
             <p className='font-Lora text-xs text-center text-[#8C760A]'>
               Login with the email provided by the firm
             </p>
-            <label htmlFor='email' className=' font-Lora font-semibold mt-2'>
-              EMAIL:
+            <label htmlFor='email' className=' font-Lora font-semibold mt-3 tracking-wide'>
+              EMAIL
             </label>
             <input
               required
@@ -86,11 +86,11 @@ function LoginSignUp() {
               type='email'
               name='email'
               placeholder='Email'
-              className='bg-white self-center h-11 border-black outline-none border-b-[1px] 
-              shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              className='bg-white self-center h-11 border-black outline-maroon border-b-[1px] 
+              shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
             />
-            <label htmlFor='password' className='font-Lora mt-3 font-semibold'>
-              PASSWORD:
+            <label htmlFor='password' className='font-Lora mt-3 font-semibold tracking-wide'>
+              PASSWORD
             </label>
             <input
               required
@@ -98,13 +98,13 @@ function LoginSignUp() {
               type='password'
               name='password'
               placeholder='Password'
-              className='bg-white self-center h-11 border-black outline-none border-b-[1px] 
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              className='bg-white self-center h-11 border-black outline-maroon border-b-[1px] 
+                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
             />
             {error && <AlertBox>{error}</AlertBox>}
             <button
               type='submit'
-              className='font-Lora font-bold mt-2 py-4 px-8 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white text-white md:text-sm md:py-3 md:px-4 '
+              className='font-Lora font-bold mt-6 py-4 px-8 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white hover:border-maroon hover:border-2 hover:font-bold text-white md:text-sm md:py-3 md:px-4 '
             >
               LOG IN
             </button>

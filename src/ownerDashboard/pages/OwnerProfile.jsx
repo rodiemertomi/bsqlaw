@@ -14,42 +14,57 @@ export default function OwnerProfile() {
 
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
-      <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-[#D9D9D9] flex flex-col items-center justify-center lg:w-[90%] lg:h-[95%] lg:ml-24'>
-        <div className='flex flex-col justify-center items-center gap-1 bg-white p-5 rounded-lg shadow-lg lg:w-[40%] h-[70%] lg:h-[85%]'>
-          <img
-            alt='user'
-            className='w-[200px] h-[200px] rounded-full mb-2'
-            src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
-          />
+      <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-maroon flex flex-col items-center justify-center lg:w-[90%] lg:h-[95%] lg:ml-24'>
+        <div className='flex flex-col justify-center items-center gap-1 bg-[#fff] rounded-lg shadow-lg lg:w-[40%] h-[70%] lg:h-[90%] md:w-[80%] md:h-[60%]'>
+          <div className='border-4 border-[#5B1D1D] shadow-lg rounded-full w-[201px] h-[208px]'>
+            <img
+              alt='user'
+              className='w-[200px] h-[200px] rounded-full p-[1px] mb-2'
+              src={photoURL === '' || !photoURL ? require('../../assets/user.png') : `${photoURL}`}
+            />
+          </div>
           <h1>
-            <span className='font-bold'>First Name:</span> {firstName}
+            <span className='font-bold text-3xl'>
+              {firstName} {lastName}
+            </span>
           </h1>
           <h1>
-            <span className='font-bold'>Last Name:</span> {lastName}
+            <span className='font-bold text-xl'>{initials}</span>
           </h1>
-          <h1>
-            <span className='font-bold'>Initials:</span> {initials}
-          </h1>
-          <h1>
-            <span className='font-bold'>Email:</span> {email}
-          </h1>
-          <h1>
-            <span className='font-bold'>Clients:</span>{' '}
-          </h1>
-          {clients?.map(client => `${client.firstname} ${client.lastname}\n`)}
-          <h1>
-            <span className='font-bold'>Gender:</span> {gender}
-          </h1>
-          <h1>
-            <span className='font-bold'>Contact Number:</span> {contactNo}
-          </h1>
+          <div className='flex flex-col gap-1'>
+            <div className='flex justify-center items-center gap-1'>
+              <img alt='info icon' className='w-5 h-5' src={require('../../assets/info.png')} />
+              <h1 className='font-bold text-maroon text-lg'>Basic Information</h1>
+            </div>
+            <h1>
+              <span className='font-bold'>Gender:</span> {gender}
+            </h1>
+            <h1>
+              <span className='font-bold'>Contact Number:</span> {contactNo}
+            </h1>
+            <h1>
+              <span className='font-bold'>List of Clients:</span>{' '}
+              {clients?.map(client => `${client.firstname} ${client.lastname}, `)}
+            </h1>
+          </div>
+          <div className='w-full mt-2 p-3 bg-black shadow-lg flex items-center justify-center'>
+            <h1>
+              <span className='text-white'>Connect with</span>{' '}
+              <span className=' text-white font-Lora'> {email}</span>
+            </h1>
+          </div>
           <button
             type='button'
             onClick={() => {
               setOpenModal(true)
             }}
-            className=' inline-block px-6 py-2.5 mt-2 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+            className='font-semibold mt-2 w-[60%] md:w-[30%] lg:w-[35%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center'
           >
+            <img
+              alt='edit icon'
+              className='w-6 h-6 invert'
+              src={require('../../assets/edit.png')}
+            />
             Edit Profile
           </button>
         </div>
