@@ -48,7 +48,12 @@ export default function AdminProfile() {
             </h1>
           </div>
           <div className='w-full mt-2 p-3 bg-black shadow-lg flex items-center justify-center'>
-            <h1>
+            <h1 className='flex items-center justify-center'>
+              <img
+                alt='user'
+                className='w-6 h-6 invert mr-1'
+                src={require('../../assets/email.png')}
+              />
               <span className='text-white'>Connect with</span>{' '}
               <span className=' text-white font-Lora italic '> {email}</span>
             </h1>
