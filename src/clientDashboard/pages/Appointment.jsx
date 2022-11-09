@@ -59,13 +59,13 @@ export default function Appointment() {
                       </tr>
                     </tbody>
                   </table>
-                  <div className='flex gap-2 items-center w-[150px]'>
+                  <div className='flex gap-2 items-center w-[650px]'>
                     <img
                       className='h-8 w-8'
                       src={require('../../assets/user.png')}
                       alt='user icon'
                     />
-                    <span className='font-bold uppercase text-xs w-[150px]'>
+                    <span className='font-bold uppercase text-xs w-[650px]'>
                       {appointment.clientFirstName} {appointment.clientLastName}
                     </span>
                   </div>

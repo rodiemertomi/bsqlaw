@@ -80,27 +80,41 @@ function LoginSignUp() {
             <label htmlFor='email' className=' font-Lora font-semibold mt-3 tracking-wide'>
               EMAIL
             </label>
-            <input
-              required
-              ref={loginEmailRef}
-              type='email'
-              name='email'
-              placeholder='Email'
-              className='bg-white self-center h-11 border-black outline-maroon border-b-[1px] 
-              shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
-            />
+            <div className='relative flex items-center text-gray-400 focus-within:text-gray-600'>
+              <img
+                alt='user'
+                className='w-5 h-5 absolute ml-3 pointer-events-none opacity-[.4]'
+                src={require('../assets/email.png')}
+              />
+              <input
+                required
+                ref={loginEmailRef}
+                type='email'
+                name='email'
+                placeholder='Email'
+                className='bg-white self-center h-11 border-black outline-maroon border-b-[1px] 
+              shadow appearance-none border rounded w-full pr-3 pl-9 py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
+              />
+            </div>
             <label htmlFor='password' className='font-Lora mt-3 font-semibold tracking-wide'>
               PASSWORD
             </label>
-            <input
-              required
-              ref={loginPasswordRef}
-              type='password'
-              name='password'
-              placeholder='Password'
-              className='bg-white self-center h-11 border-black outline-maroon border-b-[1px] 
-                shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
-            />
+            <div className='relative flex items-center text-gray-400 focus-within:text-gray-600'>
+              <img
+                alt='user'
+                className='w-6 h-6 absolute ml-3 pointer-events-none opacity-[.4]'
+                src={require('../assets/password.png')}
+              />
+              <input
+                required
+                ref={loginPasswordRef}
+                type='password'
+                name='password'
+                placeholder='Password'
+                className='bg-white self-center h-11 border-black outline-maroon border-b-[1px] 
+                shadow appearance-none border rounded w-full pr-3 pl-9   py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
+              />
+            </div>
             {error && <AlertBox>{error}</AlertBox>}
             <button
               type='submit'

@@ -299,7 +299,7 @@ export default function CaseFolders() {
               onClick={() => {
                 setShowModal(true)
               }}
-              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-black font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-black  text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
             >
               Add Folder
             </button>
@@ -308,7 +308,7 @@ export default function CaseFolders() {
               onClick={() => {
                 setShowUpdateFolder(true)
               }}
-              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-black font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-black  text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
             >
               Update Folder
             </button>
@@ -318,20 +318,20 @@ export default function CaseFolders() {
                   <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-5'>
                     <h1 className='font-bold text-3xl'>ADD FOLDER</h1>
                     <input
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className='h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                     shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       type='text'
                       ref={folderNameRef}
                       placeholder='Enter folder name'
                     />
                     <select
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className='h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => {
                         setSelectedPartner(e.target.value)
                       }}
                     >
-                      <option value=''>-Select Handling Partner-</option>
+                      <option value=''>Select Handling Partner</option>
                       {partnersList.map(partner => (
                         <option value={partner.initials}>
                           {partner.firstname} {partner.lastname}
@@ -339,14 +339,14 @@ export default function CaseFolders() {
                       ))}
                     </select>
                     <select
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className='h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => {
                         setSelectedLawyer(e.target.value)
                         getLawyerClients()
                       }}
                     >
-                      <option value=''>-Select Lawyer-</option>
+                      <option value=''>Select Lawyer</option>
                       {lawyers.map(lawyer => (
                         <option value={lawyer.initials}>
                           {lawyer.firstname} {lawyer.lastname}
@@ -354,17 +354,17 @@ export default function CaseFolders() {
                       ))}
                     </select>
                     <select
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className='h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => setSelectedLawyerClient(e.target.value)}
                     >
-                      <option value=''>-Select Client-</option>
+                      <option value=''>Select Client</option>
                       {lawyerClients?.map(client => (
                         <option value={client.id}>{client.username}</option>
                       ))}
                     </select>
                     <button
-                      className=' inline-block px-6 py-2.5 mt-1 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white w-full hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                      className=' inline-block px-6 py-2.5 mt-1 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:border-[1px] hover:border-maroon w-full hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                       onClick={addFolder}
                     >
                       Add Folder
@@ -384,7 +384,7 @@ export default function CaseFolders() {
                 <div className='flex w-[90%] h-[70%] pt-2 pb-2 md:w-[50%] bg-[#D9D9D9] rounded-md lg:h-[85%] lg:w-[30%] flex-col items-center justify-evenly gap-1'>
                   <h1 className='font-bold text-2xl'>UPDATE FOLDER</h1>
                   <select
-                    className='mt-2 bg-white h-10 self-center border-black outline-none border-b-[1px] 
+                    className='mt-2 bg-white h-10 self-center border-maroon outline-none border-b-[1px] 
                         shadow border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     name='folders'
                     id='folders'
@@ -399,21 +399,21 @@ export default function CaseFolders() {
                     ))}
                   </select>
                   <input
-                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                    className='bg-white self-center border-maroon outline-none border-b-[1px] h-10
                           shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     type='text'
                     ref={caseNoRef}
                     placeholder='Case Number'
                   />
                   <input
-                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                    className='bg-white self-center border-maroon outline-none border-b-[1px] h-10
                           shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     type='text'
                     ref={caseTitleRef}
                     placeholder='Case Title'
                   />
                   <input
-                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                    className='bg-white self-center border-maroon outline-none border-b-[1px] h-10
                           shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     type='text'
                     ref={pleadingRef}
@@ -424,21 +424,21 @@ export default function CaseFolders() {
                   </label>
                   <input
                     name='pleading-date'
-                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                    className='bg-white self-center border-maroon outline-none border-b-[1px] h-10
                           shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     type='date'
                     placeholder='Pleading Date'
                     onChange={e => setPleadingDate(e.target.value)}
                   />
                   <input
-                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                    className='bg-white self-center border-maroon outline-none border-b-[1px] h-10
                         shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     type='text'
                     placeholder='Enter Court'
                     ref={courtRef}
                   />
                   <input
-                    className='bg-white self-center border-black outline-none border-b-[1px] h-10
+                    className='bg-white self-center border-maroon outline-none border-b-[1px] h-10
                         shadow appearance-none border rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                     type='text'
                     placeholder='Enter Branch (1-300)'
@@ -451,7 +451,7 @@ export default function CaseFolders() {
                     onChange={e => setFileUpload(e.target.files[0])}
                   />
                   <button
-                    className=' inline-block mt-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon w-[65%] hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                    className=' inline-block mt-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon w-[65%] hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out hover:border-maroon hover:border-[1px]'
                     disabled={loading}
                     onClick={uploadFile}
                   >

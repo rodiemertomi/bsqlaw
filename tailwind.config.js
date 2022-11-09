@@ -10,6 +10,7 @@ module.exports = {
       gray: '#e5e7eb',
       black: '#1e1e1e',
       clearWhite: '#FFFFFF',
+      gold: '#ab940b',
       pink: '#FF00FF',
       modalbg: 'rgba(0, 0, 0, 0.5)',
     },

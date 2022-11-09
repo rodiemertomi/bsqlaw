@@ -48,9 +48,14 @@ export default function OwnerProfile() {
             </h1>
           </div>
           <div className='w-full mt-2 p-3 bg-black shadow-lg flex items-center justify-center'>
-            <h1>
+            <h1 className='flex items-center justify-center'>
+              <img
+                alt='user'
+                className='w-6 h-6 invert mr-1'
+                src={require('../../assets/email.png')}
+              />
               <span className='text-white'>Connect with</span>{' '}
-              <span className=' text-white font-Lora'> {email}</span>
+              <span className=' text-white font-Lora italic'> {email}</span>
             </h1>
           </div>
           <button
@@ -58,7 +63,7 @@ export default function OwnerProfile() {
             onClick={() => {
               setOpenModal(true)
             }}
-            className='font-semibold mt-2 w-[60%] md:w-[30%] lg:w-[35%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center'
+            className='font-semibold mt-2 w-[60%] md:w-[30%] lg:w-[30%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center'
           >
             <img
               alt='edit icon'

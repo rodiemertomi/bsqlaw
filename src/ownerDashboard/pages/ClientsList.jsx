@@ -203,7 +203,7 @@ function ReadClients({ handleAppointClick, client, i }) {
             ''
           )}
           <button
-            className='w-[61%] px-6 py-1 h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+            className='w-[61%] px-6 py-1 h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-yellow active:shadow-lg transition duration-150 ease-in-out'
             onClick={e => handleAppointClick(e, client)}
           >
             Appoint Lawyer

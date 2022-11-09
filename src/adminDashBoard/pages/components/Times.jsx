@@ -152,15 +152,15 @@ function Times({ closeShowAppointment, clients }) {
 
   return (
     <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#e1dfdf] rounded-r h-[80%] w-[90%] lg:w-[40%] lg:h-[95%] drop-shadow-lg'>
-      <h1 className='font-bold text-2xl'>Set Appointment</h1>
+      <h1 className='font-bold text-2xl'>SET APPOINTMENT</h1>
       <form onSubmit={e => saveEvent(e, clients)} className='mt-5'>
-        <div className='mt-2 flex flex-col justify-center items-center gap-5'>
+        <div className=' flex flex-col justify-center items-center gap-5'>
           <select
             name='clientName'
             id='clientName'
             value={clientId}
             onChange={e => handleSelectClient(e, clients)}
-            className='h-10 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className='h-10 pl-4 shadow border-[1px] border-maroon rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
           >
             <option value=''>Client Name</option>
             {clients?.map(client => (
@@ -175,7 +175,7 @@ function Times({ closeShowAppointment, clients }) {
             id='eventName'
             name='eventName'
             placeholder='Appointment Title'
-            className='h-10 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className='h-10 pl-4 shadow border-[1px] border-maroon rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onChange={event => setEventName(event.target.value)}
             value={eventName}
           />
@@ -185,7 +185,7 @@ function Times({ closeShowAppointment, clients }) {
             rows='4'
             cols='30'
             name='eventDesc'
-            className=' h-28 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className=' h-28 pl-4 shadow border-[1px] border-maroon rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             value={eventDesc}
             placeholder='Appointment Description'
             onChange={event => setEventDesc(event.target.value)}
@@ -194,7 +194,7 @@ function Times({ closeShowAppointment, clients }) {
             rows='4'
             cols='30'
             name='eventDesc'
-            className=' h-14 pl-4 shadow border-[1px] border-gray rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className=' h-14 pl-4 shadow border-[1px] border-maroon rounded w-[85%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             value={location}
             placeholder='Appointment Location'
             onChange={event => setLocation(event.target.value)}
@@ -208,7 +208,7 @@ function Times({ closeShowAppointment, clients }) {
             name='appt'
             onChange={event => setEventTimeStart(event.target.value)}
             value={eventTimeStart}
-            className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className=' h-10 pl-4 shadow border-[1px] border-maroon rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'time')}
             onBlur={e => (e.currentTarget.type = 'text')}
             placeholder='Time Duration:'
@@ -220,7 +220,7 @@ function Times({ closeShowAppointment, clients }) {
             name='appt'
             onChange={event => setEventTimeEnd(event.target.value)}
             value={eventTimeEnd}
-            className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className=' h-10 pl-4 shadow border-[1px] border-maroon rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'time')}
             onBlur={e => (e.currentTarget.type = 'text')}
             placeholder='To:'
@@ -234,7 +234,7 @@ function Times({ closeShowAppointment, clients }) {
             name='appt'
             onChange={event => setEventDateStart(event.target.value)}
             value={eventDateStart}
-            className=' h-10 pl-4 shadow border-[1px] border-gray rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+            className=' h-10 pl-4 shadow border-[1px] border-maroon rounded w-[41.5%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
             onFocus={e => (e.currentTarget.type = 'date')}
             onBlur={e => (e.currentTarget.type = 'text')}
             placeholder='Event Date:'
@@ -244,7 +244,7 @@ function Times({ closeShowAppointment, clients }) {
           <input
             type='submit'
             value={'Submit'}
-            className='bg-maroon w-[40%] text-white font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out text-center'
+            className='bg-maroon w-[40%] cursor-pointer text-white py-2 px-4 rounded-3xl shadow-md hover:bg-white hover:text-black active:shadow-lg hover:border-maroon hover:border-[1px] transition duration-150 ease-in-out text-center'
           />
           <p
             className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold mt-3'
