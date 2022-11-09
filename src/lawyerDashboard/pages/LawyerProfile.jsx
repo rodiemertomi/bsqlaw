@@ -50,7 +50,7 @@ export default function LawyerProfile() {
           <div className='w-full mt-2 p-3 bg-black shadow-lg flex items-center justify-center'>
             <h1>
               <span className='text-white'>Connect with</span>{' '}
-              <span className=' text-white font-Lora'> {email}</span>
+              <span className=' text-white font-Lora italic'> {email}</span>
             </h1>
           </div>
           <button
