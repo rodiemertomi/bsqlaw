@@ -99,6 +99,17 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
             }
           />
           <p className='text-sm pt-0 mb-3 text-center font-Lora'>Appointment</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='appointment'
+                onClick={viewTimesheets}
+                className='w-10 h-10 invert'
+                src={require('../assets/timesheets.png')}
+              />
+            }
+          />
+          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheets</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'
