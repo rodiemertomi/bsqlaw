@@ -102,7 +102,7 @@ function LoginSignUp() {
             <div className='relative flex items-center text-gray-400 focus-within:text-gray-600'>
               <img
                 alt='user'
-                className='w-5 h-5 absolute ml-3 pointer-events-none opacity-[.4]'
+                className='w-6 h-6 absolute ml-3 pointer-events-none opacity-[.4]'
                 src={require('../assets/password.png')}
               />
               <input
