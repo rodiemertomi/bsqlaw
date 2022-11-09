@@ -58,7 +58,7 @@ export default function LawyerProfile() {
             onClick={() => {
               setOpenModal(true)
             }}
-            className='font-semibold mt-2 w-[60%] md:w-[30%] lg:w-[35%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center'
+            className='font-semibold mt-2 w-[60%] md:w-[30%] lg:w-[30%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center'
           >
             <img
               alt='edit icon'
