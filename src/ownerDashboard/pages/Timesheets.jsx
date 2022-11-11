@@ -121,7 +121,7 @@ export default function Timesheets() {
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='h-[50px] flex flex-row justify-center gap-2 item-center self-end mb-2 mt-1 mr-6'>
             <select
-              className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
                       shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               onChange={e => setSearchYear(e.target.value)}
             >
@@ -135,18 +135,18 @@ export default function Timesheets() {
               onClick={() => {
                 setShowModal(true)
               }}
-              className='mt-2 inline-block px-6 py-2.5 bg-blue-600 text-black font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+              className='mt-2 w-full inline-block px-5 bg-blue-600 text-black font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
             >
               Upload Timesheet
             </button>
 
             {showModal && (
               <div className='w-screen h-screen z-20 bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[55%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[70%] lg:w-[35%] p-10'>
-                  <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-5'>
-                    <h1 className='font-bold text-3xl'>UPLOAD TIMESHEET</h1>
+                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[77%] lg:w-[30%] p-14'>
+                  <div className=' flex w-full flex-col items-center justify-evenly mt-2 gap-4'>
+                    <h1 className='font-bold w-full text-xl text-center'>UPLOAD TIMESHEET</h1>
                     <select
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className=' h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => setSelectedYear(e.target.value)}
                     >
@@ -156,7 +156,7 @@ export default function Timesheets() {
                       )}
                     </select>
                     <select
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className=' h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => setSelectedMonth(e.target.value)}
                     >
@@ -166,7 +166,7 @@ export default function Timesheets() {
                       ))}
                     </select>
                     <select
-                      className='h-10 bg-white self-center border-black outline-none border-b-[1px]
+                      className='h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => setSelectedWeek(e.target.value)}
                     >
@@ -179,14 +179,14 @@ export default function Timesheets() {
                       rows='4'
                       cols='30'
                       name='eventDesc'
-                      className=' h-28 pl-4 shadow border-[1px] border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+                      className=' h-24 pl-4 shadow border-[1px] border-maroon rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
                       value={remarks}
                       placeholder='Remarks'
                       onChange={event => setRemarks(event.target.value)}
                     ></textarea>
                     <input
-                      className='bg-[#e1dfdf] flex items-center justify-center h-10
-                       rounded w-[65%] py-2 px-3 text-gray-700 '
+                      className='bg-[#e1dfdf] w-full flex items-center justify-center h-10
+                       rounded py-2 px-3 text-gray-700 '
                       type='file'
                       accept='application/msword, application/vnd.ms-excel, application/pdf'
                       onChange={e => setFileUpload(e.target.files[0])}
@@ -209,10 +209,10 @@ export default function Timesheets() {
               </div>
             )}
           </div>
-          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
+          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
             {months?.map(month => (
               <Fragment>
-                <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
+                <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] lg:w-[100%] '>
                   <details className='p-5 w-full'>
                     <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
                       {month}
