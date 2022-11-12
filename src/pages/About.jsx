@@ -3,11 +3,11 @@ import React from 'react'
 function About() {
   return (
     <div>
-      <div className='min-h-screen w-screen bg-white flex flex-col lg:items-center font-Lora p-3 '>
+      <div className='min-h-screen w-screen bg-white flex flex-col lg:items-center font-Lora p-3 animate-[moveTop_0.8s_ease-in-out]'>
         <div className='text-4xl text-maroon font-bold mt-24'>
           <h2>About</h2>
         </div>
-        <div className='mt-5 text-justify font-Lora flex flex-col gap-5 leading-9 text-[#8C760A] md:w-[53%] lg:w-[30%]'>
+        <div className='mt-5 text-justify font-Lora flex flex-col gap-5 leading-9 text-maroon md:w-[53%] lg:w-[30%]'>
           <div className=''>
             <span className='font-bold'>Berberabe Santos & Quiñones &nbsp;</span>
             or simply &nbsp;

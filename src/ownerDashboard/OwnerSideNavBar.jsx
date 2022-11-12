@@ -133,7 +133,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
                 alt='appointment'
                 onClick={viewAccounting}
                 className='w-10 h-10 invert'
-                src={require('../assets/timesheets.png')}
+                src={require('../assets/accounting.png')}
               />
             }
           />

@@ -3,6 +3,7 @@ import CaseFolders from '../pages/CaseFolders'
 import ClientsList from '../pages/ClientsList'
 import MainDashboard from '../pages/MainDashboard'
 import LawyerProfile from '../pages/LawyerProfile'
+import Accounting from '../pages/Accounting'
 import React from 'react'
 import Timesheets from '../pages/Timesheets'
 
@@ -13,6 +14,7 @@ export const ACTIONS = {
   VIEW_FOLDERS: 'view-folders',
   VIEW_PROFILE: 'view-profile',
   VIEW_TIMESHEETS: 'view-timesheets',
+  VIEW_ACCOUNTING: 'view-accounting',
 }
 
 const LawyerReducer = (state, action) => {
@@ -29,6 +31,8 @@ const LawyerReducer = (state, action) => {
       return { page: <LawyerProfile /> }
     case ACTIONS.VIEW_TIMESHEETS:
       return { page: <Timesheets /> }
+    case ACTIONS.VIEW_ACCOUNTING:
+      return { page: <Accounting /> }
     default:
       return state
   }

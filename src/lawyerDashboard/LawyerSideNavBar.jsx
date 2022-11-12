@@ -38,6 +38,9 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
   const viewTimesheets = () => {
     dispatch({ type: ACTIONS.VIEW_TIMESHEETS })
   }
+  const viewAccounting = () => {
+    dispatch({ type: ACTIONS.VIEW_ACCOUNTING })
+  }
 
   return (
     <div>
@@ -110,6 +113,17 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
             }
           />
           <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheets</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='accounting'
+                onClick={viewAccounting}
+                className='w-10 h-10 invert'
+                src={require('../assets/accounting.png')}
+              />
+            }
+          />
+          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Accounting</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'

@@ -101,7 +101,7 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
                 alt='appointment'
                 onClick={viewAccounting}
                 className='w-10 h-10 invert'
-                src={require('../assets/appointment.png')}
+                src={require('../assets/accounting.png')}
               />
             }
           />
