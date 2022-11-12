@@ -37,97 +37,35 @@ export default function ClientsList() {
     e.preventDefault()
     const colRef = collection(db, 'users')
     const lq1 = query(colRef, where('initials', '==', `${selectedLawyer}`))
-    if (originalLawyer === '') {
-      const data = await getDocs(lq1)
-      const lawyer = data.docs.map(doc => {
-        return doc.id
-      })
-      const lawyerRef = doc(db, `users/${lawyer}`)
-      const clientRef = doc(db, `users/${clientEditId}`)
-      const editedClient = {
-        lawyer: selectedLawyer,
-      }
-      const clientObject = {
-        firstname: client.firstname,
-        lastname: client.lastname,
-        id: client.id,
-        username: client.username,
-      }
-      const editedLawyer = {
-        clients: arrayUnion(clientObject),
-      }
-      await setDoc(clientRef, editedClient, { merge: true }).then(() => {
-        alert(`${selectedLawyer} assigned to ${client.username}`)
-        getClients()
-        getLawyers()
-      })
-
-      await setDoc(lawyerRef, editedLawyer, { merge: true }).then(() => {
-        alert(`${client.username} assigned to ${selectedLawyer}`)
-        getClients()
-        getLawyers()
-      })
-    } else {
-      const lq2 = query(colRef, where('initials', '==', `${originalLawyer}`))
-      const data = await getDocs(lq1)
-      const data2 = await getDocs(lq2)
-      const lawyer = data.docs.map(doc => {
-        return doc.id
-      })
-      const origLawyer = data2.docs.map(doc => {
-        return doc.id
-      })
-      const lawyerRef = doc(db, `users/${lawyer}`)
-      const clientRef = doc(db, `users/${clientEditId}`)
-      const origLawyerRef = doc(db, `users/${origLawyer}`)
-      const origLawyerData = await getDoc(origLawyerRef)
-      const origLawyerInitials = origLawyerData.data().initials
-
-      const editedClient = {
-        lawyer: selectedLawyer,
-      }
-
-      const clientDeleteObject = {
-        firstname: client.firstname,
-        lastname: client.lastname,
-        id: client.id,
-        username: client.username,
-      }
-
-      const clientObject = {
-        firstname: client.firstname,
-        lastname: client.lastname,
-        id: client.id,
-        username: client.username,
-      }
-
-      const editedLawyer = {
-        clients: arrayUnion(clientObject),
-      }
-
-      const editedLawyerDelete = {
-        clients: arrayRemove(clientDeleteObject),
-      }
-
-      await setDoc(clientRef, editedClient, { merge: true }).then(() => {
-        alert(`${selectedLawyer} assigned to ${client.firstname} ${client.lastname}`)
-        getClients()
-        getLawyers()
-      })
-
-      await setDoc(lawyerRef, editedLawyer, { merge: true }).then(() => {
-        alert(`${client.username} assigned to ${selectedLawyer}`)
-        getClients()
-        getLawyers()
-      })
-
-      await setDoc(origLawyerRef, editedLawyerDelete, { merge: true }).then(() => {
-        alert(`${client.username} removed from ${origLawyerInitials}`)
-        getClients()
-        getLawyers()
-        setOriginalLawyer('')
-      })
+    const data = await getDocs(lq1)
+    const lawyer = data.docs.map(doc => {
+      return doc.id
+    })
+    const lawyerRef = doc(db, `users/${lawyer}`)
+    const clientRef = doc(db, `users/${clientEditId}`)
+    const editedClient = {
+      lawyer: arrayUnion(selectedLawyer),
     }
+    const clientObject = {
+      firstname: client.firstname,
+      lastname: client.lastname,
+      id: client.id,
+      username: client.username,
+    }
+    const editedLawyer = {
+      clients: arrayUnion(clientObject),
+    }
+    await setDoc(clientRef, editedClient, { merge: true }).then(() => {
+      alert(`${selectedLawyer} assigned to ${client.username}`)
+      getClients()
+      getLawyers()
+    })
+
+    await setDoc(lawyerRef, editedLawyer, { merge: true }).then(() => {
+      alert(`${client.username} assigned to ${selectedLawyer}`)
+      getClients()
+      getLawyers()
+    })
     setClientEditId(null)
     setSelectedLawyer(null)
   }
@@ -197,7 +135,7 @@ function ReadClients({ handleAppointClick, client, i }) {
           {client.lawyer ? (
             <h1 className='text-white font-semibold text-center flex flex-col items-center justify-center'>
               <span className='text-yellow'>Appointed Lawyer</span>
-              <span className='text-white '>{client.lawyer}</span>
+              <span className='text-white '>{client.lawyer.join(', ')}</span>
             </h1>
           ) : (
             ''

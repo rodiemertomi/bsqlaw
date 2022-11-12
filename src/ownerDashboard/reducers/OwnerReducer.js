@@ -4,6 +4,7 @@ import ClientsList from '../pages/ClientsList'
 import LawyersList from '../pages/LawyersList'
 import Appointments from '../pages/Appointments'
 import Timesheets from '../pages/Timesheets'
+import Accounting from '../pages/Accounting'
 import React from 'react'
 import CaseFolders from '../pages/CaseFolders'
 
@@ -13,6 +14,7 @@ export const ACTIONS = {
   VIEW_LAWYERS: 'view-lawyers',
   VIEW_CLIENTS: 'view-clients',
   VIEW_APPOINTMENTS: 'view-appointments',
+  MANAGE_ACCOUNTING: 'view-accounting',
   VIEW_TIMESHEETS: 'view-timesheets',
   VIEW_CASEFOLDERS: 'view-casefolders',
 }
@@ -33,6 +35,8 @@ const OwnerReducer = (state, action) => {
       return { page: <Timesheets /> }
     case ACTIONS.VIEW_CASEFOLDERS:
       return { page: <CaseFolders /> }
+    case ACTIONS.MANAGE_ACCOUNTING:
+      return { page: <Accounting /> }
     default:
       return state
   }

@@ -34,6 +34,9 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
   const viewProfile = () => {
     dispatch({ type: ACTIONS.VIEW_PROFILE })
   }
+  const viewAccounting = () => {
+    dispatch({ type: ACTIONS.VIEW_ACCOUNTING })
+  }
 
   return (
     <div>
@@ -92,6 +95,17 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
             }
           />
           <p className=' text-[13px] pt-0 mb-3 font-Lora'>Appointment</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='appointment'
+                onClick={viewAccounting}
+                className='w-10 h-10 invert'
+                src={require('../assets/appointment.png')}
+              />
+            }
+          />
+          <p className=' text-[13px] pt-0 mb-3 font-Lora'>Accounting</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'

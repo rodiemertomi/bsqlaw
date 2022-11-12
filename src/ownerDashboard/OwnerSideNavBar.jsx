@@ -41,6 +41,10 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
     dispatch({ type: ACTIONS.VIEW_APPOINTMENTS })
   }
 
+  const viewAccounting = () => {
+    dispatch({ type: ACTIONS.MANAGE_ACCOUNTING })
+  }
+
   return (
     <div>
       {/* Sliding Modules Components*/}
@@ -123,6 +127,17 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
             }
           />
           <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheets</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='appointment'
+                onClick={viewAccounting}
+                className='w-10 h-10 invert'
+                src={require('../assets/timesheets.png')}
+              />
+            }
+          />
+          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Accounting</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'

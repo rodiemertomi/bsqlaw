@@ -58,23 +58,20 @@ export default function CaseFolders() {
   }
 
   const addFolder = async () => {
-    const data = {
-      folders: arrayUnion(`${folderNameRef.current.value}`),
-    }
+    setLoading(true)
     const folderData = {
       foldername: folderNameRef.current.value,
       lawyer: selectedLawyer,
       clientid: selectedLawyerClient,
       handlingpartner: selectedPartner,
+      files: [],
     }
-    const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
-
-    await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData)
-    await setDoc(lawyer, data, { merge: true }).then(() => {
-      alert(`Updated successfully`)
+    await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData).then(() => {
+      alert('Added folder successfully')
       getFolders()
     })
     folderNameRef.current.value = ''
+    setLoading(false)
   }
 
   const uploadFile = async () => {
@@ -343,10 +340,7 @@ export default function CaseFolders() {
                     <select
                       className='h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      onChange={e => {
-                        setSelectedLawyer(e.target.value)
-                        getLawyerClients()
-                      }}
+                      onChange={e => setSelectedLawyer(e.target.value)}
                     >
                       <option value=''>Select Lawyer</option>
                       {lawyers.map(lawyer => (
