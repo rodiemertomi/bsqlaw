@@ -142,7 +142,7 @@ export default function Timesheets() {
 
             {showModal && (
               <div className='w-screen h-screen z-20 bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[77%] lg:w-[30%] p-14'>
+                <div className='flex flex-col animate-[moveTop_0.3s_ease-in-out] justify-center items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[77%] lg:w-[30%] p-14'>
                   <div className=' flex w-full flex-col items-center justify-evenly mt-2 gap-4'>
                     <h1 className='font-bold w-full text-xl text-center'>UPLOAD TIMESHEET</h1>
                     <select

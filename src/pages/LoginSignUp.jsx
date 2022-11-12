@@ -62,7 +62,7 @@ function LoginSignUp() {
       }`}
     >
       <div
-        className={`shadow-2xl flex flex-col jus items-center w-[350px] border-black border-[3px] rounded-3xl h-[600px] lg:h-[430px] lg:mt-14`}
+        className={`shadow-2xl flex flex-col animate-[fadeDown_1s_ease-in-out] items-center w-[350px] border-black border-[3px] rounded-3xl h-[600px] lg:h-[430px] lg:mt-14`}
       >
         <div className='flex'>
           <div

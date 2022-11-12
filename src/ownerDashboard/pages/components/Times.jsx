@@ -151,7 +151,7 @@ function Times({ closeShowAppointment, clients }) {
   }, [clientId])
 
   return (
-    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg bg-[#e1dfdf] rounded-r h-[80%] w-[90%] lg:w-[40%] lg:h-[95%] drop-shadow-lg'>
+    <div className='flex rounded-md justify-center items-center flex-col  border-1 border-black shadow-lg animate-[moveTop_0.3s_ease-in-out] bg-[#e1dfdf] rounded-r h-[80%] w-[90%] lg:w-[40%] lg:h-[95%] drop-shadow-lg'>
       <h1 className='font-bold text-2xl'>SET APPOINTMENT</h1>
       <form onSubmit={e => saveEvent(e, clients)} className='mt-5'>
         <div className='flex flex-col justify-center items-center gap-5'>
