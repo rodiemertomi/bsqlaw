@@ -311,7 +311,7 @@ export default function CaseFolders() {
             </button>
             {showModal && (
               <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col justify-center items-center bg-[#e1dfdf] absolute h-[55%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[70%] lg:w-[35%] p-10'>
+                <div className='flex flex-col justify-center animate-[moveTop_0.3s_ease-in-out] items-center bg-[#e1dfdf] absolute h-[55%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[70%] lg:w-[35%] p-10'>
                   <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-5'>
                     <h1 className='font-bold text-3xl'>ADD FOLDER</h1>
                     <input
@@ -378,7 +378,7 @@ export default function CaseFolders() {
             )}
             {showUpdateFolder && (
               <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex w-[90%] h-[70%] pt-2 pb-2 md:w-[50%] bg-[#D9D9D9] rounded-md lg:h-[85%] lg:w-[30%] flex-col items-center justify-evenly gap-1'>
+                <div className='flex w-[90%] h-[70%] pt-2 pb-2 md:w-[50%] animate-[moveTop_0.3s_ease-in-out] bg-[#D9D9D9] rounded-md lg:h-[85%] lg:w-[30%] flex-col items-center justify-evenly gap-1'>
                   <h1 className='font-bold text-2xl'>UPDATE FOLDER</h1>
                   <select
                     className='mt-2 bg-white h-10 self-center border-maroon outline-none border-b-[1px] 
