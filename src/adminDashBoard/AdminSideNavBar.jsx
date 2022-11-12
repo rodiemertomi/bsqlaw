@@ -51,6 +51,10 @@ function AdminSideNavBar({
     dispatch({ type: ACTIONS.MANAGE_APPOINTMENT })
     closeAdminControl()
   }
+  const viewAccounting = () => {
+    dispatch({ type: ACTIONS.MANAGE_ACCOUNTING })
+    closeAdminControl()
+  }
 
   return (
     <div>
@@ -131,6 +135,17 @@ function AdminSideNavBar({
             }
           />
           <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheets</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='appointment'
+                onClick={viewAccounting}
+                className='w-10 h-10 invert'
+                src={require('../assets/timesheets.png')}
+              />
+            }
+          />
+          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Accounting</p>
         </div>
         <div
           className='text-center fixed flex flex-col items-center justify-center bottom-4 z-10 cursor-pointer'
