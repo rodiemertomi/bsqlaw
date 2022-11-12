@@ -25,7 +25,7 @@ function ContactUs() {
   return (
     <div>
       <div className='h-screen flex flex-col content-center bg-white gap-10 p-2 md:flex md:flex-col md:items-center lg:flex lg:flex-row lg:justify-center lg:gap-10 lg:m-0 text-shadow-xl font-Lora pb-4'>
-        <div className='flex flex-col items-start content-center gap-5'>
+        <div className='flex flex-col items-start content-center gap-5 animate-[moveRight_0.8s_ease-in-out]'>
           <div className='self-start text-5xl text-maroon font-bold pt-[20%] md:pt-5 md:flex md:flex-col md:self-center lg:flex lg:self-start lg:text-3xl 2xl:text-6xl'>
             <h2>Contact Us</h2>
           </div>
@@ -75,7 +75,7 @@ function ContactUs() {
             partners@bsqlaw.com
           </div>
         </div>
-        <div className='flex flex-col gap-3 md:flex md:flex-col md:items-center lg:pl-20 lg:mt-10'>
+        <div className='flex flex-col gap-3 md:flex md:flex-col md:items-center lg:pl-20 lg:mt-10 animate-[moveLeft_0.8s_ease-in-out]'>
           <h4 className='font-bold'>Find us here!</h4>
           <div className='flex flex-col items-center content-center'>
             <iframe

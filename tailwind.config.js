@@ -20,6 +20,18 @@ module.exports = {
             transform: 'translateY(-100px)',
           },
         },
+        moveRight: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(-50px)',
+          },
+        },
+        moveLeft: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(100px)',
+          },
+        },
       },
     },
     colors: {
@@ -35,6 +47,7 @@ module.exports = {
     },
     fontFamily: {
       Lora: ['Lora', 'sans-serif'],
+      poppins: ['Poppins'],
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
