@@ -3,8 +3,8 @@ import React from 'react'
 function Faqs() {
   return (
     <div className='min-h-screen flex flex-col content-center  bg-white p-5 font-Lora'>
-      <div className='md:w-[550px] font-Lora  md:flex md:flex-col md:self-center lg:flex lg:flex-row lg:gap-10 lg:w-[900px] lg:mt-14 lg:ml-32'>
-        <div className='mt-16 flex flex-col gap-5 lg:mt-5'>
+      <div className='md:w-[550px] font-Lora  md:flex md:flex-col md:self-center lg:flex lg:flex-row lg:gap-10 lg:w-[900px] lg:mt-14 lg:ml-32 '>
+        <div className='mt-16 flex flex-col gap-5 lg:mt-5 animate-[moveTop_0.8s_ease-in-out]'>
           <div className=' text-4xl text-maroon font-bold'>
             <h2>FAQs</h2>
           </div>
