@@ -13,7 +13,7 @@ export default function ClientsList() {
     const clientsQ = query(
       colRef,
       where('role', '==', 'client'),
-      where('lawyer', '==', `${initials}`)
+      where('lawyer', 'array-contains', `${initials}`)
     )
     await getDocs(clientsQ).then(snap => {
       setClients(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
