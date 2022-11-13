@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import { storage, db } from '../../firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import {
@@ -7,15 +7,11 @@ import {
   where,
   getDocs,
   doc,
-  setDoc,
-  arrayUnion,
-  arrayRemove,
   getDoc,
   addDoc,
   deleteDoc,
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
-import { el } from 'date-fns/locale'
 
 export default function Accounting() {
   const [loading, setLoading] = useState(false)
