@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 
 function EditProfile({ closeModal }) {
-  const { username, id, photoURL, birthday, firstName, lastName, contactNo, gender, initials } =
+  const { username, id, photoURL, firstName, lastName, contactNo, gender, initials } =
     UseUserReducer()
 
   const [loading, setLoading] = useState(false)

@@ -7,11 +7,6 @@ export default function AdminProfile() {
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
 
-  const formatDate = date => {
-    let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
-    return dateArray.join('/')
-  }
-
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-maroon flex flex-col items-center justify-center lg:w-[90%] lg:h-[95%] lg:ml-24'>
