@@ -15,7 +15,7 @@ export default function OwnerProfile() {
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-maroon flex flex-col items-center justify-center lg:w-[90%] lg:h-[95%] lg:ml-24'>
-        <div className='flex flex-col justify-center items-center gap-1 bg-[#fff] rounded-lg shadow-lg lg:w-[40%] h-[70%] lg:h-[90%] md:w-[80%] md:h-[60%]'>
+        <div className='flex flex-col justify-center items-center gap-1 bg-[#fff] rounded-lg shadow-lg lg:w-[40%] h-[80%] w-[90%] lg:h-[90%] md:w-[80%] md:h-[60%]'>
           <div className='border-4 border-[#5B1D1D] shadow-lg rounded-full w-[201px] h-[208px]'>
             <img
               alt='user'

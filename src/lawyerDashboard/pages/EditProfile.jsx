@@ -62,8 +62,8 @@ function EditProfile({ closeModal }) {
 
   return (
     <div className='w-screen h-screen flex items-center justify-center bg-modalbg'>
-      <div className='bg-[#e1dfdf] animate-[popUp_0.3s_ease-in-out] shadow-2xl w-[90%] h-[85%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:h-[90%] lg:w-[40%] lg:gap-3'>
-        <div className='flex flex-col justify-center items-center gap-2'>
+      <div className='bg-[#e1dfdf] animate-[popUp_0.3s_ease-in-out] shadow-2xl w-[85%] h-[80%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:h-[90%] lg:w-[40%] lg:gap-3'>
+        <div className='flex flex-col justify-center items-center gap-5'>
           <h1 className='font-bold text-2xl'>Edit Proile</h1>
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
@@ -138,7 +138,7 @@ function EditProfile({ closeModal }) {
                 name='gender'
                 onChange={e => setGenderState(e.target.value)}
                 id='gender'
-                className='h-9 w-full shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
+                className='h-9 pl-4 w-full shadow border-[1px] border-gray rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline '
               >
                 {gender === '' || !gender ? (
                   <>
@@ -176,7 +176,7 @@ function EditProfile({ closeModal }) {
                 )}
               </select>
 
-              <div className='w-[100%] flex justify-center gap-2'>
+              <div className='w-[100%] flex justify-center gap-2 mt-2'>
                 <button
                   onClick={() => closeModal(false)}
                   className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'

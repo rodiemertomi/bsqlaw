@@ -55,7 +55,7 @@ function ReadLawyers({ lawyer }) {
       </div>
       <div className='w-full bg-black shadow-lg h-[20%] flex flex-col items-center justify-start p-2 text-xs '>
         <h1 className='font-bold text-yellow'>List of Clients</h1>
-        <div className=' overflow-auto scrollbar-hide flex flex-col items-center text-white justify-center h-full w-full'>
+        <div className=' overflow-auto pt-[5px] scrollbar-hide flex flex-col items-center text-white h-full w-full'>
           {lawyer.clients?.map((client, i) => (
             <h1 key={i}>
               {client.firstname} {client.lastname}

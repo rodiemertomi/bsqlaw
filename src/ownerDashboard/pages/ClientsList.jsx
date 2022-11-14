@@ -119,7 +119,7 @@ export default function ClientsList() {
 
 function ReadClients({ handleAppointClick, client, i }) {
   return (
-    <div className='bg-[#ECE4E4] w-[240px] h-[270px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col md:w-[220px] md:h-[270px] items-center justify-center text-white gap-1'>
+    <div className='bg-[#ECE4E4] w-[240px] h-[270px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col md:w-[220px] md:h-[270px] items-center justify-center text-white gap-1 mb-5'>
       <div className=' text-xs lg:text-sm w-full flex flex-col justify-center items-center gap-1'>
         <img
           alt='user'
@@ -141,7 +141,7 @@ function ReadClients({ handleAppointClick, client, i }) {
             ''
           )}
           <button
-            className='w-[61%] px-6 py-1 h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-yellow active:shadow-lg transition duration-150 ease-in-out'
+            className='w-[66%] px-6 py-1 h-6 inline-block text-maroon font-medium text-xs leading-tight uppercase rounded shadow-md bg-white hover:bg-maroon hover:text-yellow active:shadow-lg transition duration-150 ease-in-out'
             onClick={e => handleAppointClick(e, client)}
           >
             Appoint Lawyer
