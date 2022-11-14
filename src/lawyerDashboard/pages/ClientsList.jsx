@@ -32,10 +32,10 @@ export default function ClientsList() {
         <div className='w-[100%] h-[1000%] shadow-lg bg-maroon rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 pt-5 mr-3'>
           <div className='w-[100%] flex gap-x-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
             {clients?.map(client => (
-              <div className='shadow-lg bg-[#ECE4E4] w-32 h-32 rounded-2xl flex flex-col items-center justify-center mb-5 md:w-48 md:h-48 lg:w-60 lg:h-60'>
+              <div className='bg-[#ECE4E4] w-[240px] h-[240px] lg:w-[260px] lg:h-[270px] shadow-lg rounded-2xl flex flex-col md:w-[220px] md:h-[270px] items-center justify-center text-white gap-1 mb-5'>
                 <img
                   alt='user'
-                  className='w-[140px] h-[140px] rounded-full'
+                  className=' w-[120px] h-[120px] lg:w-[125px] lg:h-[125px] md:w-[125px] md:h-[125px] rounded-full'
                   src={
                     client.photoURL === '' || !client.photoURL
                       ? require('../../assets/user.png')
