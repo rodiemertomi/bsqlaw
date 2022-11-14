@@ -64,7 +64,7 @@ function EditProfile({ closeModal }) {
     <div className='w-screen h-screen flex items-center justify-center bg-modalbg'>
       <div className='bg-[#e1dfdf] animate-[popUp_0.3s_ease-in-out] shadow-2xl w-[85%] h-[80%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:h-[90%] lg:w-[40%] lg:gap-3'>
         <div className='flex flex-col justify-center items-center gap-5'>
-          <h1 className='font-bold text-2xl'>Edit Proile</h1>
+          <h1 className='font-bold text-2xl'>Edit Profile</h1>
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
               className='hidden'
