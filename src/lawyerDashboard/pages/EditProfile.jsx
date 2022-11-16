@@ -94,8 +94,8 @@ function EditProfile({ closeModal }) {
             </div>
           </div>
 
-          <div className='w-[100%] flex flex-col gap-3'>
-            <div className='flex flex-col items-center w-[100%] gap-3 mt-3'>
+          <div className='w-[100%] flex flex-col gap-2'>
+            <div className='flex flex-col items-center w-[100%] gap-2 mt-2'>
               <input
                 required
                 value={firstNameState}
@@ -124,7 +124,7 @@ function EditProfile({ closeModal }) {
                 className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
             </div>
-            <div className='flex flex-col items-center w-[100%] gap-3 '>
+            <div className='flex flex-col items-center w-[100%] gap-2 '>
               <input
                 required
                 value={contactNoState}
@@ -176,7 +176,7 @@ function EditProfile({ closeModal }) {
                 )}
               </select>
 
-              <div className='w-[100%] flex justify-center gap-2 mt-2'>
+              <div className='w-[100%] flex justify-center gap-2 mt-1'>
                 <button
                   onClick={() => closeModal(false)}
                   className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'

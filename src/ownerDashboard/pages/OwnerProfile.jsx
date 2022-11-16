@@ -54,7 +54,7 @@ export default function OwnerProfile() {
                 className='w-6 h-6 invert mr-1'
                 src={require('../../assets/email.png')}
               />
-              <span className='text-white'>Connect with</span>{' '}
+              <span className='text-white mr-1'>Connect with</span>{' '}
               <span className=' text-white font-Lora italic'> {email}</span>
             </h1>
           </div>

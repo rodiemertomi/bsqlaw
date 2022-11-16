@@ -68,7 +68,9 @@ function NavigationBar() {
             <li className='md:ml-8 text-xl font-black md:my-0 my-7' key={link.name}>
               <Link
                 to={link.path}
-                className='hover:text-yellow transition-all duration-200'
+                className={`${
+                  isScrolled || open ? 'hover:text-yellow' : 'hover:text-[#360000]'
+                } transition-all duration-200`}
                 onClick={() => setOpen(false)}
               >
                 {link.name}

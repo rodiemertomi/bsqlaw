@@ -219,7 +219,7 @@ export default function Timesheets() {
                     </summary>
                     {weeks?.map(week => (
                       <>
-                        <summary className='cursor-pointer text-md uppercase lg:text-md md:text-md font-bold flex justify-between pt-2'>
+                        <summary className='cursor-pointer text-maroon pl-5 text-md uppercase lg:text-md md:text-md font-bold flex justify-between pt-2'>
                           {week} Week
                         </summary>
                         {files?.map(file =>
