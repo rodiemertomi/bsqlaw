@@ -72,7 +72,7 @@ function ContactUs() {
 
           <div className='lg:self-start md:self-center'>
             <span className='font-bold'>Getting in touch is easy!</span> <br />
-            partners@bsqlaw.com
+            partnersbsq@gmail.com
           </div>
         </div>
         <div className='flex flex-col gap-3 md:flex md:flex-col md:items-center lg:pl-20 lg:mt-10 animate-[moveLeft_0.8s_ease-in-out]'>
