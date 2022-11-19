@@ -12,7 +12,7 @@ function Home() {
       ) : (
         <div className='w-screen h-screen overflow-hidden bg-white '>
           <div
-            className='mt-24 w-screen h-screen lg:h-[95%] lg:mt-20 bg-cover flex flex-col justify-center items-center'
+            className='mt-20 w-screen h-screen lg:h-[95%] lg:mt-20 bg-cover flex flex-col justify-center items-center'
             style={{ backgroundImage: `url(${background})` }}
           >
             <div className='bg-[#000000] opacity-[0.5] w-full h-full'></div>

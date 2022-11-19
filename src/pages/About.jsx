@@ -3,7 +3,7 @@ import React from 'react'
 function About() {
   return (
     <div>
-      <div className='min-h-screen w-screen bg-white flex flex-col lg:items-center font-Lora p-3 animate-[moveTop_0.8s_ease-in-out]'>
+      <div className='min-h-screen w-screen bg-white flex flex-col lg:items-center font-Lora p-6 animate-[moveTop_0.8s_ease-in-out]'>
         <div className='text-4xl text-maroon font-bold mt-24'>
           <h2>About</h2>
         </div>
@@ -32,8 +32,7 @@ function About() {
           </div>
           <div className=''>
             BSQ believes that the practice of our profession should be defined by and grounded upon
-            our relationship with our clients. Click on the link below and let us start building our
-            relationship.
+            our relationship with our clients.
           </div>
         </div>
       </div>

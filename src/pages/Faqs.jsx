@@ -2,7 +2,7 @@ import React from 'react'
 
 function Faqs() {
   return (
-    <div className='min-h-screen flex flex-col content-center  bg-white p-5 font-Lora'>
+    <div className='min-h-screen flex flex-col content-center  bg-white p-6 font-Lora'>
       <div className='md:w-[550px] font-Lora  md:flex md:flex-col md:self-center lg:flex lg:flex-row lg:gap-10 lg:w-[900px] lg:mt-14 lg:ml-32 '>
         <div className='mt-16 flex flex-col gap-5 lg:mt-5 animate-[moveTop_0.8s_ease-in-out]'>
           <div className=' text-4xl text-maroon font-bold'>
@@ -190,7 +190,11 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer'>
               How do I remember these legal fee structures or arrangements?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>A TABLE (VISIT BSQLAWFIRM)</p>
+            <p className='text-justify xl:mr-52 text-[#8C760A]'> <img
+                src={require('../assets/bsqTable.png')}
+                alt='bsqlogo'
+                className='w-[500px]'
+              /></p>
           </details>
           <details className='text-justify lg:ml-10'>
             <summary className='font-semibold cursor-pointer'>
