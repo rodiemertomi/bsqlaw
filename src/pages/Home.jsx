@@ -26,14 +26,14 @@ function Home() {
               />
             </div>
             <div className='flex flex-col gap-2 mt-[40px] font-Lora animate-[moveLeft_0.8s_ease-in-out]'>
-              <h1 className='text-white text-5xl font-bold'>Lawful: BSQ Law Firm</h1>
+              <h1 className='text-white text-5xl font-bold'>BSQ Law Firm</h1>
               <div className='text-white  flex items-center'>
                 <img
                   alt='appointment'
                   className='w-5 h-5 rounded-lg invert'
                   src={require('../assets/location.png')}
                 />
-                <h1 className='text-white font-medium ml-1 text-2xl'>
+                <h1 className='text-white font-medium ml-1 text-xl'>
                   San Juan City | Metro Manila
                 </h1>
               </div>

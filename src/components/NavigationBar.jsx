@@ -59,7 +59,7 @@ function NavigationBar() {
         </div>
         <ul
           className={`md:flex md:items-center lg:justify-end md:justify-between lg:gap-10 md:gap-6 gap-16 font-Lora text-2xl md:text-xs lg:py-0 md:py-8 pb-12 absolute lg:static bg-transparent ${
-            isScrolled || open ? 'bg-maroon animate-[slideDown_0.4s_ease-in-out] text-white  ' : 'bg-transparent text-maroon '
+            isScrolled || open ? 'bg-maroon' : 'bg-transparent text-maroon '
           } md:z-auto z-[-1] left-0 w-full md:w-full md:pl-0 pl-9 lg:pr-0 md:pr-4  ease-in ${
             open ? 'top-20' : 'top-[-400px]'
           }`}
