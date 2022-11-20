@@ -7,7 +7,7 @@ export default function ClientsReadOnlyRow({ client, handleEditClick, handleDele
       <td className='py-4 px-6 border border-slate-700'>{client.firstname}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.lastname}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.company}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.lawyer}</td>
+      <td className='py-4 px-6 border border-slate-700'>{client.lawyer.join(', ')}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.email}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.mailingaddress}</td>
       <td className='py-4 px-6 border border-slate-700'>{client.contactperson}</td>
