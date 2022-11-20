@@ -154,7 +154,7 @@ function AppointmentManagement() {
         <div className='w-[100%] h-[1000%] shadow-lg bg-maroon rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20  lg:mr-3'>
           <div className='h-[50px] flex flex-col justify-center item-center self-end mr-5 mt-2'>
             <button
-              className='inline-block px-6 py-2.5 bg-blue-600 text-black font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+              className='inline-block px-6 py-2.5 bg-blue-600 text-black font-bold text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
               onClick={() => {
                 setShowAppoitnment(true)
               }}
