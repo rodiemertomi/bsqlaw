@@ -19,8 +19,15 @@ export default function LawyersList() {
   return (
     <div>
       <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
-        <h1 className='self-start text-[30px] mt-5 ml-5 font-bold lg:ml-28'>Lawyer</h1>
-        <div className='h-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0'>
+        <div className='w-full flex item-center'>
+          <h1 className='self-start text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>BSQ Lawyer</h1>
+          <img
+                  alt='appointment'
+                  className='w-[100px] mr-2'
+                  src={require('../../assets/officialBSQlogo.png')}
+                />
+        </div>
+        <div className='h-full flex flex-col gap-5 overflow-auto pb-4 pl-5 pr-5 overflow-x-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0'>
           <div className='w-[100%] h-[1000%] bg-maroon rounded-md flex flex-col mr-3 gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
             <div className='w-[100%] flex gap-x-10 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
               {lawyers?.map(lawyer => (
