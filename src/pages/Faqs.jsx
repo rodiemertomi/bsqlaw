@@ -12,7 +12,7 @@ function Faqs() {
             Questions You Should Ask Before Hiring A Lawyer Or LawFirm
           </p>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               When should I hire a Lawyer or Law Firm?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -24,7 +24,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer '>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What factors should I consider in hiring a lawyer or law firm?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -38,7 +38,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               How important is specialization in hiring a lawyer?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -50,7 +50,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What are “full service” or “multi-specialty” law firms?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -64,7 +64,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               Should cost of services come in to play in my choice of legal representation?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -77,7 +77,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               How do lawyers price their services?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -90,7 +90,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What do lawyers charge and how do law firms generally bill for their services?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -102,7 +102,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>What is an acceptance fee?</summary>
+            <summary className='font-semibold cursor-pointer text-maroon'>What is an acceptance fee?</summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
               An acceptance fee is a fee for accepting a case or a client. It is generally not
               considered a fee for services rendered (or work performed) as these services are, as a
@@ -112,7 +112,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>What is a retainer fee?</summary>
+            <summary className='font-semibold cursor-pointer text-maroon'>What is a retainer fee?</summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
               A retainer fee is usually a monthly fee of a fixed amount for a buffet of advisory and
               other services, including, review of contracts and agreements, drafting of legal
@@ -124,7 +124,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What services are billed hourly?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -140,7 +140,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>Do lawyers bill by output?</summary>
+            <summary className='font-semibold cursor-pointer text-maroon'>Do lawyers bill by output?</summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
               Yes, instead of billing by the hour, lawyers may opt to bill by output (a pleading,
               motion or any other document) at a fixed rate that disregards the amount of time
@@ -149,7 +149,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What is a packaged or stage-billing arrangement?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -161,7 +161,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What is an hourly-capped arrangement?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -172,7 +172,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               What are contingency or success fees?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>
@@ -187,7 +187,7 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               How do I remember these legal fee structures or arrangements?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'> <img
@@ -197,7 +197,7 @@ function Faqs() {
               /></p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
               Aside from legal fees, what other costs should I expect?
             </summary>
             <p className='text-justify xl:mr-52 text-[#8C760A]'>

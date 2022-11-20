@@ -25,10 +25,17 @@ export default function ClientsList() {
   }, [])
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
-      <h1 className='self-start text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
-        {firstName} {lastName}'s Clients
-      </h1>
-      <div className='h-full flex flex-col mt-2 gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
+      <div className='w-full flex item-center'>
+        <h1 className='self-start w-full text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
+          {firstName} {lastName}'s Clients
+        </h1>
+        <img
+                  alt='appointment'
+                  className='w-[100px] mr-2'
+                  src={require('../../assets/officialBSQlogo.png')}
+                />
+      </div>
+      <div className='h-full flex flex-col mt-2 gap-5 overflow-auto pb-4 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-maroon rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 pt-5 mr-3'>
           <div className='w-[100%] flex gap-x-10 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
             {clients?.map(client => (
@@ -42,7 +49,7 @@ export default function ClientsList() {
                       : `${client.photoURL}`
                   }
                 />
-                <h1 className='text-maroon mt-1 font-bold text-lg'>
+                <h1 className='text-maroon mt-5 font-bold text-lg'>
                   {client.firstname} {client.lastname}
                 </h1>
               </div>
