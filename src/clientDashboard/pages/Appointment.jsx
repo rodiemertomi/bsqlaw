@@ -1,14 +1,30 @@
-import React from 'react'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import React, { useState } from 'react'
+import { useEffect } from 'react'
 import 'react-calendar/dist/Calendar.css'
+import { db } from '../../firebase'
 import UseUserReducer from '../../UserReducer'
 
 export default function Appointment() {
-  const { appointments } = UseUserReducer()
+  const { id } = UseUserReducer()
+  const [appointments, setAppointments] = useState()
 
   const formatDate = date => {
     let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
     return dateArray.join('/')
   }
+
+  const getAppointments = async () => {
+    const colRef = collection(db, 'appointments')
+    const q = query(colRef, where('clientId', '==', id))
+    await getDocs(q).then(snap => {
+      setAppointments(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
+  useEffect(() => {
+    getAppointments()
+  }, [])
 
   return (
     <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
@@ -16,7 +32,7 @@ export default function Appointment() {
       <div className='h-full w-full flex flex-col gap-5 overflow-auto p-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-maroon rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20  lg:mr-3'>
           <div className='w-[100%] pl-5 pt-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-center lg:w-[100%] overflow-auto scrollbar-hide'>
-            {appointments.newAppointments?.map(appointment => (
+            {appointments?.map(appointment => (
               <div
                 key={appointment.id}
                 className='bg-[#FFF] drop-shadow-lg p-2 w-[100%] rounded-md flex flex-col gap-2 '
