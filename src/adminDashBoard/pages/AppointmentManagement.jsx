@@ -152,7 +152,7 @@ function AppointmentManagement() {
           src={require('../../assets/officialBSQlogo.png')}
         />
       </div>
-      <div className='h-full w-full flex flex-col gap-5 overflow-autopb-5 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
+      <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-5 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-maroon rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20  lg:mr-3'>
           <div className='h-[50px] flex flex-col justify-center item-center self-end mr-5 mt-2'>
             <button
