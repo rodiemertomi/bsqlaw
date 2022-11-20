@@ -75,7 +75,7 @@ export default function Accounting() {
   )
 }
 
-function SOAReadOnly({ soa, handleDeleteSoa, formatDate }) {
+function SOAReadOnly({ soa, formatDate }) {
   return (
     <div
       key={soa.id}
@@ -123,21 +123,13 @@ function SOAReadOnly({ soa, handleDeleteSoa, formatDate }) {
             />
             <span className='font-bold uppercase text-xs w-[650px]'>{soa.clientname}</span>
           </div>
-          <div className='flex justify-end gap-2 w-full'>
-            <button
-              onClick={e => handleDeleteSoa(e, soa.id)}
-              className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-            >
-              Delete
-            </button>
-          </div>
         </div>
       </div>
     </div>
   )
 }
 
-function ORReadOnly({ or, handleDeleteOr, id, formatDate }) {
+function ORReadOnly({ or, formatDate }) {
   return (
     <div
       key={or.id}
@@ -184,14 +176,6 @@ function ORReadOnly({ or, handleDeleteOr, id, formatDate }) {
               alt='user icon'
             />
             <span className='font-bold uppercase text-xs w-[650px]'>{or.clientname}</span>
-          </div>
-          <div className='flex justify-end gap-2 w-full'>
-            <button
-              onClick={e => handleDeleteOr(e, or.id)}
-              className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
-            >
-              Delete
-            </button>
           </div>
         </div>
       </div>
