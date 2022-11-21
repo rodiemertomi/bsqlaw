@@ -181,8 +181,8 @@ export default function ClientsManagement() {
           data.email.toLowerCase().includes(searchKeyword.toLowerCase()) ||
           data.firstname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
           data.lastname.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          data.lawyer.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          data.company.toLowerCase().includes(searchKeyword.toLowerCase())
+          data.company.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.lawyer.some(data => data.toLowerCase().includes(searchKeyword.toLowerCase()))
       )
     } catch (err) {
       alert(err.message)
@@ -248,7 +248,7 @@ export default function ClientsManagement() {
               <input
                 className='lg:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
                 type='text'
-                placeholder='Enter Username, Firstname, Lastname, Appointed Lawyer or Email...'
+                placeholder='Enter Username, Firstname, Lastname, Email, Company or Assigned Lawyer...'
                 value={searchKeyword}
                 onChange={e => setSearchKeyword(e.target.value)}
               />
