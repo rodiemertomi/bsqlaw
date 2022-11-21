@@ -3,15 +3,15 @@ import React from 'react'
 export default function ClientsReadOnlyRow({ client, handleEditClick, handleDeleteClick }) {
   return (
     <>
-      <td className='py-4 px-6 border border-slate-700'>{client.username}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.firstname}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.lastname}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.company}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.lawyer.join(', ')}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.email}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.mailingaddress}</td>
-      <td className='py-4 px-6 border border-slate-700'>{client.contactperson}</td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>{client.username}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.firstname}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.lastname}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.company}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.lawyer.join(', ')}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.email}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.mailingaddress}</td>
+      <td className='py-4 px-2 border border-slate-700'>{client.contactperson}</td>
+      <td className='py-4 px-2 border border-slate-700'>
         <button
           onClick={e => handleEditClick(e, client)}
           className='w-14 h-8 rounded-md mb-1 border-0 bg-maroon text-white mr-1'
