@@ -37,10 +37,6 @@ export default function AdminProfile() {
             <h1>
               <span className='font-bold'>Contact Number:</span> {contactNo}
             </h1>
-            <h1>
-              <span className='font-bold'>List of Clients:</span>{' '}
-              {clients?.map(client => `${client.firstname} ${client.lastname}, `)}
-            </h1>
           </div>
           <div className='w-full mt-2 text-xs lg:text-base p-3 bg-black shadow-lg flex items-center justify-center'>
             <h1 className='flex items-center justify-center'>
@@ -53,7 +49,6 @@ export default function AdminProfile() {
               <span className=' text-white font-Lora italic'> {email}</span>
             </h1>
           </div>
-
           <button
             type='button'
             onClick={() => {
