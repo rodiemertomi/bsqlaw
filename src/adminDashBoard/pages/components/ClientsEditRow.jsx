@@ -3,7 +3,7 @@ import React from 'react'
 export default function ClientsEditRow({ editFormData, handleEditFormChange, handleCancelClick }) {
   return (
     <>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Username'
@@ -12,7 +12,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Firstname'
@@ -21,7 +21,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Lastname'
@@ -30,7 +30,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Company'
@@ -39,8 +39,8 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>{editFormData.lawyer}</td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>{editFormData.lawyer}</td>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Email'
@@ -49,7 +49,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Mailing Address'
@@ -58,7 +58,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <input
           type='text'
           placeholder='Contact Person'
@@ -67,7 +67,7 @@ export default function ClientsEditRow({ editFormData, handleEditFormChange, han
           onChange={handleEditFormChange}
         />
       </td>
-      <td className='py-4 px-6 border border-slate-700'>
+      <td className='py-4 px-2 border border-slate-700'>
         <div className='flex items-center justify-center'>
           <button className='w-14 h-8 rounded-md border-0 bg-maroon mr-1 text-white' type='submit'>
             Save
