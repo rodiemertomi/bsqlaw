@@ -5,7 +5,8 @@ import UseUserReducer from '../../UserReducer'
 
 export default function Folders() {
   const { id, firstName, lastName } = UseUserReducer()
-  const [folders, setFolders] = useState()
+  const [folders, setFolders] = useState()  
+  const [searchKeyword, setSearchKeyword] = useState('')
 
   const getFolders = async () => {
     const folderRef = collection(db, 'folders')
@@ -13,6 +14,26 @@ export default function Folders() {
     await getDocs(folderQuery).then(snap => {
       setFolders(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
+  }
+
+  const search = datas => {
+    try {
+      return datas.filter(
+        data =>
+          data.casenumber.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.casetitle.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.pleading.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.pleadingdate.toDate().toISOString().substr(0,10).includes(searchKeyword) ||
+          data.lawyer.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.court.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.branch.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.date_created.toDate().toISOString().substr(0,10).includes(searchKeyword) ||
+          data.folder.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          data.uploadby.toLowerCase().includes(searchKeyword.toLowerCase())
+      )
+    } catch (err) {
+      alert(err.message)
+    }
   }
 
   useEffect(() => {
@@ -33,6 +54,16 @@ export default function Folders() {
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='w-[100%] h-[100%] pl-5 pt-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto scrollbar-hide'>
+            <div>
+              <span className='font-bold text-xl text-white'>Search Files</span>
+              <input
+                className='lg:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
+                type='text'
+                placeholder='Enter Username, Firstname, Lastname, Email, Company or Assigned Lawyer...'
+                value={searchKeyword}
+                onChange={e => setSearchKeyword(e.target.value)}
+              />
+            </div>
             {folders?.map(folder => (
               <div
                 key={folder.id}
@@ -42,7 +73,7 @@ export default function Folders() {
                   <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'>
                     {folder.foldername}
                   </summary>
-                  {folder.files?.map(file => (
+                  {search(folder.files)?.map(file => (
                     <Fragment key={file.id}>
                       {file.folder === folder.foldername ? <ReadOnlyRow file={file} /> : ''}
                     </Fragment>
