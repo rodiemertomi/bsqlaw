@@ -319,39 +319,43 @@ export default function CaseFolders() {
                 />
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
-        <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
-          <div className='h-[50px] flex flex-row justify-center gap-2 item-center self-end mb-2 mt-1 mr-6'>
-          <div>
-              <span className='font-bold text-xl'>Search Files</span>
-              <input
-                className='lg:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
-                type='text'
-                placeholder='Enter Username, Firstname, Lastname, Email, Company or Assigned Lawyer...'
-                value={searchKeyword}
-                onChange={e => setSearchKeyword(e.target.value)}
-              />
+        <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col  lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
+          <div className='h-[50px] flex pl-5 flex-row gap-2 item-center mb-2 mt-1 mr-6'>
+          <div className='w-full flex items-center justify-between gap-2'>  
+              <div className='w-[70%] flex items-center'>
+                <span className='font-bold text-xs text-white'>Search Files</span>
+                <input
+                    className='lg:ml-2 w-[80%] py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    type='text'
+                    placeholder='Enter Case No./Title, Pleading Order/Date, etc...'
+                    value={searchKeyword}
+                    onChange={e => setSearchKeyword(e.target.value)}
+                />
+              </div>
+              <div className='flex lg:gap-2'>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setShowModal(true)
+                  }}
+                  className=' inline-block font-bold px-6 py-2.5 bg-blue-600 text-black text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+                >
+                  Add Folder
+                </button>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setShowUpdateFolder(true)
+                  }}
+                  className=' inline-block px-6 font-bold py-2.5 bg-blue-600 text-black text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+                >
+                  Update Folder
+                </button>
+              </div>
             </div>
-            <button
-              type='button'
-              onClick={() => {
-                setShowModal(true)
-              }}
-              className='mt-2 inline-block font-bold px-6 py-2.5 bg-blue-600 text-black text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
-            >
-              Add Folder
-            </button>
-            <button
-              type='button'
-              onClick={() => {
-                setShowUpdateFolder(true)
-              }}
-              className='mt-2 inline-block px-6 font-bold py-2.5 bg-blue-600 text-black text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
-            >
-              Update Folder
-            </button>
             {showModal && (
               <div className='w-screen h-screen z-20 bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col animate-[moveTop_0.3s_ease-in-out] justify-center items-center bg-[#e1dfdf] absolute h-[55%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[450px] lg:w-[420px]'>
+                <div className='flex p-4 flex-col animate-[moveTop_0.3s_ease-in-out] justify-center items-center bg-[#e1dfdf] absolute h-[55%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[450px] lg:w-[420px]'>
                   <div className='flex w-full lg:w-[60%] flex-col items-center justify-evenly mt-3 gap-5'>
                     <h1 className='font-bold text-3xl'>ADD FOLDER</h1>
                     <input

@@ -56,7 +56,7 @@ export default function CaseFolders() {
               <input
                 className='lg:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
                 type='text'
-                placeholder='Enter Username, Firstname, Lastname, Email, Company or Assigned Lawyer...'
+                placeholder='Enter Case No./Title, Pleading Order/Date, etc...'
                 value={searchKeyword}
                 onChange={e => setSearchKeyword(e.target.value)}
               />
