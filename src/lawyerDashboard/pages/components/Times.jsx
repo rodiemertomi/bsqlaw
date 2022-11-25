@@ -5,7 +5,7 @@ import UseAppointmentStore from '../../reducers/AppointmentReducer'
 import UseUserReducer from '../../../UserReducer'
 import { nanoid } from 'nanoid'
 
-function Times({ closeShowAppointment, clients }) {
+function Times({ closeShowAppointment }) {
   const {
     setClientFirstName,
     setClientLastName,
@@ -30,7 +30,7 @@ function Times({ closeShowAppointment, clients }) {
   } = UseAppointmentStore()
 
   const appointmentsRef = collection(db, 'appointments')
-  const { initials, id } = UseUserReducer()
+  const { initials, id, clients } = UseUserReducer()
   const lawyerRef = doc(db, `users/${id}`)
 
   const handleSelectClient = (e, clients) => {
@@ -247,7 +247,10 @@ function Times({ closeShowAppointment, clients }) {
           />
           <p
             className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold mt-3'
-            onClick={() => closeShowAppointment(false)}
+            onClick={() => {
+              setClientId('')
+              closeShowAppointment(false)
+            }}
           >
             Close
           </p>
