@@ -42,10 +42,6 @@ export default function OwnerProfile() {
             <h1>
               <span className='font-bold'>Contact Number:</span> {contactNo}
             </h1>
-            <h1>
-              <span className='font-bold'>List of Clients:</span>{' '}
-              {clients?.map(client => `${client.firstname} ${client.lastname}, `)}
-            </h1>
           </div>
           <div className='w-full mt-2 p-3 bg-black shadow-lg flex items-center justify-center'>
             <h1 className='flex items-center justify-center'>
