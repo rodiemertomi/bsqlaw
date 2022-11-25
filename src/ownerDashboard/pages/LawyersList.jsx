@@ -29,7 +29,7 @@ export default function LawyersList() {
       </div>
         <div className='h-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0'>
           <div className='w-[100%] h-[1000%] bg-maroon rounded-md flex flex-col mr-3 gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 '>
-            <div className='w-[100%] flex gap-x-8 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+            <div className='w-[100%] flex gap-x-8 pt-5 flex-wrap justify-center lg:w-[100%] lg:overflow-auto'>
               {lawyers?.map(lawyer => (
                 <Fragment key={lawyer.id}>
                   <ReadLawyers lawyer={lawyer} />

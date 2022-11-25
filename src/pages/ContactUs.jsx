@@ -43,7 +43,7 @@ function ContactUs() {
               className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             ></input>
             <input
-              type='text'
+              type='email'
               id='email'
               name='email'
               placeholder='Your Email'

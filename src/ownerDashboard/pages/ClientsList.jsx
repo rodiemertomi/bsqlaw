@@ -100,7 +100,7 @@ export default function ClientsList() {
         </div>
         <div className='h-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-3 lg:pt-0'>
           <div className='w-[100%] h-[1000%] bg-maroon rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 p-5 '>
-            <div className='w-[100%] flex gap-x-7 flex-wrap justify-center lg:w-[100%] lg:overflow-auto lg:scrollbar-hide'>
+            <div className='w-[100%] flex gap-x-7 flex-wrap justify-center lg:w-[100%] lg:overflow-auto '>
               {clientsList?.map((client, i) => (
                 <Fragment key={client.id}>
                   {clientEditId === client.id ? (
