@@ -50,16 +50,16 @@ function AdminControl({ setHideNavBar, dispatch }) {
   }
 
   return (
-    <div>
+    <div className='font-poppins'>
       <div
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        className={`bg-[#BABABA] w-[250px] font-Lora h-screen fixed overflow-scroll flex flex-col items-start pt-4 scrollbar-hide font-poppins top-0 ${
+        className={`bg-[#BABABA] w-[250px] h-screen fixed overflow-scroll flex flex-col items-start pt-4 scrollbar-hide font-poppins top-0 ${
           adminControl ? `left-[88px] lg:left-[91px]` : `left-[-300px]`
         } transition-all duration-300 z-50 `}
       >
-        <h1 className='ml-5 mt-5 text-xl'>Admin Control</h1>
+        <h1 className='ml-5 mt-5 text-xl font-bold'>Admin Control</h1>
 
         <div className='flex flex-col gap-5 mt-5 mb-10 ml-10'>
           <details>

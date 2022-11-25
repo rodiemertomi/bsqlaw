@@ -176,7 +176,7 @@ export default function LawyersManagement() {
 
   return (
     <>
-      <div className='h-screen w-screen pl-5 pr-5 lg:pr-24 pt-1 pb-24'>
+      <div className='h-screen w-screen font-poppins pl-5 pr-5 lg:pr-24 pt-1 pb-24'>
         <div className='lg:ml-[83px]'>
           <h1 className='self-start text-[30px] font-bold'>Create Lawyer</h1>
           <div>
@@ -210,7 +210,7 @@ export default function LawyersManagement() {
                 onChange={handleAddFormChange}
               />
               <button
-                className={`font-semibold w-[60%] md:w-[30%] lg:w-[10%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center ${
+                className={`font-semibold w-[60%] md:w-[30%] lg:w-[15%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
                 }`}
                 type='submit'

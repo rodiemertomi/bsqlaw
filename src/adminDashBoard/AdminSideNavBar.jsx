@@ -101,7 +101,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Admin Control</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Admin Control</p>
           <SideBarIcon
             icon={
               <img
@@ -112,7 +112,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Case Files</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Files</p>
           <SideBarIcon
             icon={
               <img
@@ -123,7 +123,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Appointment</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Appointment</p>
           <SideBarIcon
             icon={
               <img
@@ -134,7 +134,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheets</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Timesheets</p>
           <SideBarIcon
             icon={
               <img
@@ -145,7 +145,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Accounting</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Accounting</p>
         </div>
         <div
           className='text-center fixed flex flex-col items-center justify-center bottom-4 z-10 cursor-pointer'
@@ -158,7 +158,7 @@ function AdminSideNavBar({
               src={require('../assets/logout.png')}
             />
           }
-          <p className='text-center text-sm pt-0 font-Lora'>Logout</p>
+          <p className='text-center text-xs pt-0 font-poppins'>Logout</p>
         </div>
       </div>
     </div>

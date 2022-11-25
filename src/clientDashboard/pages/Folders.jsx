@@ -19,7 +19,7 @@ export default function Folders() {
     getFolders()
   }, [])
   return (
-    <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
+    <div className='h-screen w-screen font-poppins overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <div className='w-full flex item-center mb-2'>
         <h1 className='self-start w-full text-[30px] mt-3 ml-5 font-bold lg:ml-28'>
           {firstName} {lastName}'s Case Files

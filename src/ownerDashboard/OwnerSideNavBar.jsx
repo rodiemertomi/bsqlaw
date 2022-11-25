@@ -82,7 +82,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Lawyers</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Lawyers</p>
           <SideBarIcon
             icon={
               <img
@@ -93,7 +93,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Client</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Client</p>
           <SideBarIcon
             icon={
               <img
@@ -104,7 +104,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-sm pt-0 mb-3 font-Lora'>Case Folder</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Folder</p>
           <SideBarIcon
             icon={
               <img
@@ -115,7 +115,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Appointment</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Appointment</p>
           <SideBarIcon
             icon={
               <img
@@ -126,7 +126,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Timesheets</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Timesheets</p>
           <SideBarIcon
             icon={
               <img
@@ -137,7 +137,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-[13px] pt-0 mb-3 font-Lora'>Accounting</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Accounting</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'
@@ -150,7 +150,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               src={require('../assets/logout.png')}
             />
           }
-          <p className='text-center text-sm pt-0 mt-1 font-Lora'>Logout</p>
+          <p className='text-center text-xs pt-0 mt-1 font-poppins'>Logout</p>
         </div>
       </div>
     </div>
