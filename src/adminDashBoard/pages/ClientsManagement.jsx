@@ -255,12 +255,12 @@ export default function ClientsManagement() {
             </div>
           </div>
         </div>
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-maroon rounded-md lg:h-[90%] md:h-[86%]'>
+        <div className='overflow-auto p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-maroon rounded-md lg:h-[90%] md:h-[86%]'>
           <div className='flex flex-col justify-center'>
             {/* CLIENT DETAILS */}
             <div>
               <form onSubmit={handleEditFormSubmit}>
-              <div className='overflow-x-auto relative bg-white shadow-lg sm:rounded-lg p-2'>
+                <div className='overflow-x-auto relative bg-white shadow-lg sm:rounded-lg p-2'>
                   <table className='w-full text-sm text-center text-gray-500 border-collapse border border-slate-500 mt-2 mb-2'>
                     <thead className={`text-xs text-gray-700 `}>
                       <tr>

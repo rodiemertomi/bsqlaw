@@ -232,7 +232,7 @@ export default function LawyersManagement() {
           </div>
         </div>
 
-        <div className='overflow-auto scrollbar-hide p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-maroon rounded-md lg:h-[90%] md:h-[86%]'>
+        <div className='overflow-auto p-5 lg:ml-20 w-[100%] h-[78%] shadow-lg bg-maroon rounded-md lg:h-[90%] md:h-[86%]'>
           <div className=' flex flex-col justify-center'>
             {/* LAWYER DETAILS */}
             <div>

@@ -147,10 +147,10 @@ function AppointmentManagement() {
           BSQ Appointments
         </h1>
         <img
-                  alt='bsq logo'
-                  className='w-[80px] mr-4 pt-3'
-                  src={require('../../assets/officialBSQlogoBlack.png')}
-                />
+          alt='bsq logo'
+          className='w-[80px] mr-4 pt-3'
+          src={require('../../assets/officialBSQlogoBlack.png')}
+        />
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[1000%] shadow-lg bg-maroon rounded-md flex flex-col gap-2 items-center lg:w-[100%] lg:h-[100%] lg:ml-20  lg:mr-3'>
@@ -169,7 +169,7 @@ function AppointmentManagement() {
               </div>
             )}
           </div>
-          <div className='w-[100%] pl-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-center lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
+          <div className='w-[100%] pl-5 pr-5 flex flex-wrap gap-3 justify-center lg:justify-center lg:w-[100%] overflow-auto pb-5'>
             {appointments?.map(appointment => (
               <Fragment key={appointment.id}>
                 {today.getTime() > appointment.dateTimeStart.toDate().getTime() ? (
