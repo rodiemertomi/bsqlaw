@@ -104,7 +104,7 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
               />
             }
           />
-          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Folder</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Files</p>
           <SideBarIcon
             icon={
               <img
