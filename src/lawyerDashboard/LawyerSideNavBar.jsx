@@ -90,7 +90,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
               />
             }
           />
-          <p className='text-xs pt-0 mb-3 text-center font-poppins'>Case Files</p>
+          <p className='text-xs pt-0 mb-3 text-center font-poppins'>Case Folders</p>
           <SideBarIcon
             icon={
               <img

@@ -323,9 +323,9 @@ export default function CaseFolders() {
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col  lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='h-[50px] flex pl-5 flex-row gap-2 item-center mb-2 mt-1 mr-6'>
-            <div className='w-full flex items-center justify-between gap-2'>
+            <div className='w-full flex pt-3 items-center justify-between gap-2'>
               <div className='w-[70%] flex items-center'>
-                <span className='font-bold text-xs text-white'>Search Files</span>
+                <span className='font-bold text-xs lg:text-base text-white'>Search Files</span>
                 <input
                   className='lg:ml-2 w-[80%] py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                   type='text'
@@ -507,7 +507,7 @@ export default function CaseFolders() {
               </div>
             )}
           </div>
-          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto pb-5'>
+          <div className='w-[100%] h-[100%] pt-3 pl-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto pb-5'>
             {foldersList?.map(folder => (
               <>
                 {folder.id === 'DONOTDELETE' ? (

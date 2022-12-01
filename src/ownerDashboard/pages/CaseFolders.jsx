@@ -50,17 +50,19 @@ export default function CaseFolders() {
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-3 '>
-          <div className='w-[100%] h-[100%] pt-5 pl-5 pr-5 pb-5 flex flex-col gap-2 lg:w-[100%] overflow-auto'>
-            <div>
-              <span className='font-bold text-xl text-white'>Search Files</span>
+          <div className='w-full flex items-center'>
+            <div className='w-[70%] pl-6 pt-3 flex items-center'>
+              <span className='font-bold text-xs lg:text-base text-white'>Search Files</span>
               <input
-                className='lg:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
+                className='lg:ml-2 w-[80%] py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='text'
                 placeholder='Enter Case No./Title, Pleading Order/Date, etc...'
                 value={searchKeyword}
                 onChange={e => setSearchKeyword(e.target.value)}
               />
             </div>
+          </div>
+          <div className='w-[100%] h-[100%] pt-3 pl-5 pr-5 pb-5 flex flex-col gap-2 lg:w-[100%] overflow-auto'>
             {foldersList?.map(folder => (
               <>
                 {folder.id === 'DONOTDELETE' ? (

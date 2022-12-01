@@ -112,7 +112,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Files</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Folders</p>
           <SideBarIcon
             icon={
               <img
