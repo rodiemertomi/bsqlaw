@@ -95,9 +95,9 @@ function ReadLawyers({ lawyer }) {
                       </div>
                     ))}
                   </div>
-                  <div className='text-xs font-thin'>
+                  <div className='text-sm font-thin'>
                     <h1
-                      className='hover:font-bold hover:cursor-pointer mb-2'
+                      className='text-maroon hover:font-bold hover:cursor-pointer mb-2'
                       onClick={() => setShowLawyerList(false)}
                     >
                       close
