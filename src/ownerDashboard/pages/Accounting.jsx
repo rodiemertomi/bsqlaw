@@ -44,17 +44,19 @@ export default function Accounting() {
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
-          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5 pt-4'>
+          <div className='h-[50px] w-[24%] flex flex-row justify-center pr-5 item-center self-end mb-2 mt-1 mr-6'>
+            <select
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              onChange={e => setFileSearch(e.target.value)}
+            >
+              {fileTypes?.map(file => (
+                <option value={file.type}>{file.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
             <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
-              <select
-                className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
-                      shadow border rounded w-2/10 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                onChange={e => setFileSearch(e.target.value)}
-              >
-                {fileTypes?.map(file => (
-                  <option value={file.type}>{file.name}</option>
-                ))}
-              </select>
               <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
                 <details className='p-5 w-full'>
                   <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-center'>
