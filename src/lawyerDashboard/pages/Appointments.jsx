@@ -274,7 +274,7 @@ function ReadOnlyRow({ appointment, handleEditClick, handleCancelAppt, formatDat
               onClick={() => handleCancelAppt(appointment.id, appointment.clientId)}
               className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
             >
-              Cancel
+              Delete
             </button>
           </div>
         </div>

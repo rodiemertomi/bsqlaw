@@ -126,9 +126,6 @@ function ReadOnlyRow({ file }) {
                 Date Created
               </th>
               <th scope='col' className='py-3 px-6'>
-                Shareable
-              </th>
-              <th scope='col' className='py-3 px-6'>
                 Folder
               </th>
             </tr>
@@ -151,7 +148,6 @@ function ReadOnlyRow({ file }) {
               <td className='py-4 px-6'>
                 {file.date_created.toDate().toISOString().substr(0, 10)}
               </td>
-              <td className='py-4 px-6'>{file.shareable ? 'Shared' : 'Unshared'}</td>
               <td className='py-4 px-6'>{file.folder}</td>
             </tr>
           </tbody>
