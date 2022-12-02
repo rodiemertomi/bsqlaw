@@ -12,6 +12,8 @@ export default function LawyerProfile() {
     return dateArray.join('/')
   }
 
+  const [showClientList, setShowClientList] = useState(false)
+
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <div className='w-[90%] h-[90%] rounded-lg shadow-lg bg-maroon flex flex-col items-center justify-center gap-4 lg:w-[90%] lg:h-[95%] lg:ml-24'>
@@ -39,13 +41,51 @@ export default function LawyerProfile() {
             <h1>
               <span className='font-bold'>Gender:</span> {gender}
             </h1>
+
             <h1>
               <span className='font-bold'>Contact Number:</span> {contactNo}
             </h1>
-            <h1>
-              <span className='font-bold'>List of Clients:</span>{' '}
-              {clients?.map(client => `${client.firstname} ${client.lastname}, `)}
-            </h1>
+            <div>
+              <h1>
+                <span className='font-bold'>List of Clients:</span>
+                <span
+                  className='ml-1 text-xs font-bold text-maroon cursor-pointer hover:underline'
+                  onClick={() => {
+                    setShowClientList(true)
+                  }}
+                >
+                  Click here to see List of Clients
+                </span>
+              </h1>
+              {showClientList && (
+                <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center z-20'>
+                  <div className='bg-white animate-[moveTop_0.3s_ease-in-out] w-[360px] h-[480px] gap-2 rounded-xl flex flex-col items-center shadow-lg'>
+                    <div className='w-full h-[60px] bg-maroon rounded-t-xl flex items-center justify-center'>
+                      <h1 className='text-2xl font-bold text-white'>List of Clients</h1>
+                    </div>
+                    <div className='flex flex-col w-full h-full items-center justify-between pr-6 pl-6 pt-3 pb-3'>
+                      <div className='overflow-auto w-full text-base font-light flex flex-col gap-1'>
+                        {clients?.map((client, i) => (
+                          <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                            <h1 key={i}>
+                              {client.firstname} {client.lastname}
+                            </h1>
+                          </div>
+                        ))}
+                      </div>
+                      <div className='text-sm font-thin'>
+                        <h1
+                          className='text-maroon hover:font-bold hover:cursor-pointer mb-2'
+                          onClick={() => setShowClientList(false)}
+                        >
+                          close
+                        </h1>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <div className='w-full mt-2 text-xs lg:text-base p-3 bg-black shadow-lg flex items-center justify-center'>
             <h1 className='flex items-center justify-center'>
