@@ -17,11 +17,19 @@ export default function Accounting() {
   const [loading, setLoading] = useState(false)
   const [fileUpload, setFileUpload] = useState(null)
   const [clients, setClients] = useState()
-  const [ors, setOrs] = useState()
-  const [soas, setSoas] = useState()
   const [selectedClient, setSelectedClient] = useState()
   const [selectedFileType, setSelectedFileType] = useState()
   const [remarks, setRemarks] = useState('')
+  const [files, setFiles] = useState([])
+  const [fileSearch, setFileSearch] = useState('soa')
+  const fileTypes = [
+    {
+      name: 'Statement of Account',
+      type: 'soa',
+    },
+    { name: 'Check Vouchers', type: 'cv' },
+    { name: 'Official Receipt', type: 'or' },
+  ]
 
   const { username, initials } = UseUserReducer()
 
@@ -50,8 +58,7 @@ export default function Accounting() {
 
         await addDoc(fileTypeRef, data).then(() => {
           alert('Upload Successful')
-          getOrs()
-          getSoas()
+          getFiles()
         })
       })
     })
@@ -64,30 +71,18 @@ export default function Accounting() {
     return dateArray.join('/')
   }
 
-  const handleDeleteSoa = async (e, id) => {
+  const handleDeleteFile = async (e, id) => {
     e.preventDefault()
-    if (window.confirm('Are you sure you want to delete this file?') === true) {
-      const fileRef = doc(db, `soa/${id}`)
+    setLoading(true)
+    if (window.confirm('Are you sure you want tod elete this file?') === true) {
+      const fileRef = doc(db, `${fileSearch}/${id}`)
       await deleteDoc(fileRef).then(() => {
         alert('File Delete Successful')
-        getOrs()
-        getSoas()
+        getFiles()
+        setLoading(false)
       })
     } else {
-      return
-    }
-    return
-  }
-  const handleDeleteOr = async (e, id) => {
-    e.preventDefault()
-    if (window.confirm('Are you sure you want to delete this file?') === true) {
-      const fileRef = doc(db, `or/${id}`)
-      await deleteDoc(fileRef).then(() => {
-        alert('File Delete Successful')
-        getOrs()
-        getSoas()
-      })
-    } else {
+      setLoading(false)
       return
     }
     return
@@ -101,17 +96,10 @@ export default function Accounting() {
     })
   }
 
-  const getOrs = async () => {
-    const colRef = collection(db, 'or')
+  const getFiles = async () => {
+    const colRef = collection(db, `${fileSearch}`)
     await getDocs(colRef).then(snap => {
-      setOrs(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-
-  const getSoas = async () => {
-    const colRef = collection(db, 'soa')
-    await getDocs(colRef).then(snap => {
-      setSoas(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+      setFiles(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
   }
 
@@ -119,23 +107,33 @@ export default function Accounting() {
 
   useEffect(() => {
     getClients()
-    getOrs()
-    getSoas()
-  }, [])
+    getFiles()
+  }, [fileSearch])
 
   return (
     <div className='h-screen w-screen font-poppins overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <div className='w-full flex item-center mb-2'>
-        <h1 className='self-start text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>BSQ Accounting</h1>
+        <h1 className='self-start text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>
+          BSQ Accounting
+        </h1>
         <img
-                  alt='bsq logo'
-                  className='w-[80px] mr-4 pt-3'
-                  src={require('../../assets/officialBSQlogoBlack.png')}
-                />
+          alt='bsq logo'
+          className='w-[80px] mr-4 pt-3'
+          src={require('../../assets/officialBSQlogoBlack.png')}
+        />
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
           <div className='h-[50px] flex flex-row justify-center gap-2 item-center self-end mb-2 mt-1 mr-6'>
+            <select
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              onChange={e => setFileSearch(e.target.value)}
+            >
+              {fileTypes?.map(file => (
+                <option value={file.type}>{file.name}</option>
+              ))}
+            </select>
             <button
               type='button'
               onClick={() => {
@@ -166,9 +164,10 @@ export default function Accounting() {
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                       onChange={e => setSelectedFileType(e.target.value)}
                     >
-                      <option value=''>Select File Type</option>
-                      <option value='soa'>Statement of Account</option>
-                      <option value='or'>Original Receipt</option>
+                      <option>Select File Type</option>
+                      {fileTypes?.map(fileType => (
+                        <option value={fileType.type}>{fileType.name}</option>
+                      ))}
                     </select>
                     <textarea
                       rows='4'
@@ -208,31 +207,19 @@ export default function Accounting() {
             <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
               <details className='p-5 w-full'>
                 <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-center'>
-                  Statement of Accounts
+                  {fileTypes?.map(fileType =>
+                    fileType.type === fileSearch ? `${fileType.name}` : ''
+                  )}
                 </summary>
-                {soas?.map(soa =>
-                  soa.id === 'DONOTDELETE' ? (
+                {files?.map(file =>
+                  file.id === 'DONOTDELETE' ? (
                     ''
                   ) : (
-                    <SOAReadOnly
-                      soa={soa}
-                      handleDeleteSoa={handleDeleteSoa}
+                    <FileReadOnly
+                      file={file}
+                      handleDeleteFile={handleDeleteFile}
                       formatDate={formatDate}
                     />
-                  )
-                )}
-              </details>
-            </div>
-            <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] '>
-              <details className='p-5 w-full'>
-                <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-center'>
-                  Official Receipts
-                </summary>
-                {ors?.map(or =>
-                  or.id === 'DONOTDELETE' ? (
-                    ''
-                  ) : (
-                    <ORReadOnly or={or} handleDeleteOr={handleDeleteOr} formatDate={formatDate} />
                   )
                 )}
               </details>
@@ -357,6 +344,68 @@ function ORReadOnly({ or, handleDeleteOr, id, formatDate }) {
           <div className='flex justify-end gap-2 w-full'>
             <button
               onClick={e => handleDeleteOr(e, or.id)}
+              className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function FileReadOnly({ file, handleDeleteFile, formatDate }) {
+  return (
+    <div
+      key={file.id}
+      className='bg-[#FFF] drop-shadow-lg p-2 w-[100%] rounded-md flex flex-col gap-2 '
+    >
+      <div className='overflow-x-auto relative shadow-lg rounded-lg '>
+        <table className='w-full text-sm text-center text-gray-500 border border-gray '>
+          <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
+            <tr>
+              <th scope='col' className='py-3 px-6 '>
+                File Name
+              </th>
+              <th scope='col' className='py-3 px-6'>
+                Upload By
+              </th>
+              <th scope='col' className='py-3 px-6'>
+                Upload Date
+              </th>
+              <th scope='col' className='py-3 px-6'>
+                Remarks
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='bg-white dark:bg-gray-900 dark:border-gray-700'>
+              <td className='py-4 px-6'>
+                <a href={file.fileurl}>{file.filename}</a>
+              </td>
+              <td className='py-4 px-6'>{file.uploadby}</td>
+              <td className='py-4 px-6'>{formatDate(file.uploaddate.toDate())}</td>
+              <td className='py-4 px-6'>{file.remarks}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className='p-2 w-full flex gap-[53%] text-sm'>
+          <div className='flex gap-2 items-center w-[360px]'>
+            <img
+              className='h-8 w-8'
+              src={
+                file.clientphoto || file.clientphoto !== ''
+                  ? `${file.clientphoto}`
+                  : require('../../assets/user.png')
+              }
+              alt='user icon'
+            />
+            <span className='font-bold uppercase text-xs w-[650px]'>{file.clientname}</span>
+          </div>
+          <div className='flex justify-end gap-2 w-full'>
+            <button
+              onClick={e => handleDeleteFile(e, file.id)}
               className=' inline-block self-right px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
             >
               Delete
