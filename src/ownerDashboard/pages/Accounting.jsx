@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../../firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 export default function Accounting() {
+  const [showModal, setShowModal] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [fileUpload, setFileUpload] = useState(null)
+  const [clients, setClients] = useState()
+  const [searchUserType, setSearchUserType] = useState('')
+  const [searchClient, setSearchClient] = useState('')
+  const [searchSupplier, setSearchSupplier] = useState('')
+  const [remarks, setRemarks] = useState('')
   const [fileSearch, setFileSearch] = useState('soa')
   const [files, setFiles] = useState([])
   const fileTypes = [
@@ -13,6 +21,7 @@ export default function Accounting() {
     { name: 'Check Vouchers', type: 'cv' },
     { name: 'Official Receipt', type: 'or' },
   ]
+  const suppliers = ['Meralco', 'Manila water', 'Golden Cup', 'Hantex', 'Smart', 'PLDT', 'Data Net']
 
   const formatDate = date => {
     let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
@@ -26,7 +35,16 @@ export default function Accounting() {
     })
   }
 
+  const getClients = async () => {
+    const colRef = collection(db, 'users')
+    const clientRef = query(colRef, where('role', '==', 'client'))
+    await getDocs(clientRef).then(snap => {
+      setClients(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
   useEffect(() => {
+    getClients()
     getFiles()
   }, [fileSearch])
 
@@ -44,7 +62,7 @@ export default function Accounting() {
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
-          <div className='h-[50px] w-[24%] flex flex-row justify-center pr-5 item-center self-end mb-2 mt-1 mr-6'>
+          <div className='h-[50px] w-1/2 flex flex-row justify-center pr-5 item-center self-end mb-2 mt-1 mr-6'>
             <select
               className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
                       shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -54,6 +72,52 @@ export default function Accounting() {
                 <option value={file.type}>{file.name}</option>
               ))}
             </select>
+            <select
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              onChange={e => {
+                setSearchUserType(e.target.value)
+                setSearchClient('')
+                setSearchSupplier('')
+              }}
+            >
+              <option value=''>Select User Type</option>
+              <option value='supplier'>Supplier</option>
+              <option value='client'>Client</option>
+            </select>
+            {searchUserType === '' ? (
+              ''
+            ) : (
+              <>
+                {searchUserType === 'client' ? (
+                  <select
+                    className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                  shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    onChange={e => setSearchClient(e.target.value)}
+                  >
+                    <option defaultValue={''}>Select Client</option>
+                    {clients.map(client => (
+                      <option key={client.id} value={client.id}>
+                        {client.username}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <select
+                    className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                  shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    onChange={e => setSearchSupplier(e.target.value)}
+                  >
+                    <option defaultValue={''}>Select Supplier</option>
+                    {suppliers?.map((supplier, i) => (
+                      <option key={i} value={supplier}>
+                        {supplier}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </>
+            )}
           </div>
           <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
             <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto scrollbar-hide pb-5'>
@@ -68,7 +132,13 @@ export default function Accounting() {
                     file.id === 'DONOTDELETE' ? (
                       ''
                     ) : (
-                      <FileReadOnly file={file} formatDate={formatDate} />
+                      <>
+                        {file.clientid === searchClient || file.clientid === searchSupplier ? (
+                          <FileReadOnly key={file.id} file={file} formatDate={formatDate} />
+                        ) : (
+                          ''
+                        )}
+                      </>
                     )
                   )}
                 </details>

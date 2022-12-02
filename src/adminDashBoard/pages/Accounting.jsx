@@ -14,11 +14,17 @@ import {
 import UseUserReducer from '../../UserReducer'
 
 export default function Accounting() {
+  const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [fileUpload, setFileUpload] = useState(null)
   const [clients, setClients] = useState()
-  const [selectedClient, setSelectedClient] = useState()
-  const [selectedFileType, setSelectedFileType] = useState()
+  const [selectedUserType, setSelectedUserType] = useState('')
+  const [selectedClient, setSelectedClient] = useState('')
+  const [selectedSupplier, setSelectedSupplier] = useState('')
+  const [selectedFileType, setSelectedFileType] = useState('')
+  const [searchUserType, setSearchUserType] = useState('')
+  const [searchClient, setSearchClient] = useState('')
+  const [searchSupplier, setSearchSupplier] = useState('')
   const [remarks, setRemarks] = useState('')
   const [files, setFiles] = useState([])
   const [fileSearch, setFileSearch] = useState('soa')
@@ -30,39 +36,80 @@ export default function Accounting() {
     { name: 'Check Vouchers', type: 'cv' },
     { name: 'Official Receipt', type: 'or' },
   ]
+  const suppliers = ['Meralco', 'Manila water', 'Golden Cup', 'Hantex', 'Smart', 'PLDT', 'Data Net']
 
   const { username, initials } = UseUserReducer()
 
   const uploadFile = async () => {
     setLoading(true)
+    if (fileUpload === null) {
+      alert('Please select a file to be uploaded.')
+      setLoading(false)
+      return
+    }
 
-    const clientRef = doc(db, `users/${selectedClient}`)
-    const clientDoc = await getDoc(clientRef)
-    const client = clientDoc.data()
-    const fileTypeRef = collection(db, `${selectedFileType}`)
-    const filename = fileUpload.name.replace(/\.[^/.]+$/, '')
-    const fileUrl = `${selectedFileType}/${username}/${client.username}/${fileUpload.name}`
-    const fileRef = ref(storage, fileUrl)
-    await uploadBytes(fileRef, fileUpload).then(snap => {
-      getDownloadURL(snap.ref).then(async url => {
-        const data = {
-          clientname: client.username,
-          clientphoto: client.photoURL,
-          clientid: clientDoc.id,
-          filename: filename,
-          fileurl: url,
-          uploadby: initials,
-          uploaddate: new Date(),
-          remarks: remarks,
-        }
+    if (selectedClient !== '') {
+      const clientRef = doc(db, `users/${selectedClient}`)
+      const clientDoc = await getDoc(clientRef)
+      const client = clientDoc.data()
+      const fileTypeRef = collection(db, `${selectedFileType}`)
+      const filename = fileUpload.name.replace(/\.[^/.]+$/, '')
+      const fileUrl = `${selectedFileType}/${username}/${client.username}/${fileUpload.name}`
+      const fileRef = ref(storage, fileUrl)
+      await uploadBytes(fileRef, fileUpload).then(snap => {
+        getDownloadURL(snap.ref).then(async url => {
+          const data = {
+            clientname: client.username,
+            clientphoto: client.photoURL,
+            clientid: clientDoc.id,
+            filename: filename,
+            fileurl: url,
+            uploadby: initials,
+            uploaddate: new Date(),
+            remarks: remarks,
+          }
 
-        await addDoc(fileTypeRef, data).then(() => {
-          alert('Upload Successful')
-          getFiles()
+          await addDoc(fileTypeRef, data).then(() => {
+            alert('Upload Successful')
+            getFiles()
+            setLoading(false)
+            setShowModal(false)
+            return
+          })
         })
       })
-    })
+    } else if (selectedSupplier !== '') {
+      const fileTypeRef = collection(db, `${selectedFileType}`)
+      const filename = fileUpload.name.replace(/\.[^/.]+$/, '')
+      const fileUrl = `${selectedFileType}/${username}/${selectedSupplier}/${fileUpload.name}`
+      const fileRef = ref(storage, fileUrl)
+      await uploadBytes(fileRef, fileUpload).then(snap => {
+        getDownloadURL(snap.ref).then(async url => {
+          const data = {
+            clientname: selectedSupplier,
+            clientphoto: '',
+            clientid: selectedSupplier,
+            filename: filename,
+            fileurl: url,
+            uploadby: initials,
+            uploaddate: new Date(),
+            remarks: remarks,
+          }
 
+          await addDoc(fileTypeRef, data).then(() => {
+            alert('Upload Successful')
+            getFiles()
+            setLoading(false)
+            setShowModal(false)
+            return
+          })
+        })
+      })
+    } else {
+      alert('Please select a supplier or client first.')
+      setLoading(false)
+      return
+    }
     setLoading(false)
   }
 
@@ -103,8 +150,6 @@ export default function Accounting() {
     })
   }
 
-  const [showModal, setShowModal] = useState(false)
-
   useEffect(() => {
     getClients()
     getFiles()
@@ -134,6 +179,52 @@ export default function Accounting() {
                 <option value={file.type}>{file.name}</option>
               ))}
             </select>
+            <select
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              onChange={e => {
+                setSearchUserType(e.target.value)
+                setSearchClient('')
+                setSearchSupplier('')
+              }}
+            >
+              <option value=''>Select User Type</option>
+              <option value='supplier'>Supplier</option>
+              <option value='client'>Client</option>
+            </select>
+            {searchUserType === '' ? (
+              ''
+            ) : (
+              <>
+                {searchUserType === 'client' ? (
+                  <select
+                    className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                  shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    onChange={e => setSearchClient(e.target.value)}
+                  >
+                    <option defaultValue={''}>Select Client</option>
+                    {clients.map(client => (
+                      <option key={client.id} value={client.id}>
+                        {client.username}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <select
+                    className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                  shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    onChange={e => setSearchSupplier(e.target.value)}
+                  >
+                    <option defaultValue={''}>Select Supplier</option>
+                    {suppliers?.map((supplier, i) => (
+                      <option key={i} value={supplier}>
+                        {supplier}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </>
+            )}
             <button
               type='button'
               onClick={() => {
@@ -152,13 +243,50 @@ export default function Accounting() {
                     <select
                       className=' h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      onChange={e => setSelectedClient(e.target.value)}
+                      onChange={e => {
+                        e.preventDefault()
+                        setSelectedUserType(e.target.value)
+                        setSelectedClient('')
+                        setSelectedSupplier('')
+                      }}
                     >
-                      <option value=''>Select Client</option>
-                      {clients.map(client => (
-                        <option value={client.id}>{client.username}</option>
-                      ))}
+                      <option value=''>Select User Type</option>
+                      <option value='supplier'>Supplier</option>
+                      <option value='client'>Client</option>
                     </select>
+                    {selectedUserType === '' ? (
+                      ''
+                    ) : (
+                      <>
+                        {selectedUserType === 'client' ? (
+                          <select
+                            className=' h-10 bg-white self-center border-maroon outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            onChange={e => setSelectedClient(e.target.value)}
+                          >
+                            <option defaultValue={''}>Select Client</option>
+                            {clients.map(client => (
+                              <option key={client.id} value={client.id}>
+                                {client.username}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <select
+                            className=' h-10 bg-white self-center border-maroon outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            onChange={e => setSelectedSupplier(e.target.value)}
+                          >
+                            <option defaultValue={''}>Select Supplier</option>
+                            {suppliers?.map((supplier, i) => (
+                              <option key={i} value={supplier}>
+                                {supplier}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+                      </>
+                    )}
                     <select
                       className=' h-10 bg-white self-center border-maroon outline-none border-b-[1px]
                       shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -166,7 +294,9 @@ export default function Accounting() {
                     >
                       <option>Select File Type</option>
                       {fileTypes?.map(fileType => (
-                        <option value={fileType.type}>{fileType.name}</option>
+                        <option key={fileType.type} value={fileType.type}>
+                          {fileType.name}
+                        </option>
                       ))}
                     </select>
                     <textarea
@@ -195,7 +325,10 @@ export default function Accounting() {
                   </div>
                   <p
                     className='text-maroon text-sm cursor-pointer hover:text-black hover:font-bold'
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setRemarks('')
+                      setShowModal(false)
+                    }}
                   >
                     Close
                   </p>
@@ -215,11 +348,18 @@ export default function Accounting() {
                   file.id === 'DONOTDELETE' ? (
                     ''
                   ) : (
-                    <FileReadOnly
-                      file={file}
-                      handleDeleteFile={handleDeleteFile}
-                      formatDate={formatDate}
-                    />
+                    <>
+                      {file.clientid === searchClient || file.clientid === searchSupplier ? (
+                        <FileReadOnly
+                          key={file.id}
+                          file={file}
+                          handleDeleteFile={handleDeleteFile}
+                          formatDate={formatDate}
+                        />
+                      ) : (
+                        ''
+                      )}
+                    </>
                   )
                 )}
               </details>
