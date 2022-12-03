@@ -20,7 +20,9 @@ export default function LawyersList() {
     <div className='font-poppins'>
       <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
         <div className='w-full flex item-center mb-2'>
-          <h1 className='self-start text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>BSQ Lawyer</h1>
+          <h1 className='self-center text-base lg:text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>
+            BSQ Lawyer
+          </h1>
           <img
             alt='bsq logo'
             className='w-[80px] mr-4 pt-3'

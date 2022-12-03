@@ -91,12 +91,14 @@ export default function ClientsList() {
     <div className='font-poppins'>
       <div className='h-screen w-screen overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
         <div className='w-full flex item-center mb-2'>
-          <h1 className='self-start text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>Clients</h1>
+          <h1 className='self-center text-base lg:text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>
+            Clients
+          </h1>
           <img
-                  alt='bsq logo'
-                  className='w-[80px] mr-4 pt-3'
-                  src={require('../../assets/officialBSQlogoBlack.png')}
-                />
+            alt='bsq logo'
+            className='w-[80px] mr-4 pt-3'
+            src={require('../../assets/officialBSQlogoBlack.png')}
+          />
         </div>
         <div className='h-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-3 lg:pt-0'>
           <div className='w-[100%] h-[1000%] bg-maroon rounded-md flex flex-col gap-5 items-center lg:w-[130%] lg:h-[100%] lg:ml-20 p-5 '>

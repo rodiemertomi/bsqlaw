@@ -62,7 +62,7 @@ function LoginSignUp() {
       }`}
     >
       <div
-        className={`shadow-2xl flex flex-col animate-[fadeDown_1s_ease-in-out] items-center w-[350px] border-black border-[3px] rounded-3xl h-[430px] lg:h-[430px] lg:mt-14`}
+        className={`shadow-2xl flex flex-col animate-[fadeDown_1s_ease-in-out] items-center w-[350px] border-black border-[3px] rounded-3xl h-[440px] lg:h-[430px] lg:mt-14`}
       >
         <div className='flex'>
           <div
@@ -115,10 +115,10 @@ function LoginSignUp() {
                 shadow appearance-none border rounded w-full pr-3 pl-9   py-2 px-3 text-gray-700 leading-tight focus:shadow-outline'
               />
             </div>
-            {error && <AlertBox>{error}</AlertBox>}
+            <div className='h-6'>{error && <AlertBox>{error}</AlertBox>}</div>
             <button
               type='submit'
-              className='font-Lora font-bold mt-6 py-4 px-8 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white hover:border-maroon hover:border-2 hover:font-bold text-white md:text-sm md:py-3 md:px-4 '
+              className='h-11 mt-2 font-Lora font-bold transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon hover:text-black hover:bg-white hover:border-maroon hover:border-2 hover:font-bold text-white md:text-sm md:py-3 md:px-4 '
             >
               LOG IN
             </button>
