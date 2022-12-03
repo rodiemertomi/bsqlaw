@@ -35,7 +35,7 @@ export default function Accounting() {
   return (
     <div className='h-screen w-screen font-poppins overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
       <div className='w-full flex item-center mb-2'>
-        <h1 className='self-start text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>
+        <h1 className='self-center text-base lg:text-[30px] w-full mt-3 ml-5 font-bold lg:ml-28'>
           BSQ Accounting
         </h1>
         <img
@@ -46,7 +46,7 @@ export default function Accounting() {
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
-          <div className='h-[50px] w-[24%] flex flex-row justify-center pr-5 item-center self-end mb-2 mt-1 mr-6'>
+          <div className='h-[50px] w-[70%] lg:w-[22%] flex flex-row justify-center pr-5 item-center self-end mb-2 mt-1 mr-6'>
             <select
               className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
                       shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'

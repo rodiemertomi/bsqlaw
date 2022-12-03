@@ -15,7 +15,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               When should I hire a Lawyer or Law Firm?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Most business and trade references recommend securing the services of an accountant
               and a lawyer on or before actually doing business. A good lawyer or law firm should
               provide you with sound advice and prevent legal liability, which often translates into
@@ -27,7 +27,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What factors should I consider in hiring a lawyer or law firm?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               The best counsel for you depends primarily on your legal needs. Most lawyers, whether
               practicing on their own or in a firm, should be competent enough to advise you on
               common issues and handle simple cases. Nevertheless, for complex or pervasive legal
@@ -41,7 +41,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               How important is specialization in hiring a lawyer?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Like doctors, lawyers start out as general practitioners, but to develop their
               specialization, they must acquire further education, experience, expertise, or
               exposure in a specific field. Lawyers specializing in a specific field are generally
@@ -53,7 +53,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What are “full service” or “multi-specialty” law firms?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Most law firms strive to become “full service” or “multi-specialty” firms in order to
               become one-stop shops for their clients. Being a one-stop shop affords significant
               advantages for clients in terms of, among others, convenience, ease of coordination,
@@ -67,7 +67,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               Should cost of services come in to play in my choice of legal representation?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Lawyers price their services in a wide range or spectrum, such that, with diligence or
               good referrals, you should be able to find a competent lawyer or law firm within your
               budget. Although exorbitant legal fees are by no means always a guarantee for
@@ -80,7 +80,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               How do lawyers price their services?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               In determining the price or fee rate for their services, lawyers consider many
               factors, including, the difficulty and complexity of your case, how much resources,
               time or manpower the matter will require, the venue of the case, the potential gain or
@@ -93,7 +93,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What do lawyers charge and how do law firms generally bill for their services?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Lawyers and law firms usually charge an acceptance fee upon engagement. Depending on
               the needs of their clients, lawyers and law firms usually employ the following billing
               arrangements: (a) retainer; (b) hourly; (c) per pleading/hearing (or appearance); (d)
@@ -102,8 +102,10 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer text-maroon'>What is an acceptance fee?</summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
+              What is an acceptance fee?
+            </summary>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               An acceptance fee is a fee for accepting a case or a client. It is generally not
               considered a fee for services rendered (or work performed) as these services are, as a
               rule, charged separately. Upon payment, the client is entitled to representation by
@@ -112,8 +114,10 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer text-maroon'>What is a retainer fee?</summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
+              What is a retainer fee?
+            </summary>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               A retainer fee is usually a monthly fee of a fixed amount for a buffet of advisory and
               other services, including, review of contracts and agreements, drafting of legal
               opinions and other legal documents in the ordinary course of business. Corporate
@@ -127,7 +131,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What services are billed hourly?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Prosecuting or defending against criminal, civil or administrative cases, or those
               before quasi-judicial agencies, commonly referred to as litigation, is typically
               billed by the hour or at an hourly rate. Extensive studies, drafting of lengthy
@@ -140,8 +144,10 @@ function Faqs() {
             </p>
           </details>
           <details className='text-justify lg:ml-10'>
-            <summary className='font-semibold cursor-pointer text-maroon'>Do lawyers bill by output?</summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <summary className='font-semibold cursor-pointer text-maroon'>
+              Do lawyers bill by output?
+            </summary>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Yes, instead of billing by the hour, lawyers may opt to bill by output (a pleading,
               motion or any other document) at a fixed rate that disregards the amount of time
               required to prepare the same. A fixed rate for court appearances or meetings may also
@@ -152,7 +158,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What is a packaged or stage-billing arrangement?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               A packaged or stage-billing arrangement is an alternative (like output billing) to
               hourly billing in that a client is charged a fixed amount for representation in a
               case, usually billed at certain stages of the case. The amount billed may be based on
@@ -164,7 +170,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What is an hourly-capped arrangement?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               An hourly-capped arrangement is a variation of the hourly billing arrangement in that
               a limit or cap, whether in terms of money or time, is agreed upon, such that even if a
               lawyer’s services take more time than expected, the client is not billed over the
@@ -175,7 +181,7 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               What are contingency or success fees?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Instead of billing by the hour or per output/appearance, a lawyer may bill a client
               equivalent to a percentage (usually 10% or more) of the amount received by the client
               from an award by a court or tribunal in case of a victory. Note, however, that
@@ -190,17 +196,16 @@ function Faqs() {
             <summary className='font-semibold cursor-pointer text-maroon'>
               How do I remember these legal fee structures or arrangements?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'> <img
-                src={require('../assets/bsqTable.png')}
-                alt='bsqlogo'
-                className='w-[500px]'
-              /></p>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
+              {' '}
+              <img src={require('../assets/bsqTable.png')} alt='bsqlogo' className='w-[500px]' />
+            </p>
           </details>
           <details className='text-justify lg:ml-10'>
             <summary className='font-semibold cursor-pointer text-maroon'>
               Aside from legal fees, what other costs should I expect?
             </summary>
-            <p className='text-justify xl:mr-52 text-[#8C760A]'>
+            <p className='text-justify xl:mr-52 text-[#000] leading-8'>
               Legal costs and other expenses, include filing fees, telephone call costs, facsimile
               and document reproduction charges, courier fees, hotel and transportation expenses
               incurred in court appearances, cost of stenographic notes, printing of briefs and the
