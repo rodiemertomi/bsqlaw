@@ -28,6 +28,7 @@ export default function Accounting() {
   const [remarks, setRemarks] = useState('')
   const [files, setFiles] = useState([])
   const [fileSearch, setFileSearch] = useState('soa')
+  const [suppliers, setSuppliers] = useState([])
   const fileTypes = [
     {
       name: 'Statement of Account',
@@ -36,7 +37,6 @@ export default function Accounting() {
     { name: 'Check Vouchers', type: 'cv' },
     { name: 'Official Receipt', type: 'or' },
   ]
-  const suppliers = ['Meralco', 'Manila water', 'Golden Cup', 'Hantex', 'Smart', 'PLDT', 'Data Net']
 
   const { username, initials } = UseUserReducer()
 
@@ -143,6 +143,14 @@ export default function Accounting() {
     })
   }
 
+  const getSuppliers = async () => {
+    const colRef = collection(db, 'users')
+    const suppRef = query(colRef, where('role', '==', 'supplier'))
+    await getDocs(suppRef).then(snap => {
+      setSuppliers(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
   const getFiles = async () => {
     const colRef = collection(db, `${fileSearch}`)
     await getDocs(colRef).then(snap => {
@@ -152,6 +160,7 @@ export default function Accounting() {
 
   useEffect(() => {
     getClients()
+    getSuppliers()
     getFiles()
   }, [fileSearch])
 
@@ -217,8 +226,8 @@ export default function Accounting() {
                   >
                     <option defaultValue={''}>Select Supplier</option>
                     {suppliers?.map((supplier, i) => (
-                      <option key={i} value={supplier}>
-                        {supplier}
+                      <option key={i} value={supplier.username}>
+                        {supplier.username}
                       </option>
                     ))}
                   </select>
@@ -279,8 +288,8 @@ export default function Accounting() {
                           >
                             <option defaultValue={''}>Select Supplier</option>
                             {suppliers?.map((supplier, i) => (
-                              <option key={i} value={supplier}>
-                                {supplier}
+                              <option key={i} value={supplier.username}>
+                                {supplier.username}
                               </option>
                             ))}
                           </select>

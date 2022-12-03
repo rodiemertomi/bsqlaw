@@ -49,6 +49,12 @@ function AdminControl({ setHideNavBar, dispatch }) {
     setHideNavBar(true)
   }
 
+  const handleManageSuppliers = () => {
+    dispatch({ type: ACTIONS.MANAGE_SUPPLIERS })
+    hideAdminControl()
+    setHideNavBar(true)
+  }
+
   return (
     <div className='font-poppins'>
       <div
@@ -62,38 +68,35 @@ function AdminControl({ setHideNavBar, dispatch }) {
         <h1 className='ml-5 mt-5 text-xl font-bold'>Admin Control</h1>
 
         <div className='flex flex-col gap-5 mt-5 mb-10 ml-10'>
-          <details>
-            <summary className='font-semibold cursor-pointer'>Manage Partners</summary>
-            <div className='mt-5'>
-              <ul className='flex flex-col gap-4 cursor-pointer'>
-                <li onClick={handleManageParters}>Manage Partners</li>
-              </ul>
-            </div>
-          </details>
-          <details>
-            <summary className='font-semibold cursor-pointer'>Manage Admins</summary>
-            <div className='mt-5'>
-              <ul className='flex flex-col gap-4 cursor-pointer'>
-                <li onClick={handleManageAdmin}>Manage Admins</li>
-              </ul>
-            </div>
-          </details>
-          <details>
-            <summary className='font-semibold cursor-pointer'>Manage Lawyers</summary>
-            <div className='mt-5'>
-              <ul className='flex flex-col gap-4 cursor-pointer'>
-                <li onClick={handleManageLawyers}>Manage Lawyers</li>
-              </ul>
-            </div>
-          </details>
-          <details>
-            <summary className='font-semibold cursor-pointer'>Manage Clients</summary>
-            <div className='mt-5'>
-              <ul className='flex flex-col gap-4 cursor-pointer'>
-                <li onClick={handleManageClients}>Manage Clients</li>
-              </ul>
-            </div>
-          </details>
+          <div className='mt-5'>
+            <ul className='flex flex-col gap-4 cursor-pointer font-bold'>
+              <li onClick={handleManageParters}>Manage Partners</li>
+            </ul>
+          </div>
+
+          <div className='mt-5'>
+            <ul className='flex flex-col gap-4 cursor-pointer font-bold'>
+              <li onClick={handleManageAdmin}>Manage Admins</li>
+            </ul>
+          </div>
+
+          <div className='mt-5'>
+            <ul className='flex flex-col gap-4 cursor-pointer font-bold'>
+              <li onClick={handleManageLawyers}>Manage Lawyers</li>
+            </ul>
+          </div>
+
+          <div className='mt-5'>
+            <ul className='flex flex-col gap-4 cursor-pointer font-bold'>
+              <li onClick={handleManageClients}>Manage Clients</li>
+            </ul>
+          </div>
+
+          <div className='mt-5'>
+            <ul className='flex flex-col gap-4 cursor-pointer font-bold'>
+              <li onClick={handleManageSuppliers}>Manage Suppliers</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
