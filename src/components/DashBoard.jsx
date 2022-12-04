@@ -30,6 +30,7 @@ const DashBoard = () => {
     setId,
     setInitials,
     setBirthday,
+    setPassword,
   } = UseUserReducer()
 
   const { role } = UseUserReducer()
@@ -70,6 +71,7 @@ const DashBoard = () => {
           setInitials(data.initials)
           setBirthday(data.birthday)
           setClients(data.clients)
+          setPassword(data.password)
         })
       } catch (err) {
         alert(err.message)

@@ -15,6 +15,7 @@ const UseUserReducer = create(set => ({
   gender: '',
   contactNo: '',
   clients: [],
+  password: '',
 
   setClients: newClients =>
     set(() => ({
@@ -71,6 +72,10 @@ const UseUserReducer = create(set => ({
   setBirthday: newBirthday =>
     set(() => ({
       birthday: newBirthday,
+    })),
+  setPassword: newPassword =>
+    set(() => ({
+      password: newPassword,
     })),
 }))
 
