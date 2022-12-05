@@ -62,7 +62,7 @@ function ChangePassword({ closeModal }) {
 
   return (
     <div className='w-screen h-screen flex items-center justify-center bg-modalbg'>
-      <div className='bg-[#e1dfdf] animate-[popUp_0.3s_ease-in-out] shadow-2xl w-[85%] h-[75%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:h-[620px] lg:w-[520px] lg:gap-3'>
+      <div className='bg-[#e1dfdf] animate-[popUp_0.3s_ease-in-out] shadow-2xl w-[320px] h-[420px] flex flex-col items-center justify-center rounded-lg lg:h-[460px] lg:w-[390px] lg:gap-3'>
         <div className='flex flex-col justify-center items-center gap-5'>
           <h1 className='font-bold text-2xl'>Change Password</h1>
           <div className='w-[100%] flex flex-col gap-3'>
@@ -74,7 +74,7 @@ function ChangePassword({ closeModal }) {
                 type='password'
                 name='currentPassword'
                 placeholder='Current Password'
-                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded py-2 px-3 w-1/2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded py-2 px-3 w-[65%] text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
               <input
                 required
@@ -83,7 +83,7 @@ function ChangePassword({ closeModal }) {
                 type='password'
                 name='newPassword1'
                 placeholder='New Password'
-                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
 
               <input
@@ -93,14 +93,16 @@ function ChangePassword({ closeModal }) {
                 type='password'
                 name='confirmPassword'
                 placeholder='Confirm New Password'
-                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                className=' h-9  pl-4 shadow appearance-none border-[1px] border-gray rounded w-[65%] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
               />
-              <label className='pl-4 appearance-none w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xs'>
-                Password must contain at least 1 Uppercase, 1 Lowercase, 1 number, and a special
-                character.
-              </label>
+              <div className='w-[50%] text-center text-xs font-poppins text-maroon p-2 rounded-md'>
+                <span className='font-bold italic'>NOTE:</span> Password must contain at least 1
+                Uppercase, 1 Lowercase, 1 number, and a special character.
+              </div>
+            </div>
+            <div className='h-6'>
               {newPasswordState && (
-                <div className='h-6'>
+                <div>
                   {isStrong ? (
                     <GreenAlert>Password Is Strong</GreenAlert>
                   ) : (
@@ -109,7 +111,7 @@ function ChangePassword({ closeModal }) {
                 </div>
               )}
             </div>
-            <div className='flex flex-col items-center w-[100%] gap-4 '>
+            <div className='flex flex-col items-center w-[100%] gap-2 '>
               <div className='w-[100%] flex justify-center gap-2 mt-2'>
                 <button
                   onClick={() => closeModal(false)}
@@ -138,9 +140,9 @@ function ChangePassword({ closeModal }) {
 export default ChangePassword
 
 function RedAlert({ children }) {
-  return <div className='text-[#FF0000] font-semibold text-center mt-1'>{children}</div>
+  return <div className='text-[#FF0000] font-semibold text-center'>{children}</div>
 }
 
 function GreenAlert({ children }) {
-  return <div className='text-[#008000] font-semibold text-center mt-1'>{children}</div>
+  return <div className='text-[#008000] font-semibold text-center'>{children}</div>
 }
