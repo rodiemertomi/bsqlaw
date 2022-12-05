@@ -71,8 +71,8 @@ export default function AdminProfile() {
             >
               <img
                 alt='edit icon'
-                className='w-6 h-6 invert'
-                src={require('../../assets/edit.png')}
+                className='w-5 h-5 invert'
+                src={require('../../assets/password.png')}
               />
               Change Password
             </button>
