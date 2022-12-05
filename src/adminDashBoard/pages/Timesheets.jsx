@@ -46,7 +46,7 @@ export default function Timesheets() {
     const timesheetsref = doc(db, `timesheets/${selectedYear}-${selectedMonth}-${selectedWeek}`)
     const fileUrl = `timesheets/${username}/${selectedYear}/${selectedMonth}/${selectedWeek}/${fileUpload.name}`
     const fileRef = ref(storage, fileUrl)
-    await uploadBytes(fileRef, fileUrl).then(snap => {
+    await uploadBytes(fileRef, fileUpload).then(snap => {
       getDownloadURL(snap.ref).then(async url => {
         const data = {
           filename: filename,
