@@ -3,10 +3,30 @@ import MaroonButton from '../components/MaroonButton'
 import emailjs from '@emailjs/browser'
 
 const Result = () => {
-  return <p>Your message has been successfully sent.</p>
+  return (
+    <div>
+      <p>Your message has been successfully sent.</p>
+    </div>
+  )
 }
 
 function ContactUs() {
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState(null)
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email)
+  }
+
+  const handleChange = event => {
+    if (!isValidEmail(event.target.value)) {
+      setError('Email is invalid!')
+    } else {
+      setError(null)
+    }
+    setMessage(event.target.value)
+  }
+
   const [result, showResult] = useState(false)
   const sendEmail = form => {
     form.preventDefault()
@@ -47,6 +67,8 @@ function ContactUs() {
               id='email'
               name='email'
               placeholder='Your Email'
+              value={message}
+              onChange={handleChange}
               required
               className=' h-10 pl-4 shadow appearance-none border-[1px] border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             ></input>
@@ -66,7 +88,23 @@ function ContactUs() {
               required
               className='pl-4 h-28 shadow appearance-none border-[1px] border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             ></textarea>
-            <div>{result ? <Result /> : null}</div>
+            <div className='pl-1'>
+              {error && (
+                <h2
+                  style={{
+                    color: 'red',
+                    background: '#ffcc00',
+                    padding: '8px',
+                    fontSize: '13px',
+                    borderRadius: '8px',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {error}
+                </h2>
+              )}
+            </div>
+            {result ? <Result /> : null}
             <MaroonButton>Submit</MaroonButton>
           </form>
 
