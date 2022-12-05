@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
 import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
+import ChangePassword from '../../components/ChangePassword'
 
 export default function LawyerProfile() {
   const { firstName, lastName, email, photoURL, clients, initials, gender, contactNo } =
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
-
-  const formatDate = date => {
-    let dateArray = [date.getDate(), date.getMonth() + 1, date.getFullYear()]
-    return dateArray.join('/')
-  }
+  const [changePasswordModal, setChangePasswordModal] = useState(false)
 
   const [showClientList, setShowClientList] = useState(false)
 
@@ -112,10 +109,25 @@ export default function LawyerProfile() {
             />
             Edit Profile
           </button>
+          <button
+            type='button'
+            onClick={() => {
+              setChangePasswordModal(true)
+            }}
+            className='font-semibold mt-2 w-[60%] md:w-[30%] lg:w-[30%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center'
+          >
+            <img
+              alt='edit icon'
+              className='w-6 h-6 invert'
+              src={require('../../assets/edit.png')}
+            />
+            Change Password
+          </button>
         </div>
       </div>
       <div className='absolute lg:left-[40px]'>
         {openModal && <EditProfile closeModal={setOpenModal} />}
+        {changePasswordModal && <ChangePassword closeModal={setChangePasswordModal} />}
       </div>
     </div>
   )
