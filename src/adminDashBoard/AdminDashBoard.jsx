@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import AdminSideNavBar from './AdminSideNavBar'
 import { useReducer } from 'react'
 import AdminReducer from './reducers/AdminReducer'
+import AdminProfile from './pages/AdminProfile'
 
 export default function AdminDashBoard({ username }) {
   const [hideNavBar, setHideNavBar] = useState()
-  const [state, dispatch] = useReducer(AdminReducer, { page: '' })
+  const [state, dispatch] = useReducer(AdminReducer, { page: <AdminProfile /> })
   const [touchStartX, setTouchStartX] = useState(null)
   const [touchStartY, setTouchStartY] = useState(null)
   const [touchEndX, setTouchEndX] = useState(null)

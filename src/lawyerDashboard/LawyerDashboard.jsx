@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import LawyerSideNavBar from './LawyerSideNavBar'
 import { useReducer } from 'react'
 import LawyerReducer from './reducers/LawyerReducer'
+import LawyerProfile from './pages/LawyerProfile'
 
 export default function LawyerDashboard({ username }) {
   const [hideNavBar, setHideNavBar] = useState()
-  const [state, dispatch] = useReducer(LawyerReducer, { page: '' })
+  const [state, dispatch] = useReducer(LawyerReducer, { page: <LawyerProfile /> })
   const [touchStartX, setTouchStartX] = useState(null)
   const [touchStartY, setTouchStartY] = useState(null)
   const [touchEndX, setTouchEndX] = useState(null)

@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import OwnerSideNavBar from './OwnerSideNavBar'
 import { useReducer } from 'react'
 import OwnerReducer from './reducers/OwnerReducer'
+import OwnerProfile from './pages/OwnerProfile'
 
 export default function OwnerDashboard({ username }) {
   const [hideNavBar, setHideNavBar] = useState()
-  const [state, dispatch] = useReducer(OwnerReducer, { page: '' })
+  const [state, dispatch] = useReducer(OwnerReducer, { page: <OwnerProfile /> })
   const [touchStartX, setTouchStartX] = useState(null)
   const [touchStartY, setTouchStartY] = useState(null)
   const [touchEndX, setTouchEndX] = useState(null)

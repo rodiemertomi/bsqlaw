@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import ClientSideNavBar from './ClientSideNavBar'
 import { useReducer } from 'react'
 import ClientReducer from './reducers/ClientReducer'
+import ClientProfile from './pages/ClientProfile'
 
 export default function ClientDashboard({ username }) {
   const [hideNavBar, setHideNavBar] = useState()
-  const [state, dispatch] = useReducer(ClientReducer, { page: '' })
+  const [state, dispatch] = useReducer(ClientReducer, { page: <ClientProfile /> })
   const [touchStartX, setTouchStartX] = useState(null)
   const [touchStartY, setTouchStartY] = useState(null)
   const [touchEndX, setTouchEndX] = useState(null)
