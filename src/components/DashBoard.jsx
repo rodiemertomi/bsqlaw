@@ -10,7 +10,7 @@ import { useIdleTimer } from 'react-idle-timer'
 import UseUserReducer from '../UserReducer'
 
 const DashBoard = () => {
-  const timeout = 5 * 1000 * 60
+  const timeout = 18000000
   const { user, logOut } = UserAuth()
   const colRef = collection(db, 'users')
   const userRef = query(colRef, where('email', '==', user.email))
