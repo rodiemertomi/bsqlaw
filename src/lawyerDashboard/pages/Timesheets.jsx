@@ -30,6 +30,7 @@ export default function Timesheets() {
   const [selectedMonth, setSelectedMonth] = useState()
   const [selectedWeek, setSelectedWeek] = useState()
   const [searchYear, setSearchYear] = useState(moment().year())
+  const [searchMonth, setSearchMonth] = useState('January')
   const [files, setFiles] = useState([])
   const [remarks, setRemarks] = useState('')
 
@@ -139,6 +140,15 @@ export default function Timesheets() {
                 year === moment().year() ? '' : <option value={year}>{year}</option>
               )}
             </select>
+            <select
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              onChange={e => setSearchMonth(e.target.value)}
+            >
+              {months?.map(month =>
+                month === moment().month() ? '' : <option value={month}>{month}</option>
+              )}
+            </select>
             <button
               type='button'
               onClick={() => {
@@ -218,38 +228,44 @@ export default function Timesheets() {
               </div>
             )}
           </div>
-          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto pb-5'>
-            {months?.map(month => (
-              <Fragment>
-                <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] lg:w-[100%] '>
-                  <details className='p-5 w-full'>
-                    <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
-                      {month}
-                    </summary>
-                    {weeks?.map(week => (
-                      <>
-                        <summary className='cursor-pointer text-maroon pl-5 text-md uppercase lg:text-md md:text-md font-bold flex justify-between pt-2'>
-                          {week} Week
-                        </summary>
-                        {files?.map(file =>
-                          file.month === month && file.week === week ? (
-                            <ReadOnlyRow
-                              files={file.files}
-                              month={month}
-                              week={week}
-                              id={file.id}
-                              handleDeleteFile={handleDeleteFile}
-                            />
-                          ) : (
-                            ''
-                          )
-                        )}
-                      </>
-                    ))}
-                  </details>
-                </div>
-              </Fragment>
-            ))}
+          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto   pb-5'>
+            {months?.map(month =>
+              searchMonth === month ? (
+                <Fragment>
+                  <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] lg:w-[100%] '>
+                    <details className='p-5 w-full'>
+                      <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
+                        {month}
+                      </summary>
+                      {weeks?.map(week => (
+                        <>
+                          <summary className='cursor-pointer pl-5 text-md text-maroon uppercase lg:text-md md:text-md font-bold flex justify-between pt-2'>
+                            {week} Week
+                          </summary>
+                          {files?.map(file =>
+                            file.month === month &&
+                            file.week === week &&
+                            file.uploader === initials ? (
+                              <ReadOnlyRow
+                                files={file.files}
+                                month={month}
+                                week={week}
+                                id={file.id}
+                                handleDeleteFile={handleDeleteFile}
+                              />
+                            ) : (
+                              ''
+                            )
+                          )}
+                        </>
+                      ))}
+                    </details>
+                  </div>
+                </Fragment>
+              ) : (
+                ''
+              )
+            )}
           </div>
         </div>
       </div>

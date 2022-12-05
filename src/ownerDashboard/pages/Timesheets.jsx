@@ -30,6 +30,7 @@ export default function Timesheets() {
   const [selectedMonth, setSelectedMonth] = useState()
   const [selectedWeek, setSelectedWeek] = useState()
   const [searchYear, setSearchYear] = useState(moment().year())
+  const [searchMonth, setSearchMonth] = useState('January')
   const [files, setFiles] = useState([])
   const [remarks, setRemarks] = useState('')
 
@@ -139,6 +140,15 @@ export default function Timesheets() {
                 year === moment().year() ? '' : <option value={year}>{year}</option>
               )}
             </select>
+            <select
+              className='mt-2 h-9 bg-white self-center border-black outline-none border-b-[1px]
+                      shadow border rounded w-full px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              onChange={e => setSearchMonth(e.target.value)}
+            >
+              {months?.map(month =>
+                month === moment().month() ? '' : <option value={month}>{month}</option>
+              )}
+            </select>
             <button
               type='button'
               onClick={() => {
@@ -151,7 +161,7 @@ export default function Timesheets() {
 
             {showModal && (
               <div className='w-screen h-screen z-20 bg-modalbg absolute top-0 left-0 flex justify-center items-center'>
-                <div className='flex flex-col animate-[moveTop_0.3s_ease-in-out] justify-center items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[520px] lg:w-[400px] p-14'>
+                <div className='flex flex-col justify-center animate-[moveTop_0.3s_ease-in-out] items-center bg-[#e1dfdf] absolute h-[65%] w-[90%] drop-shadow-lg gap-5 rounded-md md:h-[50%] md:w-[60%] lg:h-[520px] lg:w-[400px] p-14'>
                   <div className=' flex w-full flex-col items-center justify-evenly mt-2 gap-4'>
                     <h1 className='font-bold w-full text-xl text-center'>UPLOAD TIMESHEET</h1>
                     <select
@@ -218,38 +228,42 @@ export default function Timesheets() {
               </div>
             )}
           </div>
-          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto pb-5'>
-            {months?.map(month => (
-              <Fragment>
-                <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] lg:w-[100%] '>
-                  <details className='p-5 w-full'>
-                    <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
-                      {month}
-                    </summary>
-                    {weeks?.map(week => (
-                      <>
-                        <summary className='cursor-pointer text-maroon pl-5 text-md uppercase lg:text-md md:text-md font-bold flex justify-between pt-2'>
-                          {week} Week
-                        </summary>
-                        {files?.map(file =>
-                          file.month === month && file.week === week ? (
-                            <ReadOnlyRow
-                              files={file.files}
-                              month={month}
-                              week={week}
-                              id={file.id}
-                              handleDeleteFile={handleDeleteFile}
-                            />
-                          ) : (
-                            ''
-                          )
-                        )}
-                      </>
-                    ))}
-                  </details>
-                </div>
-              </Fragment>
-            ))}
+          <div className='w-[100%] h-[100%] pl-5 pr-5 flex flex-col items-center gap-2 lg:w-[100%] overflow-auto   pb-5'>
+            {months?.map(month =>
+              searchMonth === month ? (
+                <Fragment>
+                  <div className='bg-[#FFF] flex items-center rounded-lg shadow-lg w-[100%] lg:w-[100%] '>
+                    <details className='p-5 w-full'>
+                      <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
+                        {month}
+                      </summary>
+                      {weeks?.map(week => (
+                        <>
+                          <summary className='cursor-pointer pl-5 text-md text-maroon uppercase lg:text-md md:text-md font-bold flex justify-between pt-2'>
+                            {week} Week
+                          </summary>
+                          {files?.map(file =>
+                            file.month === month && file.week === week ? (
+                              <ReadOnlyRow
+                                files={file.files}
+                                month={month}
+                                week={week}
+                                id={file.id}
+                                handleDeleteFile={handleDeleteFile}
+                              />
+                            ) : (
+                              ''
+                            )
+                          )}
+                        </>
+                      ))}
+                    </details>
+                  </div>
+                </Fragment>
+              ) : (
+                ''
+              )
+            )}
           </div>
         </div>
       </div>

@@ -2,14 +2,33 @@ import React, { useState } from 'react'
 import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 import ChangePassword from '../../components/ChangePassword'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { db } from '../../firebase'
+import { useEffect } from 'react'
 
 export default function LawyerProfile() {
-  const { firstName, lastName, email, photoURL, clients, initials, gender, contactNo } =
-    UseUserReducer()
+  const { firstName, lastName, email, photoURL, initials, gender, contactNo } = UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
+  const [clients, setClients] = useState()
 
   const [showClientList, setShowClientList] = useState(false)
+
+  const getClients = async () => {
+    const colRef = collection(db, 'users')
+    const clientsQ = query(
+      colRef,
+      where('role', '==', 'client'),
+      where('lawyer', 'array-contains', `${initials}`)
+    )
+    await getDocs(clientsQ).then(snap => {
+      setClients(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
+  useEffect(() => {
+    getClients()
+  }, [])
 
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
