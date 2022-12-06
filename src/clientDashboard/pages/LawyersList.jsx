@@ -64,14 +64,6 @@ function ReadLawyers({ lawyer }) {
         <h1>{`${lawyer.initials}`}</h1>
       </div>
       <div className='w-full bg-black shadow-lg h-[20%] flex flex-col items-center justify-center p-2 text-xs '>
-        {/* <h1 className='font-bold text-yellow'>List of Clients</h1>
-        <div className=' overflow-auto pt-[5px] scrollbar-hide flex flex-col items-center text-white h-full w-full'>
-          {lawyer.clients?.map((client, i) => (
-            <h1 key={i}>
-              {client.firstname} {client.lastname}
-            </h1>
-          ))}
-        </div> */}
         <div>
           <h1
             className='text-yellow font-thin hover:text-white hover:underline hover:cursor-pointer '

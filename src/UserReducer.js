@@ -16,7 +16,12 @@ const UseUserReducer = create(set => ({
   contactNo: '',
   clients: [],
   password: '',
+  lawyers: '',
 
+  setLawyers: newLawyers =>
+    set(() => ({
+      lawyers: newLawyers,
+    })),
   setClients: newClients =>
     set(() => ({
       clients: newClients,

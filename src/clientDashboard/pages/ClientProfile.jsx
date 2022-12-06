@@ -2,11 +2,39 @@ import React, { useState } from 'react'
 import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 import ChangePassword from '../../components/ChangePassword'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { db } from '../../firebase'
+import { useEffect } from 'react'
 
 export default function AdminProfile() {
-  const { firstName, lastName, email, photoURL, gender, contactNo } = UseUserReducer()
+  const { firstName, lastName, email, photoURL, gender, contactNo, lawyers } = UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
+  const [showLawyerList, setShowLawyerList] = useState(false)
+  const [showLawyerProfile, setShowLawyerProfile] = useState(false)
+  const [lawyersList, setLawyersList] = useState()
+  const [showLawyer, setShowLawyer] = useState({})
+
+  const getLawyers = async () => {
+    const colRef = collection(db, 'users')
+    let lawyersArr = []
+    lawyers?.map(async lawyer => {
+      const q = query(colRef, where('initials', '==', `${lawyer}`))
+      await getDocs(q).then(snap => {
+        snap.docs.map(doc => lawyersArr.push({ ...doc.data(), id: doc.id }))
+      })
+    })
+    setLawyersList(lawyersArr)
+  }
+
+  const handleShowLawyerProfile = lawyer => {
+    setShowLawyerProfile(true)
+    setShowLawyer(lawyer)
+  }
+
+  useEffect(() => {
+    getLawyers()
+  }, [])
 
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
@@ -24,6 +52,104 @@ export default function AdminProfile() {
               {firstName} {lastName}
             </span>
           </h1>
+          <h1
+            className='text-black font-bold hover:text-white hover:underline hover:cursor-pointer '
+            onClick={() => {
+              setShowLawyerList(true)
+            }}
+          >
+            My Lawyers
+          </h1>
+          {showLawyerList && (
+            <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center z-20'>
+              <div className='bg-white animate-[moveTop_0.3s_ease-in-out] w-[360px] h-[480px] gap-2 rounded-xl flex flex-col items-center shadow-lg'>
+                <div className='w-full h-[60px] bg-maroon rounded-t-xl flex items-center justify-center'>
+                  <h1 className='text-2xl font-bold text-white'>My Lawyers</h1>
+                </div>
+                <div className='flex flex-col w-full h-full items-center justify-between pr-6 pl-6 pt-3 pb-3'>
+                  <div className='overflow-auto w-full text-base font-light flex flex-col gap-1'>
+                    {lawyersList?.map((lawyer, i) => (
+                      <div
+                        className='w-full bg-maroon rounded-md text-white p-3 pl-5 '
+                        onClick={() => handleShowLawyerProfile(lawyer)}
+                      >
+                        <h1 key={i}>
+                          {lawyer.firstname} {lawyer.lastname}
+                        </h1>
+                      </div>
+                    ))}
+                  </div>
+                  <div className='text-sm font-thin'>
+                    <h1
+                      className='text-maroon hover:font-bold hover:cursor-pointer mb-2'
+                      onClick={() => setShowLawyerList(false)}
+                    >
+                      Close
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {showLawyerProfile && (
+            <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center z-20'>
+              <div className='bg-white animate-[moveTop_0.3s_ease-in-out] w-[360px] h-[480px] gap-2 rounded-xl flex flex-col items-center shadow-lg'>
+                <div className='flex flex-col justify-center items-center gap-1 bg-[#fff] rounded-lg shadow-lg lg:w-[500px] lg:h-[580px] h-[80%] w-[90%] md:w-[80%] md:h-[60%]'>
+                  <div className='border-4 border-[#5B1D1D] shadow-lg rounded-full w-[201px] h-[208px]'>
+                    <img
+                      alt='user'
+                      className='w-[200px] h-[200px] rounded-full p-[1px] mb-2'
+                      src={
+                        showLawyer.photoURL === '' || !showLawyer.photoURL
+                          ? require('../../assets/user.png')
+                          : `${showLawyer.photoURL}`
+                      }
+                    />
+                  </div>
+                  <h1>
+                    <span className='font-bold text-3xl'>
+                      {showLawyer.firstName} {showLawyer.lastName}
+                    </span>
+                  </h1>
+                  <h1>
+                    <span className='font-bold text-xl'>{showLawyer.initials}</span>
+                  </h1>
+                  <div className='w-[70%] flex flex-col gap-1'>
+                    <div className='flex justify-center items-center gap-1'>
+                      <img
+                        alt='info icon'
+                        className='w-5 h-5'
+                        src={require('../../assets/info.png')}
+                      />
+                      <h1 className='font-bold text-maroon text-lg'>Basic Information</h1>
+                    </div>
+                    <h1>
+                      <span className='font-bold'>Contact Number:</span> {showLawyer.contactNo}
+                    </h1>
+                    <div className='w-full mt-2 text-xs lg:text-base p-3 bg-black shadow-lg flex items-center justify-center'>
+                      <h1 className='flex items-center justify-center'>
+                        <img
+                          alt='user'
+                          className='w-6 h-6 invert mr-1'
+                          src={require('../../assets/email.png')}
+                        />
+                        <span className='text-white mr-[2px]'>Connect with</span>{' '}
+                        <span className=' text-white font-Lora italic'> {showLawyer.email}</span>
+                      </h1>
+                    </div>
+                    <div className='text-sm font-thin'>
+                      <h1
+                        className='text-maroon hover:font-bold hover:cursor-pointer mb-2'
+                        onClick={() => setShowLawyerProfile(false)}
+                      >
+                        Close
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className='flex flex-col mt-1 gap-1'>
             <div className='flex justify-center items-center gap-1'>
               <img alt='info icon' className='w-5 h-5' src={require('../../assets/info.png')} />
