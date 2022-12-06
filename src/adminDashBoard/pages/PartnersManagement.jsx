@@ -198,22 +198,6 @@ export default function PartnersManagement() {
                 placeholder='Email'
                 onChange={handleAddFormChange}
               />
-              <input
-                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='text'
-                name='username'
-                value={addFormData.username}
-                placeholder='Username'
-                onChange={handleAddFormChange}
-              />
-              <input
-                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='password'
-                name='password'
-                value={addFormData.password}
-                placeholder='Password'
-                onChange={handleAddFormChange}
-              />
               <button
                 className={`font-semibold w-[60%] md:w-[30%] lg:w-[15%] h-10 transition-all duration-200 rounded-3xl border-gray border-2 bg-maroon shadow-lg hover:font-semibold hover:bg-[#471414] text-white md:text-sm md:py-3 md:px-4 flex gap-[1px] justify-center items-center ${
                   loading ? 'cursor-wait' : 'cursor-pointer'
