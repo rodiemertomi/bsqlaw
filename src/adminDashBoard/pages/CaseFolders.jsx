@@ -93,7 +93,7 @@ export default function CaseFolders() {
     const lawyerInitials = snap.data().lawyer
 
     const extension = fileUpload.name.split('.').pop()
-    const fileUrl = `caseFiles/${username}/${folderOption}/${caseTitleRef.current.value}.${extension}`
+    const fileUrl = `caseFiles/${username}/${folderOption}/${pleadingRef.current.value}.${extension}`
     const fileRef = ref(storage, fileUrl)
     await uploadBytes(fileRef, fileUpload).then(snapshot => {
       getDownloadURL(snapshot.ref).then(async url => {
