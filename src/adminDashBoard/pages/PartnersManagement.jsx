@@ -29,7 +29,7 @@ export default function PartnersManagement() {
     gender: '',
     lastname: '',
     lawyer: '',
-    password: '',
+    password: 'newpartner',
   })
 
   const handleAddFormChange = e => {
@@ -66,7 +66,6 @@ export default function PartnersManagement() {
         username: '',
         email: '',
         role: 'partner',
-        password: '',
         contactNo: '',
         firstname: '',
         gender: '',

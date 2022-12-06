@@ -29,7 +29,7 @@ export default function AdminsManagement() {
     gender: '',
     lastname: '',
     lawyer: '',
-    password: '',
+    password: 'newadmin',
   })
 
   const handleAddFormChange = e => {
@@ -66,7 +66,6 @@ export default function AdminsManagement() {
           username: '',
           email: '',
           role: 'admin',
-          password: '',
           contactNo: '',
           firstname: '',
           gender: '',
