@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import AdminControl from './slideModule/AdminControl'
 import { ACTIONS } from './reducers/AdminReducer'
 import useStylesStore from './reducers/StylesReducer'
 import UseUserReducer from '../UserReducer'
+import { useEffect } from 'react'
 
 function AdminSideNavBar({
   hideNavBar,
@@ -17,7 +18,8 @@ function AdminSideNavBar({
   const { hideAdminControl, closeAdminControl } = useStylesStore()
   const { logOut } = UserAuth()
 
-  const { photoURL } = UseUserReducer()
+  const { photoURL, password } = UseUserReducer()
+  const [error, setError] = useState(false)
 
   const handleSignOut = async () => {
     if (window.confirm('Sure to log out?') === true) {
@@ -31,35 +33,54 @@ function AdminSideNavBar({
     }
   }
 
+  const checkPassword = () => {
+    if (password !== 'newadmin') {
+      setError(false)
+      return
+    }
+    setError(true)
+  }
+
   const viewProfile = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_PROFILE })
     closeAdminControl()
   }
   const viewDashboard = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_DASHBOARD })
     closeAdminControl()
   }
   const viewCasefolders = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_CASEFOLDERS })
     closeAdminControl()
   }
   const viewTimesheets = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_TIMESHEETS })
     closeAdminControl()
   }
   const viewAppointments = () => {
+    if (error) return
     dispatch({ type: ACTIONS.MANAGE_APPOINTMENT })
     closeAdminControl()
   }
   const viewAccounting = () => {
+    if (error) return
     dispatch({ type: ACTIONS.MANAGE_ACCOUNTING })
     closeAdminControl()
   }
+
+  useEffect(() => {
+    checkPassword()
+  })
 
   return (
     <div>
       {/* Sliding Modules Components*/}
       <AdminControl
+        error={error}
         dispatch={dispatch}
         minSwipeDistance={minSwipeDistance}
         onTouchStart={onTouchStart}
@@ -95,7 +116,10 @@ function AdminSideNavBar({
             icon={
               <img
                 alt='dashboard icon'
-                onClick={hideAdminControl}
+                onClick={() => {
+                  if (error) return
+                  hideAdminControl()
+                }}
                 className='w-10 h-10 invert'
                 src={require('../assets/adminControl.png')}
               />

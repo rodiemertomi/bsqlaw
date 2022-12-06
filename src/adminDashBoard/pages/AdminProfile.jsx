@@ -2,11 +2,27 @@ import React, { useState } from 'react'
 import UseUserReducer from '../../UserReducer'
 import EditProfile from '../pages/EditProfile'
 import ChangePassword from '../../components/ChangePassword'
+import { useEffect } from 'react'
 
 export default function AdminProfile() {
-  const { firstName, lastName, email, photoURL, initials, gender, contactNo } = UseUserReducer()
+  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password } =
+    UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
+  const [error, setError] = useState(false)
+
+  const checkPassword = () => {
+    if (password !== 'newadmin') {
+      setError(false)
+      return
+    }
+    setChangePasswordModal(true)
+    setError(true)
+  }
+
+  useEffect(() => {
+    checkPassword()
+  })
 
   return (
     <div className='h-screen w-screen flex flex-col justify-center items-center'>
@@ -84,7 +100,9 @@ export default function AdminProfile() {
       </div>
       <div className='absolute lg:left-[40px]'>
         {openModal && <EditProfile closeModal={setOpenModal} />}
-        {changePasswordModal && <ChangePassword closeModal={setChangePasswordModal} />}
+        {changePasswordModal && (
+          <ChangePassword closeModal={setChangePasswordModal} error={error} />
+        )}
       </div>
     </div>
   )

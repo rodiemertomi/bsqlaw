@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { ACTIONS } from './reducers/OwnerReducer'
 import UseUserReducer from '../UserReducer'
 
 function OwnerSideNavBar({ dispatch, hideNavBar }) {
   const { logOut } = UserAuth()
-  const { photoURL } = UseUserReducer()
+  const { photoURL, password } = UseUserReducer()
+  const [error, setError] = useState(false)
 
   const handleSignOut = async () => {
     if (window.confirm('Sure to log out?') === true) {
@@ -19,31 +20,51 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
     }
   }
 
+  const checkPassword = () => {
+    if (password !== 'newpartner') {
+      setError(false)
+      return
+    }
+    setError(true)
+  }
+
   const viewProfile = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_PROFILE })
   }
   const viewDashboard = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_DASHBOARD })
   }
   const viewLawyers = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_LAWYERS })
   }
   const viewClients = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_CLIENTS })
   }
   const viewFolders = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_CASEFOLDERS })
   }
   const viewTimesheets = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_TIMESHEETS })
   }
   const viewAppointments = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_APPOINTMENTS })
   }
 
   const viewAccounting = () => {
+    if (error) return
     dispatch({ type: ACTIONS.MANAGE_ACCOUNTING })
   }
+
+  useEffect(() => {
+    checkPassword()
+  }, [])
 
   return (
     <div>

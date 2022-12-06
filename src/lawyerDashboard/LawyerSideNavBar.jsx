@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { ACTIONS } from './reducers/LawyerReducer'
 import UseUserReducer from '../UserReducer'
 
 function LawyerSideNavBar({ hideNavBar, dispatch }) {
   const { logOut } = UserAuth()
+  const [error, setError] = useState(false)
 
-  const { photoURL } = UseUserReducer()
+  const { photoURL, password } = UseUserReducer()
 
   const handleSignOut = async () => {
     if (window.confirm('Sure to log out?') === true) {
@@ -20,32 +21,49 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
     }
   }
 
+  const checkPassword = () => {
+    if (password !== 'newlawyer') {
+      setError(false)
+      return
+    }
+    setError(true)
+  }
+
   const viewProfile = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_PROFILE })
   }
   const viewDashboard = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_DASHBOARD })
   }
   const viewClients = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_CLIENTS })
   }
   const viewFolders = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_FOLDERS })
   }
   const viewAppointments = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_APPOINTMENTS })
   }
   const viewTimesheets = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_TIMESHEETS })
   }
   const viewAccounting = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_ACCOUNTING })
   }
 
+  useEffect(() => {
+    checkPassword()
+  }, [])
+
   return (
     <div>
-      {/* Sliding Modules Components*/}
-
       {/* Navigation Bar */}
       <div
         className={`${
@@ -54,6 +72,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
       >
         <div className='fixed z-10'>
           <div
+            disabled={error}
             onClick={viewProfile}
             className='relative flex items-center justify-center h-16 w-16 mt-5 mb-10 mx-auto 
     shadow-lg bg-[#632121] hover:bg-[#ab940b]
@@ -84,6 +103,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
             icon={
               <img
                 alt='casefolder icon'
+                disabled={error}
                 onClick={viewFolders}
                 className='w-10 h-10 invert'
                 src={require('../assets/caseFolder.png')}
@@ -95,6 +115,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
             icon={
               <img
                 alt='casefolder icon'
+                disabled={error}
                 onClick={viewAppointments}
                 className='w-10 h-10 invert'
                 src={require('../assets/appointment.png')}
@@ -106,6 +127,7 @@ function LawyerSideNavBar({ hideNavBar, dispatch }) {
             icon={
               <img
                 alt='appointment'
+                disabled={error}
                 onClick={viewTimesheets}
                 className='w-10 h-10 invert'
                 src={require('../assets/timesheets.png')}

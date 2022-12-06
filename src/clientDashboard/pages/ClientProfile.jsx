@@ -7,13 +7,24 @@ import { db } from '../../firebase'
 import { useEffect } from 'react'
 
 export default function AdminProfile() {
-  const { firstName, lastName, email, photoURL, gender, contactNo, lawyers } = UseUserReducer()
+  const { firstName, lastName, email, photoURL, gender, contactNo, lawyers, password } =
+    UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
   const [showLawyerList, setShowLawyerList] = useState(false)
   const [showLawyerProfile, setShowLawyerProfile] = useState(false)
   const [lawyersList, setLawyersList] = useState()
   const [showLawyer, setShowLawyer] = useState({})
+  const [error, setError] = useState(false)
+
+  const checkPassword = () => {
+    if (password !== 'newclient') {
+      setError(false)
+      return
+    }
+    setChangePasswordModal(true)
+    setError(true)
+  }
 
   const getLawyers = async () => {
     const colRef = collection(db, 'users')
@@ -33,6 +44,7 @@ export default function AdminProfile() {
   }
 
   useEffect(() => {
+    checkPassword()
     getLawyers()
   }, [])
 
@@ -207,7 +219,9 @@ export default function AdminProfile() {
       </div>
       <div className='absolute lg:left-[40px]'>
         {openModal && <EditProfile closeModal={setOpenModal} />}
-        {changePasswordModal && <ChangePassword closeModal={setChangePasswordModal} />}
+        {changePasswordModal && (
+          <ChangePassword closeModal={setChangePasswordModal} error={error} />
+        )}
       </div>
     </div>
   )
