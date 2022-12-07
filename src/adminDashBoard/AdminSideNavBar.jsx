@@ -51,6 +51,11 @@ function AdminSideNavBar({
     dispatch({ type: ACTIONS.VIEW_DASHBOARD })
     closeAdminControl()
   }
+  const viewReports = () => {
+    if (error) return
+    dispatch({ type: ACTIONS.VIEW_REPORTS })
+    closeAdminControl()
+  }
   const viewCasefolders = () => {
     if (error) return
     dispatch({ type: ACTIONS.VIEW_CASEFOLDERS })
@@ -170,6 +175,17 @@ function AdminSideNavBar({
             }
           />
           <p className='text-center text-xs pt-0 mb-3 font-poppins'>Accounting</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='appointment'
+                onClick={viewReports}
+                className='w-10 h-10 invert'
+                src={require('../assets/dashboard.jpg')}
+              />
+            }
+          />
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Reports</p>
         </div>
         <div
           className='text-center fixed flex flex-col items-center justify-center bottom-4 z-10 cursor-pointer'

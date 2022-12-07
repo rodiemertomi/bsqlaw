@@ -10,6 +10,7 @@ import CaseFolders from '../pages/CaseFolders'
 import Accounting from '../pages/Accounting'
 import React from 'react'
 import Timesheets from '../pages/Timesheets'
+import Reports from '../pages/Reports'
 
 export const ACTIONS = {
   MANAGE_ADMIN: 'manage-admin',
@@ -23,6 +24,7 @@ export const ACTIONS = {
   VIEW_DASHBOARD: 'view-dashboard',
   VIEW_CASEFOLDERS: 'view-casefolders',
   VIEW_TIMESHEETS: 'view-timesheets',
+  VIEW_REPORTS: 'view-reports',
 }
 
 const AdminReducer = (state, action) => {
@@ -45,6 +47,8 @@ const AdminReducer = (state, action) => {
       return { page: <CaseFolders /> }
     case ACTIONS.VIEW_TIMESHEETS:
       return { page: <Timesheets /> }
+    case ACTIONS.VIEW_REPORTS:
+      return { page: <Reports /> }
     case ACTIONS.MANAGE_PARTNERS:
       return { page: <PartnersManagement /> }
     case ACTIONS.MANAGE_ACCOUNTING:
