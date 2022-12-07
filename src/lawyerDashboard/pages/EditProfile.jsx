@@ -49,9 +49,10 @@ function EditProfile({ closeModal }) {
         initials: initialsState,
         photoURL: photoURLState,
       }
-    setDoc(docRef, data, { merge: true }).then(
-      alert('Updated profile successfully. Please refresh page.')
-    )
+    setDoc(docRef, data, { merge: true }).then(() => {
+      alert('Updated profile successfully.')
+      window.location.reload(false)
+    })
     closeModal(false)
     setLoading(false)
   }
