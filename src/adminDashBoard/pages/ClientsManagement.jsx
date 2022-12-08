@@ -8,10 +8,13 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase'
 import ClientsEditRow from './components/ClientsEditRow'
 import ClientsReadOnlyRow from './components/ClientsReadOnlyRow'
+import reportLog from '../../components/ReportLog'
+import UseUserReducer from '../../UserReducer'
 
 export default function ClientsManagement() {
   const colRef = collection(db, 'users')
@@ -19,6 +22,7 @@ export default function ClientsManagement() {
   const [loading, setLoading] = useState(false)
   const [clients, setClients] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const { username } = UseUserReducer()
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -98,6 +102,7 @@ export default function ClientsManagement() {
 
     try {
       await addDoc(colRef, newClient).then(() => {
+        reportLog(`${username} created ${newClient.email} account.`)
         setAddFormData({
           username: '',
           email: '',
@@ -134,6 +139,7 @@ export default function ClientsManagement() {
     }
 
     await setDoc(docRef, editedUser, { merge: true }).then(() => {
+      reportLog(`${username} edited ${editedUser.email}'s information.`)
       alert('Document updated Successfully')
       getClients()
     })
@@ -166,6 +172,9 @@ export default function ClientsManagement() {
   const handleDeleteClick = async clientId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
+      await getDoc(doc(db, `users/${clientId}`)).then(snap => {
+        reportLog(`${username} deleted ${snap.data().username}'s account.`)
+      })
       await deleteDoc(doc(db, 'users', clientId))
     }
     setLoading(false)

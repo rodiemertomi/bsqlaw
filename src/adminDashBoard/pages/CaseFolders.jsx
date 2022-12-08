@@ -15,6 +15,7 @@ import {
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 import { nanoid } from 'nanoid'
+import reportLog from '../../components/ReportLog'
 
 export default function CaseFolders() {
   const [loading, setLoading] = useState(false)
@@ -68,6 +69,7 @@ export default function CaseFolders() {
       files: [],
     }
     await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData).then(() => {
+      reportLog(`${username} added folder ${folderNameRef.current.value}.`)
       alert('Added folder successfully')
       getFolders()
     })
@@ -117,6 +119,7 @@ export default function CaseFolders() {
           files: arrayUnion(data),
         }
         await setDoc(selectedFolderRef, fileInput, { merge: true }).then(() => {
+          reportLog(`${username} uploaded ${pleadingRef.current.value} to ${folderOption}.`)
           alert('Successfully added file in firestore')
           getFolders()
         })
@@ -210,6 +213,7 @@ export default function CaseFolders() {
     await setDoc(docRef, deleteData, { merge: true })
     await setDoc(docRef, addData, { merge: true }).then(() => {
       alert('Update Successful')
+      reportLog(`${username} edited ${editFormData.pleading} in ${editFormData.folder}`)
       setEditFileId(null)
       setEditFolderId(null)
       getFolders()
@@ -242,6 +246,7 @@ export default function CaseFolders() {
       window.confirm('Are you sure you want to delete this folder and all its contents?') === true
     ) {
       const ref = doc(db, `folders/${folderid}`)
+      reportLog(`${username} deleted ${folderid}`)
       await deleteDoc(ref).then(() => {
         alert('Deleted Folder.')
         getFolders()
@@ -272,6 +277,7 @@ export default function CaseFolders() {
         url: file.url,
       }
       const deleteData = { files: arrayRemove(deleteFile) }
+      reportLog(`${username} deleted ${deleteFile.pleading} in ${deleteFile.folder}`)
       await setDoc(docRef, deleteData, { merge: true }).then(() => {
         alert('Deleted file.')
         getFolders()

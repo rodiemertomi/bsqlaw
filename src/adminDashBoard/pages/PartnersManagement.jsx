@@ -8,10 +8,13 @@ import {
   setDoc,
   deleteDoc,
   addDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase'
 import PartnersEditRow from './components/PartnersEditRow'
 import PartnersReadOnlyRow from './components/PartnersReadOnlyRow'
+import UseUserReducer from '../../UserReducer'
+import reportLog from '../../components/ReportLog'
 
 export default function PartnersManagement() {
   const colRef = collection(db, 'users')
@@ -19,6 +22,7 @@ export default function PartnersManagement() {
   const [loading, setLoading] = useState(false)
   const [partners, setPartners] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const { username } = UseUserReducer()
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -49,7 +53,7 @@ export default function PartnersManagement() {
     setLoading(true)
     if (!addFormData.email || !addFormData.username || !addFormData.password) return
 
-    const newClient = {
+    const newPartner = {
       username: addFormData.username,
       email: addFormData.email,
       role: addFormData.role,
@@ -61,21 +65,24 @@ export default function PartnersManagement() {
     }
 
     try {
-      await addDoc(colRef, newClient)
-      setAddFormData({
-        username: '',
-        email: '',
-        role: 'partner',
-        contactNo: '',
-        firstname: '',
-        gender: '',
-        lastname: '',
-        lawyer: '',
+      await addDoc(colRef, newPartner).then(() => {
+        reportLog(`${username} added ${newPartner.email} account.`)
+        setAddFormData({
+          username: '',
+          email: '',
+          role: 'partner',
+          contactNo: '',
+          firstname: '',
+          gender: '',
+          lastname: '',
+          lawyer: '',
+        })
+        getPartners()
+        setLoading(false)
       })
     } catch (err) {
       alert(err.message)
     }
-    getPartners()
     setLoading(false)
   }
 
@@ -122,7 +129,7 @@ export default function PartnersManagement() {
     e.preventDefault()
     const docRef = doc(db, 'users', editPartnerId)
 
-    const editedAdmin = {
+    const editedPartner = {
       username: editFormData.username,
       firstname: editFormData.firstname,
       lastname: editFormData.lastname,
@@ -130,7 +137,8 @@ export default function PartnersManagement() {
       email: editFormData.email,
     }
 
-    setDoc(docRef, editedAdmin, { merge: true }).then(() => {
+    setDoc(docRef, editedPartner, { merge: true }).then(() => {
+      reportLog(`${username} edited ${editedPartner.username}'s information.`)
       alert('Document updated Successfully')
     })
 
@@ -156,10 +164,13 @@ export default function PartnersManagement() {
     setEditPartnerId(null)
   }
 
-  const handleDeleteClick = async clientId => {
+  const handleDeleteClick = async partnerId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
-      await deleteDoc(doc(db, 'users', clientId))
+      await getDoc(doc(db, `users/${partnerId}`)).then(snap => {
+        reportLog(`${username} deleted ${snap.data().email} account.`)
+      })
+      await deleteDoc(doc(db, 'users', partnerId))
     }
     setLoading(false)
     getPartners()

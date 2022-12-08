@@ -3,6 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { storage, db } from '../../firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
+import reportLog from '../../components/ReportLog'
 
 function EditProfile({ closeModal }) {
   const { username, id, photoURL, firstName, lastName, contactNo, gender, initials } =
@@ -51,6 +52,7 @@ function EditProfile({ closeModal }) {
         photoURL: photoURLState,
       }
     await setDoc(docRef, data, { merge: true }).then(() => {
+      reportLog(`${username} updated his profile.`)
       alert('Updated profile successfully.')
       window.location.reload(false)
     })

@@ -15,11 +15,12 @@ import 'react-calendar/dist/Calendar.css'
 import { db } from '../../firebase'
 import UseUserReducer from '../../UserReducer'
 import Times from './components/Times'
+import reportLog from '../../components/ReportLog'
 
 function AppointmentManagement() {
   const [showAppointment, setShowAppoitnment] = useState(false)
   const [appointments, setAppointments] = useState([])
-  const { id } = UseUserReducer()
+  const { id, username } = UseUserReducer()
   const [clients, setClients] = useState()
 
   const today = new Date()
@@ -37,6 +38,11 @@ function AppointmentManagement() {
       await getDoc(apptRef).then(async snap => {
         const clientRef = doc(db, `users/${clientId}`)
         const lawyerRef = doc(db, `users/${id}`)
+        reportLog(
+          `${username} canceled ${snap.data().clientUsername}'s appointment with ${
+            snap.data().setter
+          }`
+        )
         const data = {
           appointments: arrayRemove(snap.data()),
         }
@@ -74,6 +80,7 @@ function AppointmentManagement() {
       uid: appointment.uid,
       setter: appointment.setter,
       clientId: appointment.clientId,
+      clientUsername: appointment.clientUsername,
       clientFirstName: appointment.clientFirstName,
       clientLastName: appointment.clientLastName,
       eventName: appointment.eventName,
@@ -104,6 +111,7 @@ function AppointmentManagement() {
       uid: editFormData.uid,
       setter: editFormData.setter,
       clientId: editFormData.clientId,
+      clientUsername: editFormData.clientUsername,
       clientFirstName: editFormData.clientFirstName,
       clientLastName: editFormData.clientLastName,
       eventName: editFormData.eventName,
@@ -115,6 +123,7 @@ function AppointmentManagement() {
     }
 
     await setDoc(docRef, editedAppointment, { merge: true }).then(() => {
+      reportLog(`${username} edited appointment for ${editFormData.clientUsername}`)
       alert('Appointment updated.')
       getAppointments()
     })

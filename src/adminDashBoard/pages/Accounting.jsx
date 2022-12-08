@@ -12,6 +12,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
+import reportLog from '../../components/ReportLog'
 
 export default function Accounting() {
   const [showModal, setShowModal] = useState(false)
@@ -71,6 +72,7 @@ export default function Accounting() {
 
           await addDoc(fileTypeRef, data).then(() => {
             alert('Upload Successful')
+            reportLog(`${username} uploaded ${filename} for ${client.username}`)
             getFiles()
             setLoading(false)
             setShowModal(false)
@@ -98,6 +100,7 @@ export default function Accounting() {
 
           await addDoc(fileTypeRef, data).then(() => {
             alert('Upload Successful')
+            reportLog(`${username} uploaded ${filename} for ${selectedSupplier}`)
             getFiles()
             setLoading(false)
             setShowModal(false)
@@ -123,8 +126,11 @@ export default function Accounting() {
     setLoading(true)
     if (window.confirm('Are you sure you want tod elete this file?') === true) {
       const fileRef = doc(db, `${fileSearch}/${id}`)
+      const file = await getDoc(fileRef)
+      console.log(file.data())
       await deleteDoc(fileRef).then(() => {
         alert('File Delete Successful')
+        reportLog(`${username} deleted ${file.data().filename} from ${fileSearch}`)
         getFiles()
         setLoading(false)
       })

@@ -8,10 +8,13 @@ import {
   setDoc,
   deleteDoc,
   addDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase'
 import AdminEditRow from './components/AdminEditRow'
 import AdminReadOnlyRow from './components/AdminReadOnlyRow'
+import reportLog from '../../components/ReportLog'
+import UseUserReducer from '../../UserReducer'
 
 export default function AdminsManagement() {
   const colRef = collection(db, 'users')
@@ -19,6 +22,7 @@ export default function AdminsManagement() {
   const [loading, setLoading] = useState(false)
   const [admins, setAdmins] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const { username } = UseUserReducer()
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -62,6 +66,7 @@ export default function AdminsManagement() {
 
     try {
       await addDoc(colRef, newClient).then(() => {
+        reportLog(`${username} created ${addFormData.email} account.`)
         setAddFormData({
           username: '',
           email: '',
@@ -132,6 +137,7 @@ export default function AdminsManagement() {
     }
 
     setDoc(docRef, editedAdmin, { merge: true }).then(() => {
+      reportLog(`${username} edited ${editFormData.email}'s information.`)
       alert('Document updated Successfully')
       getAdmins()
     })
@@ -161,7 +167,10 @@ export default function AdminsManagement() {
   const handleDeleteClick = async clientId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
-      await deleteDoc(doc(db, 'users', clientId)).then(() => {
+      const userRef = doc(db, 'users', clientId)
+      const userDoc = await getDoc(userRef)
+      await deleteDoc(userRef).then(() => {
+        reportLog(`${username} deleted ${userDoc.data().email}'s account.`)
         alert('User deleted')
         getAdmins()
       })

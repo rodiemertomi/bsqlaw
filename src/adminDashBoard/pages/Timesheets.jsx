@@ -13,6 +13,7 @@ import {
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 import moment from 'moment'
+import reportLog from '../../components/ReportLog'
 
 export default function Timesheets() {
   const months = moment.months()
@@ -65,6 +66,9 @@ export default function Timesheets() {
           month: selectedMonth,
         }
         await setDoc(timesheetsref, dataInput, { merge: true }).then(() => {
+          reportLog(
+            `${username} uploaded ${data.filename} timesheet for ${data.week} of ${data.month}, ${data.year}`
+          )
           alert('Uploaded file successfully.')
           getFiles()
         })
@@ -92,6 +96,7 @@ export default function Timesheets() {
       }
 
       await setDoc(docRef, remove, { merge: true }).then(() => {
+        reportLog(`${username} deleted ${data.filename} timesheet.`)
         alert('Deleted File.')
         getFiles()
       })
