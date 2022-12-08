@@ -1,17 +1,27 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { db } from '../../firebase'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  setDoc,
+  arrayRemove,
+  deleteDoc,
+} from 'firebase/firestore'
+import UseUserReducer from '../../UserReducer'
+import reportLog from '../../components/ReportLog'
 
 export default function CaseFolders() {
+  const [loading, setLoading] = useState(false)
   const [foldersList, setFoldersList] = useState([])
-  const foldersRef = collection(db, 'folders')
-  const activeFolders = query(foldersRef, where('active', '==', true))
   const [searchKeyword, setSearchKeyword] = useState('')
 
-  const getFolders = async () => {
-    const snap = await getDocs(activeFolders)
-    setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-  }
+  const { username } = UseUserReducer()
+
+  const foldersRef = collection(db, 'folders')
+  const inactiveFolders = query(foldersRef, where('active', '==', false))
 
   const search = datas => {
     try {
@@ -33,6 +43,84 @@ export default function CaseFolders() {
     }
   }
 
+  const handleDeleteFolder = async (e, folderid) => {
+    e.preventDefault()
+    setLoading(true)
+    if (
+      window.confirm('Are you sure you want to delete this folder and all its contents?') === true
+    ) {
+      const ref = doc(db, `folders/${folderid}`)
+      reportLog(`${username} deleted folder ${folderid}`)
+      await deleteDoc(ref).then(() => {
+        alert('Deleted Folder.')
+        setLoading(false)
+        getFolders()
+        return
+      })
+    } else {
+      setLoading(false)
+      return
+    }
+  }
+
+  const unarchiveFolder = async (e, folderId) => {
+    e.preventDefault()
+    if (
+      window.confirm('Are you sure you want to unarchive this folder and all its contents?') ===
+      true
+    ) {
+      const ref = doc(db, `folders/${folderId}`)
+      reportLog(`${username} unarchived folder ${folderId}`)
+
+      await setDoc(ref, { active: true }, { merge: true }).then(() => {
+        alert('Unarchived Folder.')
+        setLoading(false)
+        getFolders()
+        return
+      })
+    } else {
+      setLoading(false)
+      return
+    }
+  }
+
+  const handleDeleteFile = async (e, file, folderid) => {
+    e.preventDefault()
+    const docRef = doc(db, `folders/${folderid}`)
+    if (window.confirm('Are you sure you want to delete this file?') === true) {
+      const deleteFile = {
+        active: file.active,
+        branch: file.branch,
+        casenumber: file.casenumber,
+        casetitle: file.casetitle,
+        court: file.court,
+        date_created: file.date_created,
+        folder: file.folder,
+        id: file.id,
+        lawyer: file.lawyer,
+        pleading: file.pleading,
+        pleadingdate: file.pleadingdate,
+        shareable: file.shareable,
+        uploadby: file.uploadby,
+        url: file.url,
+      }
+      const deleteData = { files: arrayRemove(deleteFile) }
+      reportLog(`${username} deleted ${deleteFile.pleading} in ${deleteFile.folder}`)
+      await setDoc(docRef, deleteData, { merge: true }).then(() => {
+        alert('Deleted file.')
+        getFolders()
+      })
+    } else {
+      return
+    }
+    return
+  }
+
+  const getFolders = async () => {
+    const snap = await getDocs(inactiveFolders)
+    setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
+
   useEffect(() => {
     getFolders()
   }, [])
@@ -50,20 +138,22 @@ export default function CaseFolders() {
         />
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
-        <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-3 '>
-          <div className='w-full flex items-center'>
-            <div className='w-[70%] pl-6 pt-3 flex items-center'>
-              <span className='font-bold text-xs lg:text-base text-white'>Search Files</span>
-              <input
-                className='lg:ml-2 w-[80%] py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                type='text'
-                placeholder='Enter Case No./Title, Pleading Order/Date, etc...'
-                value={searchKeyword}
-                onChange={e => setSearchKeyword(e.target.value)}
-              />
+        <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col  lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
+          <div className='h-[50px] flex pl-5 flex-row gap-2 item-center mb-2 mt-1 mr-6'>
+            <div className='w-full flex pt-3 items-center justify-between gap-2'>
+              <div className='w-[70%] flex items-center'>
+                <span className='font-bold text-xs lg:text-base text-white'>Search Files</span>
+                <input
+                  className='lg:ml-2 w-[80%] py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  type='text'
+                  placeholder='Enter Case No./Title, Pleading Order/Date, etc...'
+                  value={searchKeyword}
+                  onChange={e => setSearchKeyword(e.target.value)}
+                />
+              </div>
             </div>
           </div>
-          <div className='w-[100%] h-[100%] pt-3 pl-5 pr-5 pb-5 flex flex-col gap-2 lg:w-[100%] overflow-auto'>
+          <div className='w-[100%] h-[100%] pt-3 pl-5 pr-5 flex flex-col gap-2 lg:w-[100%] overflow-auto pb-5'>
             {foldersList?.map(folder => (
               <>
                 {folder.id === 'DONOTDELETE' ? (
@@ -73,11 +163,31 @@ export default function CaseFolders() {
                     <details className='p-5 w-full'>
                       <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
                         <div>{folder.foldername}</div> <div>{folder.handlingpartner}</div>{' '}
+                        <div>
+                          <button
+                            disabled={loading}
+                            className='mr-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                            onClick={e => unarchiveFolder(e, folder.id)}
+                          >
+                            Unarchive Folder
+                          </button>
+                          <button
+                            disabled={loading}
+                            className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                            onClick={e => handleDeleteFolder(e, folder.id)}
+                          >
+                            Delete Folder
+                          </button>
+                        </div>
                       </summary>
                       {search(folder.files)?.map(file => (
                         <Fragment key={file.id}>
                           {file.folder === folder.foldername ? (
-                            <ReadOnlyRow file={file} folderid={folder.id} />
+                            <ReadOnlyRow
+                              file={file}
+                              folderid={folder.id}
+                              handleDeleteFile={handleDeleteFile}
+                            />
                           ) : (
                             ''
                           )}

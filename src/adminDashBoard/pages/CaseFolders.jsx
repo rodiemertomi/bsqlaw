@@ -48,6 +48,7 @@ export default function CaseFolders() {
   const lawyerRef = query(userColRef, where('role', '==', 'lawyer'))
   const partnersRef = query(userColRef, where('role', '==', 'partner'))
   const foldersRef = collection(db, 'folders')
+  const activeFolders = query(foldersRef, where('active', '==', true))
 
   const getLawyerClients = async () => {
     const lawyer = query(userColRef, where('initials', '==', `${selectedLawyer}`))
@@ -246,10 +247,28 @@ export default function CaseFolders() {
       window.confirm('Are you sure you want to delete this folder and all its contents?') === true
     ) {
       const ref = doc(db, `folders/${folderid}`)
-      reportLog(`${username} deleted ${folderid}`)
+      reportLog(`${username} deleted folder ${folderid}`)
       await deleteDoc(ref).then(() => {
         alert('Deleted Folder.')
         getFolders()
+      })
+    } else {
+      return
+    }
+  }
+
+  const archiveFolder = async (e, folderId) => {
+    e.preventDefault()
+    if (
+      window.confirm('Are you sure you want to archive this folder and all its contents?') === true
+    ) {
+      const ref = doc(db, `folders/${folderId}`)
+      reportLog(`${username} archived folder ${folderId}`)
+
+      await setDoc(ref, { active: false }, { merge: true }).then(() => {
+        alert('Archived Folder.')
+        getFolders()
+        return
       })
     } else {
       return
@@ -289,7 +308,7 @@ export default function CaseFolders() {
   }
 
   const getFolders = async () => {
-    const snap = await getDocs(foldersRef)
+    const snap = await getDocs(activeFolders)
     setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
 
@@ -525,6 +544,12 @@ export default function CaseFolders() {
                         <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
                           <div>{folder.foldername}</div> <div>{folder.handlingpartner}</div>{' '}
                           <div>
+                            <button
+                              className='mr-2 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
+                              onClick={e => archiveFolder(e, folder.id)}
+                            >
+                              Archive Folder
+                            </button>
                             <button
                               className='inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-3xl shadow-md bg-maroon hover:bg-white hover:text-black active:shadow-lg transition duration-150 ease-in-out'
                               onClick={e => handleDeleteFolder(e, folder.id)}

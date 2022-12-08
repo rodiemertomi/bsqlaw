@@ -76,6 +76,11 @@ function AdminSideNavBar({
     dispatch({ type: ACTIONS.MANAGE_ACCOUNTING })
     closeAdminControl()
   }
+  const viewArchives = () => {
+    if (error) return
+    dispatch({ type: ACTIONS.VIEW_ARCHIVES })
+    closeAdminControl()
+  }
 
   useEffect(() => {
     checkPassword()
@@ -145,6 +150,17 @@ function AdminSideNavBar({
           <SideBarIcon
             icon={
               <img
+                alt='case folder icon'
+                onClick={viewArchives}
+                className='w-10 h-10 invert'
+                src={require('../assets/archive.png')}
+              />
+            }
+          />
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Archives</p>
+          <SideBarIcon
+            icon={
+              <img
                 alt='appointment'
                 onClick={viewAppointments}
                 className='w-10 h-10 invert'
@@ -181,7 +197,7 @@ function AdminSideNavBar({
                 alt='appointment'
                 onClick={viewReports}
                 className='w-10 h-10 invert'
-                src={require('../assets/dashboard.jpg')}
+                src={require('../assets/analytics.png')}
               />
             }
           />

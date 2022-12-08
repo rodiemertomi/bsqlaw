@@ -1,14 +1,15 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { db } from '../../firebase'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 export default function CaseFolders() {
   const [foldersList, setFoldersList] = useState([])
   const foldersRef = collection(db, 'folders')
+  const activeFolders = query(foldersRef, where('active', '==', true))
   const [searchKeyword, setSearchKeyword] = useState('')
 
   const getFolders = async () => {
-    const snap = await getDocs(foldersRef)
+    const snap = await getDocs(activeFolders)
     setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
 
