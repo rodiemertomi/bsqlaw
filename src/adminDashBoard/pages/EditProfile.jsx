@@ -3,6 +3,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { storage, db } from '../../firebase'
 import { doc, setDoc } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
+import reportLog from '../../components/ReportLog'
 
 function EditProfile({ closeModal }) {
   const { username, id, photoURL, firstName, lastName, contactNo, gender, initials } =
@@ -28,7 +29,8 @@ function EditProfile({ closeModal }) {
     })
   }
 
-  const handleSave = async () => {
+  const handleSave = async e => {
+    e.preventDefault()
     setLoading(true)
     const docRef = doc(db, `users/${id}`)
     let data = {}
@@ -49,10 +51,11 @@ function EditProfile({ closeModal }) {
         initials: initialsState,
         photoURL: photoURLState,
       }
-    setDoc(docRef, data, { merge: true }).then(
-      alert('Updated profile successfully. Please refresh page.')
-    )
-    closeModal(false)
+    await setDoc(docRef, data, { merge: true }).then(() => {
+      reportLog(`${username} updated his profile.`)
+      alert('Updated profile successfully.')
+      window.location.reload(false)
+    })
     setLoading(false)
   }
 
@@ -65,6 +68,7 @@ function EditProfile({ closeModal }) {
       <div className='bg-[#e1dfdf] animate-[popUp_0.3s_ease-in-out] shadow-2xl w-[85%] h-[80%] flex flex-col items-center justify-center rounded-lg md:h-[95%] lg:h-[620px] lg:w-[520px] lg:gap-3'>
         <div className='flex flex-col justify-center items-center gap-5'>
           <h1 className='font-bold text-2xl'>Edit Profile</h1>
+
           <div className='flex flex-col justify-center items-center bg-transparent transition-all'>
             <input
               className='hidden'

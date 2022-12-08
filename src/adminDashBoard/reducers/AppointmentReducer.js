@@ -1,6 +1,7 @@
 import create from 'zustand'
 
 const UseAppointmentStore = create(set => ({
+  clientUsername: '',
   eventTimeStart: '',
   eventTimeEnd: '',
   eventName: '',
@@ -14,6 +15,10 @@ const UseAppointmentStore = create(set => ({
   location: '',
   remarks: '',
 
+  setClientUsername: newClientUsername =>
+    set(() => ({
+      clientUsername: newClientUsername,
+    })),
   setRemarks: newRemark =>
     set(() => ({
       remarks: newRemark,

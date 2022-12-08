@@ -5,7 +5,7 @@ import UseUserReducer from '../UserReducer'
 import { UserAuth } from '../context/AuthContext'
 import validator from 'validator'
 
-function ChangePassword({ closeModal }) {
+function ChangePassword({ closeModal, error }) {
   const { id, password } = UseUserReducer()
 
   const { changePassword } = UserAuth()
@@ -67,6 +67,7 @@ function ChangePassword({ closeModal }) {
           <h1 className='font-bold text-2xl'>Change Password</h1>
           <div className='w-[100%] flex flex-col gap-3'>
             <div className='flex flex-col items-center w-[100%] gap-4 mt-3'>
+              {error ? <RedAlert>Please Change Default Password</RedAlert> : ''}
               <input
                 required
                 value={currentPasswordState}
@@ -114,8 +115,11 @@ function ChangePassword({ closeModal }) {
             <div className='flex flex-col items-center w-[100%] gap-2 '>
               <div className='w-[100%] flex justify-center gap-2 mt-2'>
                 <button
+                  disabled={error}
                   onClick={() => closeModal(false)}
-                  className='bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out'
+                  className={`bg-white w-20 text-black font-bold py-2 px-4 rounded-3xl shadow-md hover:bg-maroon hover:text-white active:shadow-lg transition duration-150 ease-in-out ${
+                    error ? 'cursor-not-allowed' : ''
+                  }`}
                 >
                   Cancel
                 </button>

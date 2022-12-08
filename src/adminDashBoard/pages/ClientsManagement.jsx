@@ -8,10 +8,13 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase'
 import ClientsEditRow from './components/ClientsEditRow'
 import ClientsReadOnlyRow from './components/ClientsReadOnlyRow'
+import reportLog from '../../components/ReportLog'
+import UseUserReducer from '../../UserReducer'
 
 export default function ClientsManagement() {
   const colRef = collection(db, 'users')
@@ -19,6 +22,7 @@ export default function ClientsManagement() {
   const [loading, setLoading] = useState(false)
   const [clients, setClients] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const { username } = UseUserReducer()
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -29,7 +33,7 @@ export default function ClientsManagement() {
     gender: '',
     lastname: '',
     lawyer: [],
-    password: '',
+    password: 'newclient',
     contactperson: '',
     mailingaddress: '',
     company: '',
@@ -98,11 +102,11 @@ export default function ClientsManagement() {
 
     try {
       await addDoc(colRef, newClient).then(() => {
+        reportLog(`${username} created ${newClient.email} account.`)
         setAddFormData({
           username: '',
           email: '',
           role: 'client',
-          password: '',
           contactNo: '',
           firstname: '',
           gender: '',
@@ -135,6 +139,7 @@ export default function ClientsManagement() {
     }
 
     await setDoc(docRef, editedUser, { merge: true }).then(() => {
+      reportLog(`${username} edited ${editedUser.email}'s information.`)
       alert('Document updated Successfully')
       getClients()
     })
@@ -167,6 +172,9 @@ export default function ClientsManagement() {
   const handleDeleteClick = async clientId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
+      await getDoc(doc(db, `users/${clientId}`)).then(snap => {
+        reportLog(`${username} deleted ${snap.data().username}'s account.`)
+      })
       await deleteDoc(doc(db, 'users', clientId))
     }
     setLoading(false)
@@ -219,18 +227,10 @@ export default function ClientsManagement() {
               />
               <input
                 className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='text'
-                name='username'
-                value={addFormData.username}
-                placeholder='Username'
-                onChange={handleAddFormChange}
-              />
-              <input
-                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='password'
-                name='password'
-                value={addFormData.password}
-                placeholder='Password'
+                type='company'
+                name='company'
+                value={addFormData.company}
+                placeholder='Company'
                 onChange={handleAddFormChange}
               />
               <button

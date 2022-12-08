@@ -8,10 +8,13 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase'
 import LawyersEditRow from './components/LawyersEditRow'
 import LawyersReadOnlyRow from './components/LawyersReadOnlyRow'
+import reportLog from '../../components/ReportLog'
+import UseUserReducer from '../../UserReducer'
 
 export default function LawyersManagement() {
   const colRef = collection(db, 'users')
@@ -19,6 +22,7 @@ export default function LawyersManagement() {
   const [loading, setLoading] = useState(false)
   const [lawyers, setLawyers] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const { username } = UseUserReducer()
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -29,7 +33,7 @@ export default function LawyersManagement() {
     gender: '',
     lastname: '',
     lawyer: '',
-    password: '',
+    password: 'newlawyer',
   })
 
   const handleAddFormChange = e => {
@@ -49,7 +53,7 @@ export default function LawyersManagement() {
     setLoading(true)
     if (!addFormData.email || !addFormData.username || !addFormData.password) return
 
-    const newClient = {
+    const newLawyer = {
       username: addFormData.username,
       email: addFormData.email,
       role: addFormData.role,
@@ -61,12 +65,14 @@ export default function LawyersManagement() {
     }
 
     try {
-      await addDoc(colRef, newClient)
+      await addDoc(colRef, newLawyer).then(() => {
+        reportLog(`${username} created ${newLawyer.email} account.`)
+        getLawyers()
+      })
       setAddFormData({
         username: '',
         email: '',
         role: 'lawyer',
-        password: '',
         contactNo: '',
         firstname: '',
         gender: '',
@@ -131,7 +137,9 @@ export default function LawyersManagement() {
     }
 
     setDoc(docRef, editedLawyer, { merge: true }).then(() => {
+      reportLog(`${username} edited ${editedLawyer.username}'s information.`)
       alert('Document updated Successfully')
+      getLawyers()
     })
 
     setLawyerEditId(null)
@@ -156,21 +164,23 @@ export default function LawyersManagement() {
     setLawyerEditId(null)
   }
 
-  const handleDeleteClick = async clientId => {
+  const handleDeleteClick = async lawyerId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
-      await deleteDoc(doc(db, 'users', clientId))
+      await getDoc(doc(db, `users/${lawyerId}`)).then(snap => {
+        reportLog(`${username} deleted ${snap.data().username}'s account.`)
+      })
+      await deleteDoc(doc(db, 'users', lawyerId))
     }
     setLoading(false)
     return
   }
 
+  const getLawyers = async () => {
+    const data = await getDocs(lawyerRef)
+    setLawyers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
   useEffect(() => {
-    const getLawyers = async () => {
-      const data = await getDocs(lawyerRef)
-      setLawyers(data.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-    }
-
     getLawyers()
   }, [])
 
@@ -191,22 +201,6 @@ export default function LawyersManagement() {
                 name='email'
                 value={addFormData.email}
                 placeholder='Email'
-                onChange={handleAddFormChange}
-              />
-              <input
-                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='text'
-                name='username'
-                value={addFormData.username}
-                placeholder='Username'
-                onChange={handleAddFormChange}
-              />
-              <input
-                className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='password'
-                name='password'
-                value={addFormData.password}
-                placeholder='Password'
                 onChange={handleAddFormChange}
               />
               <button

@@ -4,8 +4,9 @@ import { db } from '../../../firebase'
 import UseAppointmentStore from '../../reducers/AppointmentReducer'
 import UseUserReducer from '../../../UserReducer'
 import { nanoid } from 'nanoid'
+import reportLog from '../../../components/ReportLog'
 
-function Times({ closeShowAppointment, clients }) {
+function Times({ closeShowAppointment, clients, getAppointments, appointmentList }) {
   const {
     setClientFirstName,
     setClientLastName,
@@ -16,8 +17,10 @@ function Times({ closeShowAppointment, clients }) {
     setEventDateStart,
     setClientId,
     setLocation,
+    setClientUsername,
   } = UseAppointmentStore()
   const {
+    clientUsername,
     clientFirstName,
     clientLastName,
     eventTimeStart,
@@ -30,7 +33,7 @@ function Times({ closeShowAppointment, clients }) {
   } = UseAppointmentStore()
 
   const appointmentsRef = collection(db, 'appointments')
-  const { initials, id } = UseUserReducer()
+  const { initials, id, username } = UseUserReducer()
   const lawyerRef = doc(db, `users/${id}`)
 
   const handleSelectClient = (e, clients) => {
@@ -38,11 +41,13 @@ function Times({ closeShowAppointment, clients }) {
     setClientId(e.target.value)
     clients.forEach(client => {
       if (client.id === clientId) {
+        setClientUsername(client.username)
         setClientFirstName(client.firstname)
       }
     })
     clients.forEach(client => {
       if (client.id === clientId) {
+        setClientUsername(client.username)
         setClientLastName(client.lastname)
       }
     })
@@ -52,15 +57,7 @@ function Times({ closeShowAppointment, clients }) {
     e.preventDefault()
     if (clientId === '') {
       alert('Please select a client')
-      setEventName('')
-      setEventDesc('')
-      setClientFirstName('')
-      setClientLastName('')
-      setClientId('')
-      setEventTimeStart('')
-      setEventTimeEnd('')
-      setEventDateStart('')
-      setLocation('')
+      resetForm()
       return
     }
     const clientRef = doc(db, `users/${clientId}`)
@@ -79,34 +76,19 @@ function Times({ closeShowAppointment, clients }) {
 
     if (today.getTime() > dateStart.getTime()) {
       alert('Date set has already passed')
-      setEventName('')
-      setEventDesc('')
-      setClientFirstName('')
-      setClientLastName('')
-      setClientId('')
-      setEventTimeStart('')
-      setEventTimeEnd('')
-      setEventDateStart('')
-      setLocation('')
+      resetForm()
       return
     }
     if (eventTimeStart > eventTimeEnd) {
       alert('Time end is less than Time Start')
-      setEventName('')
-      setEventDesc('')
-      setClientFirstName('')
-      setClientLastName('')
-      setClientId('')
-      setEventTimeStart('')
-      setEventTimeEnd('')
-      setEventDateStart('')
-      setLocation('')
+      resetForm()
       return
     }
 
     const data = {
       uid: nanoid(10),
       setter: initials,
+      clientUsername: clientUsername,
       clientId: clientId,
       clientFirstName: clientFirstName,
       clientLastName: clientLastName,
@@ -119,32 +101,56 @@ function Times({ closeShowAppointment, clients }) {
       location: location,
       remarks: '',
     }
-    await addDoc(appointmentsRef, data).then(alert('Appointment is set!'))
+    const isAvailable = appointmentList.map(appointment => {
+      return !(
+        dateStart.getTime() >= appointment.dateTimeStart.toDate().getTime() &&
+        dateStart.getTime() <= appointment.dateTimeEnd.toDate().getTime() &&
+        dateEnd.getTime() >= appointment.dateTimeStart.toDate().getTime() &&
+        (clientId === appointment.clientId || appointment.setter === initials)
+      )
+    })
+    if (isAvailable.includes(false)) {
+      alert('Appointment coincides with another appointment.')
+      isAvailable.length = 0
+      return
+    }
+    await addDoc(appointmentsRef, data).then(() => {
+      reportLog(`${username} set appointment for ${clientUsername} and ${initials}`)
+      alert('Appointment is set!')
+      getAppointments()
+    })
     const appointments = {
       appointments: arrayUnion(data),
     }
     await setDoc(lawyerRef, appointments, { merge: true })
     await setDoc(clientRef, appointments, { merge: true }).then(() => {
-      setEventName('')
-      setEventDesc('')
-      setClientFirstName('')
-      setClientLastName('')
-      setClientId('')
-      setEventTimeStart('')
-      setEventTimeEnd('')
-      setEventDateStart('')
-      setLocation('')
+      resetForm()
     })
+  }
+
+  const resetForm = () => {
+    setClientUsername('')
+    setEventName('')
+    setEventDesc('')
+    setClientFirstName('')
+    setClientLastName('')
+    setClientId('')
+    setEventTimeStart('')
+    setEventTimeEnd('')
+    setEventDateStart('')
+    setLocation('')
   }
 
   useEffect(() => {
     clients.forEach(client => {
       if (client.id === clientId) {
+        setClientUsername(client.username)
         setClientFirstName(client.firstname)
       }
     })
     clients.forEach(client => {
       if (client.id === clientId) {
+        setClientUsername(client.username)
         setClientLastName(client.lastname)
       }
     })
@@ -164,9 +170,17 @@ function Times({ closeShowAppointment, clients }) {
           >
             <option value=''>Client Name</option>
             {clients?.map(client => (
-              <option key={client.id} value={client.id}>
-                {client.firstname} {client.lastname}
-              </option>
+              <>
+                {client.firstname !== '' && client.lastname !== '' ? (
+                  <option key={client.id} value={client.id}>
+                    {client.firstname} {client.lastname}
+                  </option>
+                ) : (
+                  <option key={client.id} value={client.id}>
+                    {client.company}
+                  </option>
+                )}
+              </>
             ))}
           </select>
           {/* Event Name */}

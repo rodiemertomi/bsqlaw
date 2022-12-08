@@ -3,6 +3,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   query,
   setDoc,
@@ -13,6 +14,8 @@ import { useEffect } from 'react'
 import { db } from '../../firebase'
 import SuppliersEditRow from './components/SuppliersEditRow'
 import SuppliersReadOnlyRow from './components/SuppliersReadOnlyRow'
+import reportLog from '../../components/ReportLog'
+import UseUserReducer from '../../UserReducer'
 
 export default function SuppliersManagement() {
   const colRef = collection(db, 'users')
@@ -20,6 +23,7 @@ export default function SuppliersManagement() {
   const [loading, setLoading] = useState(false)
   const [suppliers, setSuppliers] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const { username } = UseUserReducer()
 
   const [addFormData, setAddFormData] = useState({
     username: '',
@@ -77,6 +81,7 @@ export default function SuppliersManagement() {
     }
 
     await addDoc(colRef, newSupplier).then(() => {
+      reportLog(`${username} added ${newSupplier.username}.`)
       setAddFormData({
         username: '',
         role: 'supplier',
@@ -102,6 +107,7 @@ export default function SuppliersManagement() {
     }
 
     await setDoc(docRef, editedUser, { merge: true }).then(() => {
+      reportLog(`${username} edited ${editedUser}'s information.`)
       alert('Document updated Successfully')
       getSuppliers()
     })
@@ -130,6 +136,9 @@ export default function SuppliersManagement() {
   const handleDeleteClick = async supplierId => {
     setLoading(true)
     if (window.confirm('Are you sure you want to delete this user?') === true) {
+      await getDoc(doc(db, 'users', supplierId)).then(snap => {
+        reportLog(`${username} deleted ${snap.data().username}.`)
+      })
       await deleteDoc(doc(db, 'users', supplierId))
     }
     setLoading(false)

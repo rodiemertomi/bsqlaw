@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { UserAuth } from '../context/AuthContext'
 import { ACTIONS } from './reducers/ClientReducer'
 import UseUserReducer from '../UserReducer'
+import { useEffect } from 'react'
 
 function ClientSideNavBar({ hideNavBar, dispatch }) {
   const { logOut } = UserAuth()
+  const [error, setError] = useState(false)
 
-  const { photoURL } = UseUserReducer()
+  const { photoURL, password } = UseUserReducer()
   const handleSignOut = async () => {
     if (window.confirm('Sure to log out?') === true) {
       try {
@@ -19,24 +21,42 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
     }
   }
 
+  const checkPassword = () => {
+    if (password !== 'newclient') {
+      setError(false)
+      return
+    }
+    setError(true)
+  }
+
   const viewDashboard = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_DASHBOARD })
   }
   const viewLawyers = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_LAWYERS })
   }
   const viewAppointments = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_APPOINTMENT })
   }
   const viewFolders = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_FOLDERS })
   }
   const viewProfile = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_PROFILE })
   }
   const viewAccounting = () => {
+    if (error) return
     dispatch({ type: ACTIONS.VIEW_ACCOUNTING })
   }
+
+  useEffect(() => {
+    checkPassword()
+  })
 
   return (
     <div>
@@ -65,14 +85,14 @@ function ClientSideNavBar({ hideNavBar, dispatch }) {
           <SideBarIcon
             icon={
               <img
-                alt='lawyers'
-                onClick={viewLawyers}
+                alt='folders'
+                onClick={viewFolders}
                 className='w-10 h-10 invert'
-                src={require('../assets/lawyer.png')}
+                src={require('../assets/caseFolder.png')}
               />
             }
           />
-          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Lawyers</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Case Folders</p>
           <SideBarIcon
             icon={
               <img

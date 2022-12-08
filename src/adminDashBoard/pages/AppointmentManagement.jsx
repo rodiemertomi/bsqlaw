@@ -13,11 +13,14 @@ import {
 import React, { Fragment, useEffect, useState } from 'react'
 import 'react-calendar/dist/Calendar.css'
 import { db } from '../../firebase'
+import UseUserReducer from '../../UserReducer'
 import Times from './components/Times'
+import reportLog from '../../components/ReportLog'
 
 function AppointmentManagement() {
   const [showAppointment, setShowAppoitnment] = useState(false)
   const [appointments, setAppointments] = useState([])
+  const { id, username } = UseUserReducer()
   const [clients, setClients] = useState()
 
   const today = new Date()
@@ -34,10 +37,17 @@ function AppointmentManagement() {
       const apptRef = doc(db, `appointments/${apptId}`)
       await getDoc(apptRef).then(async snap => {
         const clientRef = doc(db, `users/${clientId}`)
+        const lawyerRef = doc(db, `users/${id}`)
+        reportLog(
+          `${username} canceled ${snap.data().clientUsername}'s appointment with ${
+            snap.data().setter
+          }`
+        )
         const data = {
           appointments: arrayRemove(snap.data()),
         }
         await setDoc(clientRef, data, { merge: true })
+        await setDoc(lawyerRef, data, { merge: true })
         await deleteDoc(apptRef).then(() => {
           alert('Canceled Appointment')
           getAppointments()
@@ -70,6 +80,7 @@ function AppointmentManagement() {
       uid: appointment.uid,
       setter: appointment.setter,
       clientId: appointment.clientId,
+      clientUsername: appointment.clientUsername,
       clientFirstName: appointment.clientFirstName,
       clientLastName: appointment.clientLastName,
       eventName: appointment.eventName,
@@ -100,6 +111,7 @@ function AppointmentManagement() {
       uid: editFormData.uid,
       setter: editFormData.setter,
       clientId: editFormData.clientId,
+      clientUsername: editFormData.clientUsername,
       clientFirstName: editFormData.clientFirstName,
       clientLastName: editFormData.clientLastName,
       eventName: editFormData.eventName,
@@ -111,6 +123,7 @@ function AppointmentManagement() {
     }
 
     await setDoc(docRef, editedAppointment, { merge: true }).then(() => {
+      reportLog(`${username} edited appointment for ${editFormData.clientUsername}`)
       alert('Appointment updated.')
       getAppointments()
     })
@@ -165,7 +178,12 @@ function AppointmentManagement() {
             </button>
             {showAppointment && (
               <div className='w-screen h-screen bg-modalbg absolute top-0 left-0 flex justify-center items-center z-20'>
-                <Times closeShowAppointment={setShowAppoitnment} clients={clients} />
+                <Times
+                  closeShowAppointment={setShowAppoitnment}
+                  clients={clients}
+                  getAppointments={getAppointments}
+                  appointmentList={appointments}
+                />
               </div>
             )}
           </div>
