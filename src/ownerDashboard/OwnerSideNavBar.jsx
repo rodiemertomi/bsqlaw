@@ -36,6 +36,10 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
     if (error) return
     dispatch({ type: ACTIONS.VIEW_DASHBOARD })
   }
+  const viewReports = () => {
+    if (error) return
+    dispatch({ type: ACTIONS.VIEW_REPORTS })
+  }
   const viewLawyers = () => {
     if (error) return
     dispatch({ type: ACTIONS.VIEW_LAWYERS })
@@ -159,6 +163,17 @@ function OwnerSideNavBar({ dispatch, hideNavBar }) {
             }
           />
           <p className='text-center text-xs pt-0 mb-3 font-poppins'>Accounting</p>
+          <SideBarIcon
+            icon={
+              <img
+                alt='appointment'
+                onClick={viewReports}
+                className='w-10 h-10 invert'
+                src={require('../assets/analytics.png')}
+              />
+            }
+          />
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Reports</p>
         </div>
         <div
           className='text-center flex flex-col items-center fixed bottom-4 z-10 cursor-pointer'

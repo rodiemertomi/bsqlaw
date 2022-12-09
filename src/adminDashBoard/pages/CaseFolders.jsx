@@ -12,6 +12,7 @@ import {
   getDoc,
   arrayRemove,
   deleteDoc,
+  addDoc,
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 import { nanoid } from 'nanoid'
@@ -34,6 +35,7 @@ export default function CaseFolders() {
   const [partnersList, setPartnersList] = useState()
   const [selectedPartner, setSelectedPartner] = useState()
   const [searchKeyword, setSearchKeyword] = useState('')
+  const [files, setFiles] = useState([])
 
   const caseTitleRef = useRef()
   const pleadingRef = useRef()
@@ -67,7 +69,6 @@ export default function CaseFolders() {
       lawyer: selectedLawyer,
       clientid: selectedLawyerClient,
       handlingpartner: selectedPartner,
-      files: [],
     }
     await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData).then(() => {
       reportLog(`${username} added folder ${folderNameRef.current.value}.`)
@@ -116,13 +117,12 @@ export default function CaseFolders() {
           court: courtRef.current.value,
           branch: branchRef.current.value,
         }
-        const fileInput = {
-          files: arrayUnion(data),
-        }
-        await setDoc(selectedFolderRef, fileInput, { merge: true }).then(() => {
+        const filesRef = doc(db, `files/${data.id}`)
+        await setDoc(filesRef, data).then(() => {
           reportLog(`${username} uploaded ${pleadingRef.current.value} to ${folderOption}.`)
           alert('Successfully added file in firestore')
           getFolders()
+          getFiles()
         })
       })
     })
@@ -172,7 +172,7 @@ export default function CaseFolders() {
 
   const handleEditFormSubmit = async e => {
     e.preventDefault()
-    const docRef = doc(db, `folders/${editFolderId}`)
+    const fileRef = doc(db, `files/${editFileId}`)
 
     const editedFile = {
       active: editFormData.active,
@@ -190,34 +190,13 @@ export default function CaseFolders() {
       uploadby: editFormData.uploadby,
       url: editFormData.url,
     }
-
-    const deleteFile = {
-      active: firstEditFormData.active,
-      branch: firstEditFormData.branch,
-      casenumber: firstEditFormData.casenumber,
-      casetitle: firstEditFormData.casetitle,
-      court: firstEditFormData.court,
-      date_created: firstEditFormData.date_created,
-      folder: firstEditFormData.folder,
-      id: firstEditFormData.id,
-      lawyer: firstEditFormData.lawyer,
-      pleading: firstEditFormData.pleading,
-      pleadingdate: firstEditFormData.pleadingdate,
-      shareable: firstEditFormData.shareable,
-      uploadby: firstEditFormData.uploadby,
-      url: firstEditFormData.url,
-    }
-
-    const deleteData = { files: arrayRemove(deleteFile) }
-    const addData = { files: arrayUnion(editedFile) }
-
-    await setDoc(docRef, deleteData, { merge: true })
-    await setDoc(docRef, addData, { merge: true }).then(() => {
+    await setDoc(fileRef, editedFile, { merge: true }).then(() => {
       alert('Update Successful')
       reportLog(`${username} edited ${editFormData.pleading} in ${editFormData.folder}`)
       setEditFileId(null)
       setEditFolderId(null)
       getFolders()
+      getFiles()
     })
   }
 
@@ -278,6 +257,7 @@ export default function CaseFolders() {
   const handleDeleteFile = async (e, file, folderid) => {
     e.preventDefault()
     const docRef = doc(db, `folders/${folderid}`)
+    const filesRef = doc(db, `files/${file.id}`)
     if (window.confirm('Are you sure you want to delete this file?') === true) {
       const deleteFile = {
         active: file.active,
@@ -297,6 +277,7 @@ export default function CaseFolders() {
       }
       const deleteData = { files: arrayRemove(deleteFile) }
       reportLog(`${username} deleted ${deleteFile.pleading} in ${deleteFile.folder}`)
+      await deleteDoc(filesRef)
       await setDoc(docRef, deleteData, { merge: true }).then(() => {
         alert('Deleted file.')
         getFolders()
@@ -323,11 +304,19 @@ export default function CaseFolders() {
     })
   }
 
+  const getFiles = async () => {
+    const filesRef = collection(db, 'files')
+    await getDocs(filesRef).then(snap => {
+      setFiles(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
   useEffect(() => {
     getFolders()
     getLawyers()
     getPartners()
     getLawyerClients()
+    getFiles()
   }, [selectedLawyer])
 
   const [showModal, setShowModal] = useState(false)
@@ -558,7 +547,7 @@ export default function CaseFolders() {
                             </button>
                           </div>
                         </summary>
-                        {search(folder.files)?.map(file => (
+                        {search(files)?.map(file => (
                           <Fragment key={file.id}>
                             {file.folder === folder.foldername ? (
                               editFileId === file.id ? (

@@ -7,10 +7,18 @@ export default function CaseFolders() {
   const foldersRef = collection(db, 'folders')
   const activeFolders = query(foldersRef, where('active', '==', true))
   const [searchKeyword, setSearchKeyword] = useState('')
+  const [files, setFiles] = useState([])
 
   const getFolders = async () => {
     const snap = await getDocs(activeFolders)
     setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+  }
+
+  const getFiles = async () => {
+    const filesRef = collection(db, 'files')
+    await getDocs(filesRef).then(snap => {
+      setFiles(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
   }
 
   const search = datas => {
@@ -35,6 +43,7 @@ export default function CaseFolders() {
 
   useEffect(() => {
     getFolders()
+    getFiles()
   }, [])
 
   return (
@@ -74,7 +83,7 @@ export default function CaseFolders() {
                       <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold flex justify-between'>
                         <div>{folder.foldername}</div> <div>{folder.handlingpartner}</div>{' '}
                       </summary>
-                      {search(folder.files)?.map(file => (
+                      {search(files)?.map(file => (
                         <Fragment key={file.id}>
                           {file.folder === folder.foldername ? (
                             <ReadOnlyRow file={file} folderid={folder.id} />

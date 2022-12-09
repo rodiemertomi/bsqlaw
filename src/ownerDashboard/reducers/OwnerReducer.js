@@ -7,6 +7,7 @@ import Timesheets from '../pages/Timesheets'
 import Accounting from '../pages/Accounting'
 import React from 'react'
 import CaseFolders from '../pages/CaseFolders'
+import Reports from '../pages/Reports'
 
 export const ACTIONS = {
   VIEW_DASHBOARD: 'view-dashboard',
@@ -17,6 +18,7 @@ export const ACTIONS = {
   MANAGE_ACCOUNTING: 'view-accounting',
   VIEW_TIMESHEETS: 'view-timesheets',
   VIEW_CASEFOLDERS: 'view-casefolders',
+  VIEW_REPORTS: 'view-reports',
 }
 
 const OwnerReducer = (state, action) => {
@@ -37,6 +39,8 @@ const OwnerReducer = (state, action) => {
       return { page: <CaseFolders /> }
     case ACTIONS.MANAGE_ACCOUNTING:
       return { page: <Accounting /> }
+    case ACTIONS.VIEW_REPORTS:
+      return { page: <Reports /> }
     default:
       return state
   }

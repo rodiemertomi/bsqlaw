@@ -7,12 +7,20 @@ export default function Folders() {
   const { id, firstName, lastName } = UseUserReducer()
   const [folders, setFolders] = useState()
   const [searchKeyword, setSearchKeyword] = useState('')
+  const [files, setFiles] = useState([])
 
   const getFolders = async () => {
     const folderRef = collection(db, 'folders')
     const folderQuery = query(folderRef, where('clientid', '==', `${id}`))
     await getDocs(folderQuery).then(snap => {
       setFolders(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
+  const getFiles = async () => {
+    const filesRef = collection(db, 'files')
+    await getDocs(filesRef).then(snap => {
+      setFiles(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     })
   }
 
@@ -38,6 +46,7 @@ export default function Folders() {
 
   useEffect(() => {
     getFolders()
+    getFiles()
   }, [])
   return (
     <div className='h-screen w-screen font-poppins overflow-auto flex flex-col items-center overflow-x-hidden md:h-screen md:w-screen lg:w-screen '>
@@ -75,7 +84,7 @@ export default function Folders() {
                   <summary className='cursor-pointer text-md uppercase lg:text-2xl md:text-2xl font-bold'>
                     {folder.foldername}
                   </summary>
-                  {search(folder.files)?.map(file => (
+                  {search(files)?.map(file => (
                     <Fragment key={file.id}>
                       {file.folder === folder.foldername ? <ReadOnlyRow file={file} /> : ''}
                     </Fragment>
