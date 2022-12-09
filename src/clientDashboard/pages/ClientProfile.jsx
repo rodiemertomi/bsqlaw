@@ -7,8 +7,18 @@ import { db } from '../../firebase'
 import { useEffect } from 'react'
 
 export default function AdminProfile() {
-  const { firstName, lastName, email, photoURL, gender, contactNo, lawyers, password, username } =
-    UseUserReducer()
+  const {
+    firstName,
+    lastName,
+    email,
+    photoURL,
+    gender,
+    contactNo,
+    lawyers,
+    password,
+    username,
+    role,
+  } = UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
   const [showLawyerList, setShowLawyerList] = useState(false)
@@ -27,6 +37,9 @@ export default function AdminProfile() {
   }
 
   const getLawyers = async () => {
+    if (role !== 'client') {
+      return
+    }
     const colRef = collection(db, 'users')
     let lawyersArr = []
     lawyers?.map(async lawyer => {
