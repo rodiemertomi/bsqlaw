@@ -17,6 +17,7 @@ export default function CaseFolders() {
   const [loading, setLoading] = useState(false)
   const [foldersList, setFoldersList] = useState([])
   const [searchKeyword, setSearchKeyword] = useState('')
+  const [files, setFiles] = useState([])
 
   const { username } = UseUserReducer()
 
@@ -121,6 +122,13 @@ export default function CaseFolders() {
     setFoldersList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
   }
 
+  const getFiles = async () => {
+    const filesRef = collection(db, 'files')
+    await getDocs(filesRef).then(snap => {
+      setFiles(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
   useEffect(() => {
     getFolders()
   }, [])
@@ -180,7 +188,7 @@ export default function CaseFolders() {
                           </button>
                         </div>
                       </summary>
-                      {search(folder.files)?.map(file => (
+                      {search(files)?.map(file => (
                         <Fragment key={file.id}>
                           {file.folder === folder.foldername ? (
                             <ReadOnlyRow
