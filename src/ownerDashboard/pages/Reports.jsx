@@ -21,11 +21,14 @@ export default function Reports() {
   const [totalFiles, setTotalFiles] = useState(0)
   const [lawyerList, setLawyerList] = useState([])
   const [handledBy, setHandledBy] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const getLogs = async () => {
+    setLoading(true)
     const logRef = doc(db, 'reports', 'LOGS')
     const data = await getDoc(logRef)
     setLogs(data.data().logArray)
+    setLoading(false)
   }
 
   const formatDate = date => {
@@ -36,46 +39,65 @@ export default function Reports() {
   const sortedLogs = logs.slice().sort((a, b) => b.timestamp - a.timestamp)
 
   const getCaseFolders = async () => {
+    setLoading(true)
     const foldersRef = collection(db, 'folders')
     const activeQ = query(foldersRef, where('active', '==', true))
     const inactiveQ = query(foldersRef, where('active', '==', false))
     await getDocs(foldersRef).then(snap => setTotalCaseFolders(snap.size - 1))
     await getDocs(activeQ).then(snap => setActiveCaseFolders(snap.size))
     await getDocs(inactiveQ).then(snap => setInactiveCaseFolders(snap.size))
+    setLoading(false)
   }
 
   const getAllFiles = async () => {
+    setLoading(true)
     const filesRef = collection(db, 'files')
     await getDocs(filesRef).then(snap => setTotalFiles(snap.size))
+    setLoading(false)
   }
 
   const getAccounts = async () => {
+    setLoading(true)
     const accountsRef = collection(db, 'users')
     const partnersQ = query(accountsRef, where('role', '==', 'partner'))
     const adminQ = query(accountsRef, where('role', '==', 'admin'))
     const lawyerQ = query(accountsRef, where('role', '==', 'lawyer'))
     const clientQ = query(accountsRef, where('role', '==', 'client'))
-    await getDocs(accountsRef).then(snap => setTotalAccounts(snap.size - 1))
+    const supplierQ = query(accountsRef, where('role', '==', 'supplier'))
+    let total = 0
+    let supps = 0
+    await getDocs(lawyerQ).then(snap =>
+      setLawyerList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    )
+    await getDocs(lawyerQ).then(snap => setLawyerAccounts(snap.size))
+    await getDocs(accountsRef).then(snap => (total = snap.size - 1))
+    await getDocs(supplierQ).then(snap => (supps = snap.size))
     await getDocs(partnersQ).then(snap => setPartnerAccounts(snap.size))
     await getDocs(adminQ).then(snap => setAdminAccounts(snap.size))
-    await getDocs(lawyerQ).then(snap => {
-      setLawyerAccounts(snap.size)
-      setLawyerList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
-    })
     await getDocs(clientQ).then(snap => setClientAccounts(snap.size))
+    setTotalAccounts(total - supps)
+    setLoading(false)
   }
 
   const getHandledFiles = async () => {
-    const filesRef = collection(db, 'files')
+    setLoading(true)
     let data = []
-    lawyerList?.map(async lawyer => {
-      const filesQ = query(filesRef, where('lawyer', '==', lawyer.initials))
-      await getDocs(filesQ).then(snap => data.push({ lawyer: lawyer.initials, size: snap.size }))
+    const filesRef = collection(db, 'files')
+    const lawyerRef = query(collection(db, 'users'), where('role', '==', 'lawyer'))
+    await getDocs(lawyerRef).then(snap => {
+      snap.docs.map(async doc => {
+        const filesQ = query(filesRef, where('lawyer', '==', doc.data().initials))
+        await getDocs(filesQ).then(snaps =>
+          data.push({ lawyer: doc.data().initials, size: snaps.size })
+        )
+      })
     })
     setHandledBy(data)
+    setLoading(false)
   }
 
   const getAccounting = async () => {
+    setLoading(true)
     const soaRef = collection(db, 'soa')
     const orRef = collection(db, 'or')
     const cvRef = collection(db, 'cv')
@@ -93,14 +115,15 @@ export default function Reports() {
       setTotalCv(snap.size - 1)
     })
     setTotalAccounting(totalAccountingFiles)
+    setLoading(false)
   }
 
   useEffect(() => {
     getAccounts()
+    getAllFiles()
     getLogs()
     getCaseFolders()
     getAccounting()
-    getAllFiles()
     getHandledFiles()
   }, [])
 
@@ -127,15 +150,21 @@ export default function Reports() {
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Total: {totalCaseFolders}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Active: {activeCaseFolders}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Archive: {inactiveCaseFolders}</span>
-                  </div>
+                  {loading ? (
+                    'Loading...'
+                  ) : (
+                    <>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Total: {totalCaseFolders}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Active: {activeCaseFolders}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Archive: {inactiveCaseFolders}</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -147,31 +176,40 @@ export default function Reports() {
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mt-5'>
-                    <span>Total Case Files: {totalFiles}</span>
-                  </div>
-                  {lawyerList?.map((lawyer, i) =>
-                    handledBy?.map(handler =>
-                      i === lawyerList.length - 1 ? (
-                        handler.lawyer === lawyer.initials ? (
-                          <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mb-5'>
-                            <span>
-                              Handled By {lawyer.initials}: {handler.size}
-                            </span>
-                          </div>
-                        ) : (
-                          ''
-                        )
-                      ) : handler.lawyer === lawyer.initials ? (
-                        <div className='w-full bg-maroon rounded-md text-white p-3 pl-5'>
-                          <span>
-                            Handled By {lawyer.initials}: {handler.size}
-                          </span>
-                        </div>
-                      ) : (
-                        ''
-                      )
-                    )
+                  {loading ? (
+                    'Loading...'
+                  ) : (
+                    <>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mt-5'>
+                        <span>Total Case Files: {totalFiles}</span>
+                      </div>
+
+                      {lawyerList?.map((lawyer, i) =>
+                        i === lawyerList.length - 1
+                          ? handledBy?.map(handler =>
+                              handler.lawyer === lawyer.initials ? (
+                                <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mb-5'>
+                                  <span>
+                                    Handled By {lawyer.initials}: {handler.size}
+                                  </span>
+                                </div>
+                              ) : (
+                                ''
+                              )
+                            )
+                          : handledBy?.map(handler =>
+                              handler.lawyer === lawyer.initials ? (
+                                <div className='w-full bg-maroon rounded-md text-white p-3 pl-5'>
+                                  <span>
+                                    Handled By {lawyer.initials}: {handler.size}
+                                  </span>
+                                </div>
+                              ) : (
+                                ''
+                              )
+                            )
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -184,21 +222,27 @@ export default function Reports() {
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mt-5'>
-                    <span>Total: {totalAccounts}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Partners: {partnerAccounts}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Admins: {adminAccounts}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Lawyers: {lawyerAccounts}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mb-5'>
-                    <span>Clients: {clientAccounts}</span>
-                  </div>
+                  {loading ? (
+                    'Loading...'
+                  ) : (
+                    <>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mt-5'>
+                        <span>Total: {totalAccounts}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Partners: {partnerAccounts}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Admins: {adminAccounts}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Lawyers: {lawyerAccounts}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mb-5'>
+                        <span>Clients: {clientAccounts}</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -210,18 +254,24 @@ export default function Reports() {
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mt-5'>
-                    <span>Total: {totalAccounting}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Statement of Accounts: {totalSoa}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
-                    <span>Official Receipts: {totalOr}</span>
-                  </div>
-                  <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mb-5'>
-                    <span>Check Vouchers: {totalCv}</span>
-                  </div>
+                  {loading ? (
+                    'Loading...'
+                  ) : (
+                    <>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mt-5'>
+                        <span>Total: {totalAccounting}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Statement of Accounts: {totalSoa}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 '>
+                        <span>Official Receipts: {totalOr}</span>
+                      </div>
+                      <div className='w-full bg-maroon rounded-md text-white p-3 pl-5 mb-5'>
+                        <span>Check Vouchers: {totalCv}</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -233,32 +283,37 @@ export default function Reports() {
               >
                 LOGS
               </div>
+
               <div
                 className={` flex justify-center overflow-y-scroll border-black border-2 w-full bg-white text-black`}
               >
-                <table className='w-full h-full text-sm text-center text-gray-500 border-collapse border border-slate-500'>
-                  <thead>
-                    <tr>
-                      <th
-                        scope='col'
-                        className='px-2 text-left lg:text-sm border border-slate-600 w-[70%]'
-                      >
-                        Description
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-2 text-right lg:text-sm border border-slate-600 w-[30%]'
-                      >
-                        Timestamp
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sortedLogs?.map(log => (
-                      <Logs data={log} formatDate={formatDate} />
-                    ))}
-                  </tbody>
-                </table>
+                {loading ? (
+                  'Loading...'
+                ) : (
+                  <table className='w-full h-full text-sm text-center text-gray-500 border-collapse border border-slate-500'>
+                    <thead>
+                      <tr>
+                        <th
+                          scope='col'
+                          className='px-2 text-left lg:text-sm border border-slate-600 w-[70%]'
+                        >
+                          Description
+                        </th>
+                        <th
+                          scope='col'
+                          className='px-2 text-right lg:text-sm border border-slate-600 w-[30%]'
+                        >
+                          Timestamp
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sortedLogs?.map(log => (
+                        <Logs data={log} formatDate={formatDate} />
+                      ))}
+                    </tbody>
+                  </table>
+                )}
               </div>
             </div>
           </div>
