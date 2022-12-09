@@ -31,16 +31,12 @@ function ContactUs() {
   const sendEmail = form => {
     form.preventDefault()
 
-    emailjs.sendForm('service_5gjxz6n', 'template_rzy2xi9', form.target, 'm_ccmgiqUCgKDcULH').then(
-      result => {
-        console.log(result.text)
-      },
-      error => {
-        console.log(error.text)
-      }
-    )
-    form.target.reset()
-    showResult(true)
+    emailjs
+      .sendForm('service_5gjxz6n', 'template_rzy2xi9', form.target, 'm_ccmgiqUCgKDcULH')
+      .then(() => {
+        form.target.reset()
+        showResult(true)
+      })
   }
   return (
     <div>

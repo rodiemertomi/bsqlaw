@@ -127,7 +127,6 @@ export default function Accounting() {
     if (window.confirm('Are you sure you want tod elete this file?') === true) {
       const fileRef = doc(db, `${fileSearch}/${id}`)
       const file = await getDoc(fileRef)
-      console.log(file.data())
       await deleteDoc(fileRef).then(() => {
         alert('File Delete Successful')
         reportLog(`${username} deleted ${file.data().filename} from ${fileSearch}`)

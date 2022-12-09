@@ -74,7 +74,6 @@ export default function Reports() {
     })
     setHandledBy(data)
   }
-  console.log(handledBy)
 
   const getAccounting = async () => {
     const soaRef = collection(db, 'soa')
