@@ -5,7 +5,7 @@ import ChangePassword from '../../components/ChangePassword'
 import { useEffect } from 'react'
 
 export default function AdminProfile() {
-  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password } =
+  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password, username } =
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
@@ -101,7 +101,7 @@ export default function AdminProfile() {
       <div className='absolute lg:left-[40px]'>
         {openModal && <EditProfile closeModal={setOpenModal} />}
         {changePasswordModal && (
-          <ChangePassword closeModal={setChangePasswordModal} error={error} />
+          <ChangePassword closeModal={setChangePasswordModal} error={error} username={username} />
         )}
       </div>
     </div>

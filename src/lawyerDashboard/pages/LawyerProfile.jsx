@@ -7,7 +7,7 @@ import { db } from '../../firebase'
 import { useEffect } from 'react'
 
 export default function LawyerProfile() {
-  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password } =
+  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password, username } =
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
@@ -160,7 +160,7 @@ export default function LawyerProfile() {
       <div className='absolute lg:left-[40px]'>
         {openModal && <EditProfile closeModal={setOpenModal} />}
         {changePasswordModal && (
-          <ChangePassword closeModal={setChangePasswordModal} error={error} />
+          <ChangePassword closeModal={setChangePasswordModal} username={username} error={error} />
         )}
       </div>
     </div>

@@ -11,6 +11,8 @@ import {
   getDoc,
 } from 'firebase/firestore'
 import { db } from '../../firebase'
+import reportLog from '../../components/ReportLog'
+import UseUserReducer from '../../UserReducer'
 
 export default function ClientsList() {
   const colRef = collection(db, 'users')
@@ -21,6 +23,8 @@ export default function ClientsList() {
   const [clientEditId, setClientEditId] = useState()
   const [selectedLawyer, setSelectedLawyer] = useState()
   const [originalLawyer, setOriginalLawyer] = useState('')
+
+  const { username } = UseUserReducer()
 
   const handleEditClick = (e, client) => {
     e.preventDefault()
@@ -57,12 +61,14 @@ export default function ClientsList() {
     }
     await setDoc(clientRef, editedClient, { merge: true }).then(() => {
       alert(`${selectedLawyer} assigned to ${client.username}`)
+      reportLog(`${username} assigned ${selectedLawyer} to ${client.username}`)
       getClients()
       getLawyers()
     })
 
     await setDoc(lawyerRef, editedLawyer, { merge: true }).then(() => {
       alert(`${client.username} assigned to ${selectedLawyer}`)
+      reportLog(`${username} assigned ${client.username} to ${selectedLawyer}`)
       getClients()
       getLawyers()
     })

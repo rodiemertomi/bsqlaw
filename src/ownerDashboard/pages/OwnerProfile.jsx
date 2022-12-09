@@ -4,7 +4,7 @@ import EditProfile from '../pages/EditProfile'
 import ChangePassword from '../../components/ChangePassword'
 
 export default function OwnerProfile() {
-  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password } =
+  const { firstName, lastName, email, photoURL, initials, gender, contactNo, password, username } =
     UseUserReducer()
   const [openModal, setOpenModal] = useState(false)
   const [changePasswordModal, setChangePasswordModal] = useState(false)
@@ -100,7 +100,7 @@ export default function OwnerProfile() {
       <div className='absolute lg:left-[40px]'>
         {openModal && <EditProfile closeModal={setOpenModal} />}
         {changePasswordModal && (
-          <ChangePassword closeModal={setChangePasswordModal} error={error} />
+          <ChangePassword closeModal={setChangePasswordModal} username={username} error={error} />
         )}
       </div>
     </div>

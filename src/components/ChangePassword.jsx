@@ -4,8 +4,9 @@ import { doc, setDoc } from 'firebase/firestore'
 import UseUserReducer from '../UserReducer'
 import { UserAuth } from '../context/AuthContext'
 import validator from 'validator'
+import reportLog from './ReportLog'
 
-function ChangePassword({ closeModal, error }) {
+function ChangePassword({ closeModal, error, username }) {
   const { id, password } = UseUserReducer()
 
   const { changePassword } = UserAuth()
@@ -50,6 +51,7 @@ function ChangePassword({ closeModal, error }) {
     }
     await setDoc(docRef, data, { merge: true }).then(() => {
       alert('Updated password successfully. Please refresh page.')
+      reportLog(`${username} changed their password.`)
       changePassword(newPasswordState)
       closeModal(false)
       setLoading(false)
