@@ -78,7 +78,7 @@ export default function AdminProfile() {
             </span>
           </h1>
           <h1
-            className='text-black font-bold hover:text-white hover:underline hover:cursor-pointer '
+            className='font-bold underline text-maroon hover:text-black  hover:cursor-pointer '
             onClick={() => {
               setShowLawyerList(true)
             }}
@@ -95,7 +95,7 @@ export default function AdminProfile() {
                   <div className='overflow-auto w-full text-base font-light flex flex-col gap-1'>
                     {lawyersList?.map((lawyer, i) => (
                       <div
-                        className='w-full bg-maroon rounded-md text-white p-3 pl-5 '
+                        className='w-full bg-maroon rounded-md cursor-pointer text-white p-3 pl-5 '
                         onClick={() => handleShowLawyerProfile(lawyer)}
                       >
                         <h1 key={i}>
@@ -164,7 +164,7 @@ export default function AdminProfile() {
                     </div>
                     <div className='text-sm font-thin'>
                       <h1
-                        className='text-maroon hover:font-bold hover:cursor-pointer mb-2'
+                        className='text-maroon text-center mt-5 hover:font-bold hover:cursor-pointer mb-2'
                         onClick={() => setShowLawyerProfile(false)}
                       >
                         Close
