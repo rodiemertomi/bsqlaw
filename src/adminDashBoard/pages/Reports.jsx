@@ -141,7 +141,7 @@ export default function Reports() {
       </div>
       <div className='h-full w-full flex flex-col gap-5 overflow-auto pb-2 pl-5 pr-5 overflow-x-hidden lg:overflow-hidden lg:w-screen lg:h-screen lg:flex lg:flex-row lg:pr-0 lg:mt-0'>
         <div className='w-[100%] h-[100%] shadow-lg bg-maroon rounded-md flex flex-col items-center gap-1 lg:w-[100%] lg:h-[100%] lg:ml-20 lg:mr-2 '>
-          <div className='h-[60%] w-full flex items-center justify-center'>
+          <div className='h-[70%] w-full flex items-center justify-center flex-wrap'>
             <div className=' w-[350px] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
                 className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
@@ -276,7 +276,7 @@ export default function Reports() {
               </div>
             </div>
           </div>
-          <div className='h-[40%] w-full px-2 pb-2'>
+          <div className='h-[30%] w-full px-2 pb-2'>
             <div className='flex flex-col h-full'>
               <div
                 className={` flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-14 bg-white text-black`}
