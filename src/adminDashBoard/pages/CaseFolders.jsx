@@ -64,6 +64,7 @@ export default function CaseFolders() {
       lawyer: selectedLawyer,
       clientid: selectedLawyerClient,
       handlingpartner: selectedPartner,
+      active: true,
     }
     await setDoc(doc(foldersRef, `${folderNameRef.current.value}`), folderData).then(() => {
       reportLog(`${username} added folder ${folderNameRef.current.value}.`)
