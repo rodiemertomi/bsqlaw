@@ -97,10 +97,11 @@ function Times({ closeShowAppointment, getAppointments, appointmentList }) {
     }
     const isAvailable = appointmentList.map(appointment => {
       return !(
-        dateStart.getTime() >= appointment.dateTimeStart.toDate().getTime() &&
-        dateStart.getTime() <= appointment.dateTimeEnd.toDate().getTime() &&
-        dateEnd.getTime() >= appointment.dateTimeStart.toDate().getTime() &&
-        (clientId === appointment.clientId || appointment.setter === initials)
+        (dateStart.getTime() >= appointment.dateTimeStart.toDate().getTime() &&
+          dateStart.getTime() <= appointment.dateTimeEnd.toDate().getTime() &&
+          dateEnd.getTime() >= appointment.dateTimeStart.toDate().getTime()) ||
+        clientId === appointment.clientId ||
+        appointment.setter === initials
       )
     })
     if (isAvailable.includes(false)) {

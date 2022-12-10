@@ -1,15 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { db } from '../../firebase'
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  setDoc,
-  arrayRemove,
-  deleteDoc,
-} from 'firebase/firestore'
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 import reportLog from '../../components/ReportLog'
 
@@ -85,9 +76,9 @@ export default function CaseFolders() {
     }
   }
 
-  const handleDeleteFile = async (e, file, folderid) => {
+  const handleDeleteFile = async (e, file) => {
     e.preventDefault()
-    const docRef = doc(db, `folders/${folderid}`)
+    const filesRef = doc(db, `files/${file.id}`)
     if (window.confirm('Are you sure you want to delete this file?') === true) {
       const deleteFile = {
         active: file.active,
@@ -105,12 +96,8 @@ export default function CaseFolders() {
         uploadby: file.uploadby,
         url: file.url,
       }
-      const deleteData = { files: arrayRemove(deleteFile) }
       reportLog(`${username} deleted ${deleteFile.pleading} in ${deleteFile.folder}`)
-      await setDoc(docRef, deleteData, { merge: true }).then(() => {
-        alert('Deleted file.')
-        getFolders()
-      })
+      await deleteDoc(filesRef)
     } else {
       return
     }

@@ -8,11 +8,8 @@ import {
   getDocs,
   doc,
   setDoc,
-  arrayUnion,
   getDoc,
-  arrayRemove,
   deleteDoc,
-  addDoc,
 } from 'firebase/firestore'
 import UseUserReducer from '../../UserReducer'
 import { nanoid } from 'nanoid'
@@ -25,13 +22,11 @@ export default function CaseFolders() {
   const [pleadingDate, setPleadingDate] = useState()
   const [folderOption, setFolderOption] = useState('')
   const [editFileId, setEditFileId] = useState(null)
-  const [firstEditFormData, setFirstEditFormData] = useState({})
   const [editFormData, setEditFormData] = useState({})
   const [selectedLawyer, setSelectedLawyer] = useState()
   const [lawyerClients, setLawyerClients] = useState()
   const [selectedLawyerClient, setSelectedLawyerClient] = useState()
   const [lawyers, setLawyers] = useState()
-  const [editFolderId, setEditFolderId] = useState()
   const [partnersList, setPartnersList] = useState()
   const [selectedPartner, setSelectedPartner] = useState()
   const [searchKeyword, setSearchKeyword] = useState('')
@@ -74,6 +69,7 @@ export default function CaseFolders() {
       reportLog(`${username} added folder ${folderNameRef.current.value}.`)
       alert('Added folder successfully')
       getFolders()
+      setLoading(false)
     })
     folderNameRef.current.value = ''
     setLoading(false)
@@ -123,6 +119,7 @@ export default function CaseFolders() {
           alert('Successfully added file in firestore')
           getFolders()
           getFiles()
+          setLoading(false)
         })
       })
     })
@@ -132,7 +129,6 @@ export default function CaseFolders() {
   const handleEditClick = (e, data, folderid) => {
     e.preventDefault()
     setEditFileId(data.id)
-    setEditFolderId(folderid)
 
     const formValues = {
       active: data.active,
@@ -150,7 +146,6 @@ export default function CaseFolders() {
       uploadby: data.uploadby,
       url: data.url,
     }
-    setFirstEditFormData(formValues)
     setEditFormData(formValues)
   }
 
@@ -167,10 +162,10 @@ export default function CaseFolders() {
 
   const handleCancel = () => {
     setEditFileId(null)
-    setEditFolderId(null)
   }
 
   const handleEditFormSubmit = async e => {
+    setLoading(true)
     e.preventDefault()
     const fileRef = doc(db, `files/${editFileId}`)
 
@@ -194,9 +189,9 @@ export default function CaseFolders() {
       alert('Update Successful')
       reportLog(`${username} edited ${editFormData.pleading} in ${editFormData.folder}`)
       setEditFileId(null)
-      setEditFolderId(null)
       getFolders()
       getFiles()
+      setLoading(false)
     })
   }
 
@@ -221,6 +216,7 @@ export default function CaseFolders() {
   }
 
   const handleDeleteFolder = async (e, folderid) => {
+    setLoading(true)
     e.preventDefault()
     if (
       window.confirm('Are you sure you want to delete this folder and all its contents?') === true
@@ -230,13 +226,16 @@ export default function CaseFolders() {
       await deleteDoc(ref).then(() => {
         alert('Deleted Folder.')
         getFolders()
+        setLoading(false)
       })
     } else {
+      setLoading(false)
       return
     }
   }
 
   const archiveFolder = async (e, folderId) => {
+    setLoading(true)
     e.preventDefault()
     if (
       window.confirm('Are you sure you want to archive this folder and all its contents?') === true
@@ -247,16 +246,18 @@ export default function CaseFolders() {
       await setDoc(ref, { active: false }, { merge: true }).then(() => {
         alert('Archived Folder.')
         getFolders()
+        setLoading(false)
         return
       })
     } else {
+      setLoading(false)
       return
     }
   }
 
-  const handleDeleteFile = async (e, file, folderid) => {
+  const handleDeleteFile = async (e, file) => {
+    setLoading(true)
     e.preventDefault()
-    const docRef = doc(db, `folders/${folderid}`)
     const filesRef = doc(db, `files/${file.id}`)
     if (window.confirm('Are you sure you want to delete this file?') === true) {
       const deleteFile = {
@@ -275,14 +276,14 @@ export default function CaseFolders() {
         uploadby: file.uploadby,
         url: file.url,
       }
-      const deleteData = { files: arrayRemove(deleteFile) }
-      reportLog(`${username} deleted ${deleteFile.pleading} in ${deleteFile.folder}`)
-      await deleteDoc(filesRef)
-      await setDoc(docRef, deleteData, { merge: true }).then(() => {
-        alert('Deleted file.')
-        getFolders()
+      await deleteDoc(filesRef).then(() => {
+        reportLog(`${username} deleted ${deleteFile.pleading} in ${deleteFile.folder}`)
+        alert('File deleted')
+        getFiles()
+        setLoading(true)
       })
     } else {
+      setLoading(false)
       return
     }
     return
@@ -350,6 +351,7 @@ export default function CaseFolders() {
               </div>
               <div className='flex lg:gap-2'>
                 <button
+                  disabled={loading}
                   type='button'
                   onClick={() => {
                     setShowModal(true)
@@ -359,13 +361,14 @@ export default function CaseFolders() {
                   Add Folder
                 </button>
                 <button
+                  disabled={loading}
                   type='button'
                   onClick={() => {
                     setShowUpdateFolder(true)
                   }}
                   className=' inline-block px-6 font-bold py-2.5 bg-blue-600 text-black text-xs leading-tight uppercase rounded-3xl shadow-md bg-white hover:bg-[#471414] hover:text-white active:shadow-lg transition duration-150 ease-in-out'
                 >
-                  Update Folder
+                  Upload File
                 </button>
               </div>
             </div>
