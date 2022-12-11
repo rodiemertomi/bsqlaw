@@ -206,10 +206,14 @@ export default function Reports() {
           <div className='h-[70%] w-full flex items-center justify-center flex-wrap'>
             <div className=' w-[350px] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 CASE FOLDERS
-                <button onClick={exportCaseFolders} disabled={loading}>
+                <button
+                  className='rounded-2xl py-1 px-2 border-black font-light hover:border-black border-[1px] bg-maroon hover:text-black text-white hover:bg-white'
+                  onClick={exportCaseFolders}
+                  disabled={loading}
+                >
                   EXPORT
                 </button>
               </div>
@@ -235,10 +239,14 @@ export default function Reports() {
             </div>
             <div className=' w-[350px] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 CASE FILES
-                <button onClick={exportFiles} disabled={loading}>
+                <button
+                  className='rounded-2xl py-1 px-2 border-black font-light hover:border-black border-[1px] bg-maroon hover:text-black text-white hover:bg-white'
+                  onClick={exportFiles}
+                  disabled={loading}
+                >
                   EXPORT
                 </button>
               </div>
@@ -284,10 +292,14 @@ export default function Reports() {
             </div>
             <div className=' w-[350px] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 USER ACCOUNTS
-                <button onClick={exportAccounts} disabled={loading}>
+                <button
+                  className='rounded-2xl py-1 px-2 border-black font-light hover:border-black border-[1px] bg-maroon hover:text-black text-white hover:bg-white'
+                  onClick={exportAccounts}
+                  disabled={loading}
+                >
                   EXPORT
                 </button>
               </div>
@@ -319,10 +331,14 @@ export default function Reports() {
             </div>
             <div className=' w-[350px] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 ACCOUNTING
-                <button onClick={exportAccountings} disabled={loading}>
+                <button
+                  className='rounded-2xl py-1 px-2 border-black font-light hover:border-black border-[1px] bg-maroon hover:text-black text-white hover:bg-white'
+                  onClick={exportAccountings}
+                  disabled={loading}
+                >
                   EXPORT
                 </button>
               </div>
@@ -356,7 +372,10 @@ export default function Reports() {
                 className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-14 bg-white text-black`}
               >
                 <div>LOGS</div>
-                <button className='border-2 rounded-xl' onClick={exportLogs}>
+                <button
+                  className='rounded-2xl py-1 px-2 border-black font-light hover:border-black border-[1px] bg-maroon hover:text-black text-white hover:bg-white'
+                  onClick={exportLogs}
+                >
                   Export
                 </button>
               </div>
