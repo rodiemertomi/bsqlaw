@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { db } from '../../firebase'
+import * as XLSX from 'xlsx'
 
 export default function Reports() {
   const [logs, setLogs] = useState([])
@@ -22,13 +23,62 @@ export default function Reports() {
   const [lawyerList, setLawyerList] = useState([])
   const [handledBy, setHandledBy] = useState([])
   const [loading, setLoading] = useState(false)
+  const [exportLog, setExportLog] = useState([])
+  const [exportFolder, setExportFolder] = useState([])
+  const [exportFile, setExportFile] = useState([])
+  const [exportAccount, setExportAccount] = useState([])
+  const [exportOr, setExportOR] = useState([])
+  const [exportSoa, setExportSoa] = useState([])
+  const [exportCv, setExportCv] = useState([])
 
   const getLogs = async () => {
     setLoading(true)
     const logRef = doc(db, 'reports', 'LOGS')
     const data = await getDoc(logRef)
     setLogs(data.data().logArray)
+    setExportLog(data.data().logArray)
     setLoading(false)
+  }
+
+  const exportLogs = async () => {
+    setLoading(true)
+    ExportToExcel(exportLog)
+    setLoading(false)
+  }
+
+  const exportCaseFolders = async () => {
+    setLoading(true)
+    ExportToExcel(exportFolder)
+    setLoading(false)
+  }
+
+  const exportFiles = async () => {
+    setLoading(true)
+    ExportToExcel(exportFile)
+    setLoading(false)
+  }
+
+  const exportAccounts = async () => {
+    setLoading(true)
+    ExportToExcel(exportAccount)
+    setLoading(false)
+  }
+
+  const exportAccountings = async () => {
+    setLoading(true)
+    ExportToExcel(exportSoa)
+    ExportToExcel(exportOr)
+    ExportToExcel(exportCv)
+    setLoading(false)
+  }
+
+  const ExportToExcel = async exportedData => {
+    const ws = XLSX.utils.json_to_sheet(exportedData)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'workbook')
+    XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' })
+    XLSX.write(wb, { bookType: 'xlsx', type: 'binary' })
+    await XLSX.writeFile(wb, 'logs.xlsx')
   }
 
   const formatDate = date => {
@@ -43,7 +93,10 @@ export default function Reports() {
     const foldersRef = collection(db, 'folders')
     const activeQ = query(foldersRef, where('active', '==', true))
     const inactiveQ = query(foldersRef, where('active', '==', false))
-    await getDocs(foldersRef).then(snap => setTotalCaseFolders(snap.size - 1))
+    await getDocs(foldersRef).then(snap => {
+      setTotalCaseFolders(snap.size - 1)
+      setExportFolder(snap.docs.map(doc => ({ ...doc.data() })))
+    })
     await getDocs(activeQ).then(snap => setActiveCaseFolders(snap.size))
     await getDocs(inactiveQ).then(snap => setInactiveCaseFolders(snap.size))
     setLoading(false)
@@ -52,7 +105,10 @@ export default function Reports() {
   const getAllFiles = async () => {
     setLoading(true)
     const filesRef = collection(db, 'files')
-    await getDocs(filesRef).then(snap => setTotalFiles(snap.size))
+    await getDocs(filesRef).then(snap => {
+      setTotalFiles(snap.size)
+      setExportFile(snap.docs.map(doc => ({ ...doc.data() })))
+    })
     setLoading(false)
   }
 
@@ -70,7 +126,10 @@ export default function Reports() {
       setLawyerList(snap.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     )
     await getDocs(lawyerQ).then(snap => setLawyerAccounts(snap.size))
-    await getDocs(accountsRef).then(snap => (total = snap.size - 1))
+    await getDocs(accountsRef).then(snap => {
+      total = snap.size - 1
+      setExportAccount(snap.docs.map(doc => ({ ...doc.data() })))
+    })
     await getDocs(supplierQ).then(snap => (supps = snap.size))
     await getDocs(partnersQ).then(snap => setPartnerAccounts(snap.size))
     await getDocs(adminQ).then(snap => setAdminAccounts(snap.size))
@@ -105,14 +164,17 @@ export default function Reports() {
     await getDocs(soaRef).then(snap => {
       totalAccountingFiles = totalAccountingFiles + snap.size - 1
       setTotalSoa(snap.size - 1)
+      setExportSoa(snap.docs.map(doc => ({ ...doc.data() })))
     })
     await getDocs(orRef).then(snap => {
       totalAccountingFiles = totalAccountingFiles + snap.size - 1
       setTotalOr(snap.size - 1)
+      setExportOR(snap.docs.map(doc => ({ ...doc.data() })))
     })
     await getDocs(cvRef).then(snap => {
       totalAccountingFiles = totalAccountingFiles + snap.size - 1
       setTotalCv(snap.size - 1)
+      setExportCv(snap.docs.map(doc => ({ ...doc.data() })))
     })
     setTotalAccounting(totalAccountingFiles)
     setLoading(false)
@@ -147,6 +209,9 @@ export default function Reports() {
                 className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 CASE FOLDERS
+                <button onClick={exportCaseFolders} disabled={loading}>
+                  EXPORT
+                </button>
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
@@ -173,6 +238,9 @@ export default function Reports() {
                 className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 CASE FILES
+                <button onClick={exportFiles} disabled={loading}>
+                  EXPORT
+                </button>
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
@@ -219,6 +287,9 @@ export default function Reports() {
                 className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 USER ACCOUNTS
+                <button onClick={exportAccounts} disabled={loading}>
+                  EXPORT
+                </button>
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
@@ -251,6 +322,9 @@ export default function Reports() {
                 className={`flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
               >
                 ACCOUNTING
+                <button onClick={exportAccountings} disabled={loading}>
+                  EXPORT
+                </button>
               </div>
               <div className='flex flex-col w-full h-[230px] border-[2px] border-black items-center justify-center pr-6 pl-6 pt-3 pb-3 bg-white rounded-b-2xl'>
                 <div className='overflow-auto w-full text-base font-light flex flex-col gap-2'>
@@ -279,9 +353,12 @@ export default function Reports() {
           <div className='h-[30%] w-full px-2 pb-2'>
             <div className='flex flex-col h-full'>
               <div
-                className={` flex justify-center items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-14 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-14 bg-white text-black`}
               >
-                LOGS
+                <div>LOGS</div>
+                <button className='border-2 rounded-xl' onClick={exportLogs}>
+                  Export
+                </button>
               </div>
 
               <div
