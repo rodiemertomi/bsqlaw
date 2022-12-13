@@ -227,10 +227,10 @@ export default function ClientsManagement() {
               />
               <input
                 className='w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[20%] h-8'
-                type='company'
-                name='company'
-                value={addFormData.company}
-                placeholder='Company'
+                type='text'
+                name='username'
+                value={addFormData.username}
+                placeholder='Username'
                 onChange={handleAddFormChange}
               />
               <button
