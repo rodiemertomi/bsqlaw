@@ -206,7 +206,7 @@ export default function Reports() {
           <div className='h-[70%] w-full flex items-center justify-center flex-wrap'>
             <div className=' w-[25%] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-12 bg-white text-black`}
               >
                 CASE FOLDERS
                 <button
@@ -239,7 +239,7 @@ export default function Reports() {
             </div>
             <div className=' w-[25%] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-12 bg-white text-black`}
               >
                 CASE FILES
                 <button
@@ -292,7 +292,7 @@ export default function Reports() {
             </div>
             <div className=' w-[25%] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-12 bg-white text-black`}
               >
                 USER ACCOUNTS
                 <button
@@ -331,7 +331,7 @@ export default function Reports() {
             </div>
             <div className=' w-[25%] px-2 pt-2 flex flex-col items-center justify-center '>
               <div
-                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-10 bg-white text-black`}
+                className={`flex justify-around items-center font-semibold border-black border-[2px] w-full rounded-t-2xl h-12 bg-white text-black`}
               >
                 ACCOUNTING
                 <button
