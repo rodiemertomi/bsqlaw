@@ -135,7 +135,7 @@ function AdminSideNavBar({
               />
             }
           />
-          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Non-Legal Control</p>
+          <p className='text-center text-xs pt-0 mb-3 font-poppins'>Accounts Control</p>
           <SideBarIcon
             icon={
               <img

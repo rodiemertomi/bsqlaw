@@ -65,7 +65,7 @@ function AdminControl({ setHideNavBar, dispatch }) {
           adminControl ? `left-[88px] lg:left-[91px]` : `left-[-300px]`
         } transition-all duration-300 z-50 `}
       >
-        <h1 className='ml-5 mt-5 text-xl font-bold'>Non-Legal Control</h1>
+        <h1 className='ml-5 mt-5 text-xl font-bold'>Accounts Control</h1>
 
         <div className='flex flex-col gap-5 mt-5 mb-10 ml-10'>
           <div className='mt-5'>
