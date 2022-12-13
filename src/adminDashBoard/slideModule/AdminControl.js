@@ -65,7 +65,7 @@ function AdminControl({ setHideNavBar, dispatch }) {
           adminControl ? `left-[88px] lg:left-[91px]` : `left-[-300px]`
         } transition-all duration-300 z-50 `}
       >
-        <h1 className='ml-5 mt-5 text-xl font-bold'>Admin Control</h1>
+        <h1 className='ml-5 mt-5 text-xl font-bold'>Non-Legal Control</h1>
 
         <div className='flex flex-col gap-5 mt-5 mb-10 ml-10'>
           <div className='mt-5'>
@@ -76,7 +76,7 @@ function AdminControl({ setHideNavBar, dispatch }) {
 
           <div className='mt-5'>
             <ul className='flex flex-col gap-4 cursor-pointer font-bold'>
-              <li onClick={handleManageAdmin}>Manage Admins</li>
+              <li onClick={handleManageAdmin}>Manage Non-Legal</li>
             </ul>
           </div>
 
