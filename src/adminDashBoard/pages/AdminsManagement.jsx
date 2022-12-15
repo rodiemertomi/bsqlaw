@@ -196,7 +196,7 @@ export default function AdminsManagement() {
     <>
       <div className='h-screen w-screen font-poppins pl-5 pr-5 lg:pr-24 pt-1 pb-24'>
         <div className='lg:ml-[83px]'>
-          <h1 className='self-start text-[30px] font-bold'>Create Admin</h1>
+          <h1 className='self-start text-[30px] font-bold'>Create Non-Legal Accounts</h1>
           <div>
             <form
               className='flex flex-col lg:flex-row gap-2'
