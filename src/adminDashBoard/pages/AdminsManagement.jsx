@@ -196,7 +196,7 @@ export default function AdminsManagement() {
     <>
       <div className='h-screen w-screen font-poppins pl-5 pr-5 lg:pr-24 pt-1 pb-24'>
         <div className='lg:ml-[83px]'>
-          <h1 className='self-start text-[30px] font-bold'>Create Non-Legal Accounts</h1>
+          <h1 className='self-start text-[30px] font-bold'>Create Non-Legal</h1>
           <div>
             <form
               className='flex flex-col lg:flex-row gap-2'
@@ -230,7 +230,7 @@ export default function AdminsManagement() {
               </button>
             </form>
             <div>
-              <span className='font-bold text-xl'>Search Admin</span>
+              <span className='font-bold text-xl'>Search Non-Legal</span>
               <input
                 className='lg:ml-2 md:ml-2 w-3/4 py-2 my-2 shadow appearance-none border rounded px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline lg:w-[49%]'
                 type='text'
